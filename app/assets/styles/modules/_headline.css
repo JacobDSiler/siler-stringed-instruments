@@ -7,7 +7,7 @@
     text-align: center;
     font-weight: bolder;
     font-size: 2rem;
-    color: #000000;
+    color: $fontMain;
 
 
   &__main {
@@ -16,5 +16,17 @@
 
   &__subtitle {
     font-size: 1.1rem;
+  }
+
+  &__contact {
+    margin-top: -3.8rem;
+    font-size: .75rem;
+    float: right;
+    padding: 1.5rem .8rem;
+
+    @mixin atMedium {
+      font-size: 1.2rem;
+      padding: .8rem 1.5rem;
+    }
   }
 }
