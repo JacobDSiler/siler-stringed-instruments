@@ -1,12 +1,13 @@
 .btn {
-  background-color: $mainTan;
-  color: #mainBlue;
+  background-color: $mainHigh;
+  color: #FFF;
   text-decoration: none;
   padding: .5rem .8rem;
   display: inline-block;
+  font-weight: 350;
 
   &--orange {
-    background-color: $mainTan;
+    background-color: $mainHigh;
   }
 
   &--large {
