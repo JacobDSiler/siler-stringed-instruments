@@ -1,5 +1,6 @@
 .primary-nav {
   padding-top: 10px;
+  transform: translateY(-6.25rem);
 
   @mixin atMedium {
     padding-top: 0;

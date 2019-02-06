@@ -456,11 +456,14 @@ a {
 }
 
 .headline__main {
+  opacity: 1;
+  visibility: visible;
   padding-top: 88px;
   padding-bottom: 188px;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+  transition: all .40s ease-out;
   left: 0;
   width: 100%;
 }
@@ -472,11 +475,18 @@ a {
   }
 }
 
+.headline__main--is-hidden  {
+  opacity: 0;
+  visibility: hidden;
+}
+
 .headline__title {
+  font-size: 4rem;
   margin: 0;
 }
 
 .headline__subtitle {
+  font-size: 4rem;
   margin: 0;
 }
 
@@ -1026,7 +1036,7 @@ Instead edit gulp/templates/sprite */
 
 .site-footer__text {
   display: block;
-  margin-bottom: 1rem;
+  margin-bottom: ;
   font-weight: 200;
 }
 
@@ -1079,33 +1089,57 @@ Instead edit gulp/templates/sprite */
   transform-origin: 50% 0;
   background-color: #afcbe3;
   padding: 25px 36px;
+  visibility: hidden;
 }
 
 @media (min-width: 800px) {
 
   .site-header__logo {
     left: auto;
-    transform: translateX(0);
   }
 
   .site-header--dark .site-header__logo {
     transform: scale(.56);
+    visibility: visible;
   }
 }
 
 .site-header__image {
-  opacity: .8;
+  opacity: 1;
   padding: 0 0;
   text-align: center;
   font-size: 1.5rem;
-  transition: transform .6s ease-out;
+  transition: transform .40s ease-out;
+}
+
+.site-header--dark .site-header__image {
+  opacity: .75;
+}
+
+.site-header__title {
+  position: relative;
+  opacity: 0;
+  text-align: center;
+  font-size: 2rem;
+  transform: translateY(-5rem) scale(1);
+  transition: all .20s ease-out;
+}
+
+.site-header--dark .site-header__title {
+  opacity: .8;
 }
 
 .site-header__subtitle {
-  opacity: .8;
+  position: relative;
+  opacity: 0;
   text-align: center;
-  font-size: 1.1rem;
-  transition: transform .6s ease-out;
+  font-size: 1.3rem;
+  transform: translateY(-5rem);
+  transition: all .40s ease-out;
+}
+
+.site-header--dark .site-header__subtitle {
+  opacity: .8;
 }
 
 .site-header__logo__graphic {
@@ -1204,6 +1238,7 @@ Instead edit gulp/templates/sprite */
 
 .primary-nav {
   padding-top: 10px;
+  transform: translateY(-6.25rem);
 }
 
 @media (min-width: 800px) {

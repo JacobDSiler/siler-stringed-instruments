@@ -14,24 +14,34 @@
   }
 
   &__main {
+    opacity: 1;
+    visibility: visible;
     padding-top: 88px;
     padding-bottom: 188px;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+    transition: all .40s ease-out;
     left: 0;
     width: 100%;
 
     @mixin atMedium {
       padding-top: 60px;
     }
+
+    &--is-hidden  {
+      opacity: 0;
+      visibility: hidden;
+    }
   }
 
   &__title {
+    font-size: 4rem;
     margin: 0;
   }
 
   &__subtitle {
+    font-size: 4rem;
     margin: 0;
   }
 

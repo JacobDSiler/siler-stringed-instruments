@@ -6,7 +6,8 @@ class StickyHeader {
   constructor() {
     this.lazyImages = $(".lazyload");
     this.siteHeader = $(".site-header");
-    this.headerTriggerElement = $(".jacobdsiler");
+    this.headerTriggerElement = $(".headline__main");
+    this.titleMain = $(".headline__main");
     this.createHeaderWaypoint();
     this.pageSections = $(".page-section");
     this.headerLinks = $(".primary-nav a");
@@ -32,8 +33,10 @@ class StickyHeader {
       handler: function(direction) {
         if (direction == "down") {
           that.siteHeader.addClass("site-header--dark");
+          that.titleMain.addClass("headline__main--is-hidden");
         } else {
           that.siteHeader.removeClass("site-header--dark");
+          that.titleMain.removeClass("headline__main--is-hidden");
         }
       }
     });

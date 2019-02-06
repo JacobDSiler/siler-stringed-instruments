@@ -54,22 +54,26 @@
 
 	var _RevealOnScroll2 = _interopRequireDefault(_RevealOnScroll);
 
+	var _HideTitle = __webpack_require__(5);
+
+	var _HideTitle2 = _interopRequireDefault(_HideTitle);
+
 	var _jquery = __webpack_require__(2);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _StickyHeader = __webpack_require__(5);
+	var _StickyHeader = __webpack_require__(6);
 
 	var _StickyHeader2 = _interopRequireDefault(_StickyHeader);
 
-	var _Modal = __webpack_require__(7);
+	var _Modal = __webpack_require__(8);
 
 	var _Modal2 = _interopRequireDefault(_Modal);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var mobileMenu = new _MobileMenu2.default();
-	new _RevealOnScroll2.default((0, _jquery2.default)(".feature-item"), "45%");
+	new _RevealOnScroll2.default((0, _jquery2.default)(".feature-item"), "85%");
 	var stickyHeader = new _StickyHeader2.default();
 	var modal = new _Modal2.default();
 
@@ -10786,7 +10790,70 @@
 
 	var _noframework2 = _interopRequireDefault(_noframework);
 
-	var _jquerySmoothScroll = __webpack_require__(6);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var HideTitle = function () {
+	  function HideTitle(els, offset) {
+	    _classCallCheck(this, HideTitle);
+
+	    this.itemsToReveal = els;
+	    this.offsetPercentage = offset;
+	    this.hideInitially();
+	    this.createWaypoints();
+	  }
+
+	  _createClass(HideTitle, [{
+	    key: 'Reveal',
+	    value: function Reveal() {
+	      this.itemsToReveal.addClass("reveal-item");
+	    }
+	  }, {
+	    key: 'createWaypoints',
+	    value: function createWaypoints() {
+	      var that = this;
+	      this.itemsToReveal.each(function () {
+	        var currentItem = this;
+	        new Waypoint({
+	          element: currentItem,
+	          handler: function handler() {
+	            if (this.currentItem = (0, _jquery2.default)("headline__title")) {
+	              (0, _jquery2.default)(currentItem).addClass("hide");
+	            }
+	          },
+	          offset: that.offsetPercentage
+	        });
+	      });
+	    }
+	  }]);
+
+	  return HideTitle;
+	}();
+
+	exports.default = HideTitle;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _jquery = __webpack_require__(2);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _noframework = __webpack_require__(4);
+
+	var _noframework2 = _interopRequireDefault(_noframework);
+
+	var _jquerySmoothScroll = __webpack_require__(7);
 
 	var _jquerySmoothScroll2 = _interopRequireDefault(_jquerySmoothScroll);
 
@@ -10800,7 +10867,8 @@
 
 	    this.lazyImages = (0, _jquery2.default)(".lazyload");
 	    this.siteHeader = (0, _jquery2.default)(".site-header");
-	    this.headerTriggerElement = (0, _jquery2.default)(".jacobdsiler");
+	    this.headerTriggerElement = (0, _jquery2.default)(".headline__main");
+	    this.titleMain = (0, _jquery2.default)(".headline__main");
 	    this.createHeaderWaypoint();
 	    this.pageSections = (0, _jquery2.default)(".page-section");
 	    this.headerLinks = (0, _jquery2.default)(".primary-nav a");
@@ -10830,8 +10898,10 @@
 	        handler: function handler(direction) {
 	          if (direction == "down") {
 	            that.siteHeader.addClass("site-header--dark");
+	            that.titleMain.addClass("headline__main--is-hidden");
 	          } else {
 	            that.siteHeader.removeClass("site-header--dark");
+	            that.titleMain.removeClass("headline__main--is-hidden");
 	          }
 	        }
 	      });
@@ -10875,7 +10945,7 @@
 	exports.default = StickyHeader;
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11239,7 +11309,7 @@
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";

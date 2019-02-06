@@ -33,30 +33,53 @@
     transform-origin: 50% 0;
     background-color: $mainBack;
     padding: 25px 36px;
+    visibility: hidden;
 
     @mixin atMedium {
       left: auto;
-      transform: translateX(0);
 
       .site-header--dark & {
         transform: scale(.56);
+        visibility: visible;
       }
     }
   }
 
   &__image {
-    opacity: .8;
+    opacity: 1;
     padding: 0 0;
     text-align: center;
     font-size: 1.5rem;
-    transition: transform .6s ease-out;
+    transition: transform .40s ease-out;
+    .site-header--dark & {
+      opacity: .75;
+    }
+  }
+
+  &__title {
+    position: relative;
+    opacity: 0;
+    text-align: center;
+    font-size: 2rem;
+    transform: translateY(-5rem) scale(1);
+    transition: all .20s ease-out;
+
+    .site-header--dark & {
+      opacity: .8;
+    }
   }
 
   &__subtitle {
-    opacity: .8;
+    position: relative;
+    opacity: 0;
     text-align: center;
-    font-size: 1.1rem;
-    transition: transform .6s ease-out;
+    font-size: 1.3rem;
+    transform: translateY(-5rem);
+    transition: all .40s ease-out;
+
+    .site-header--dark & {
+      opacity: .8;
+    }
   }
 
   &__logo__graphic {
