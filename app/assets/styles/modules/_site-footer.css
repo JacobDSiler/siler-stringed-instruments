@@ -6,7 +6,7 @@
 
   &__text {
     display: block;
-    margin-bottom: ;
+    margin-bottom: 12px;
     font-weight: 200;
 
     @mixin atMedium {

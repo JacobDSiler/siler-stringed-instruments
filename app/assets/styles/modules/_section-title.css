@@ -12,7 +12,7 @@
   }
 
   &--blue {
-    color: $mainBack;
+    color: $fontMain;
   }
 
   &--less-margin {
