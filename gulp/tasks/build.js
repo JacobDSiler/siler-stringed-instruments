@@ -29,7 +29,8 @@ gulp.task('copyGeneralFiles', ['deleteDistFolder'], function() {
     '!./app/assets/styles/**',
     '!./app/assets/scripts/**',
     '!./app/temp',
-    '!./app/temp/**'
+    '!./app/temp/**',
+    '!./app/assets/*.jpg'
   ]
 
   return gulp.src(pathsToCopy)
