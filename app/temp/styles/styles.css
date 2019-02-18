@@ -526,6 +526,8 @@ a {
   display: block;
   position: relative;
   margin-top: 5px;
+  background-color: #e0c999;
+  transition: all .3s ease-out;
 }
 
 .jacobdsiler__image--feature {
@@ -536,6 +538,10 @@ a {
   border-radius: 20px;
   border-color: #485872;
   border-style: none;
+}
+
+.jacobdsiler__image--feature:hover {
+  transform:scale(1.1);
 }
 
 @media (min-width: 800px) {
@@ -652,6 +658,12 @@ a {
 .page-section {
   padding: 1.2rem 0;
 
+}
+
+.page-section::after {
+  content: "";
+  clear: both;
+  display: table;
 }
 
 @media (min-width: 800px) {
@@ -1108,7 +1120,7 @@ Instead edit gulp/templates/sprite */
   .site-header {
     position: fixed;
     color: rgba(175,203,227, .6);
-    z-index: 15;
+    z-index: 4;
   }
 
   .site-header--dark {
@@ -1131,6 +1143,7 @@ Instead edit gulp/templates/sprite */
   opacity: 0;
   text-align: center;
   font-size: 1.3rem;
+  z-index: 4;
   transition: all .20s ease-out;
 }
 
@@ -1138,10 +1151,12 @@ Instead edit gulp/templates/sprite */
   opacity: 1;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 530px) {
 
   .site-header__title {
     font-size: 1.5rem;
+    opacity: 1;
+    visibility: visible;
   }
 }
 
@@ -1149,7 +1164,7 @@ Instead edit gulp/templates/sprite */
   position: fixed;
   top: 8%;
   left: -1rem;
-  z-index: 15;
+  z-index: 4;
 }
 
 @media (min-width: 800px) {

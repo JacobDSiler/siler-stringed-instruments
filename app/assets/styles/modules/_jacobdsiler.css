@@ -4,6 +4,8 @@
   display: block;
   position: relative;
   margin-top: 5px;
+  background-color: $mainTan;
+  transition: all .3s ease-out;
 
 
     &--feature {
@@ -14,6 +16,9 @@
       border-radius: 20px;
       border-color: $frameColor;
       border-style: none;
+        &:hover {
+          transform:scale(1.1);
+        }
 
       @mixin atMedium {
       max-height: 15rem;
