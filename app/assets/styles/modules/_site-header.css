@@ -39,15 +39,17 @@
     position: relative;
     top: 0;
     left: 0;
-    transform: translateY(20%);
+    transform: translateY(-9999rem);
     opacity: 0;
     text-align: center;
     font-size: 1.3rem;
     z-index: 4;
-    transition: all .20s ease-out;
+    transition: opacity .20s ease-out;
 
     .site-header--dark & {
+      transform: translateY(20%);
       opacity: 1;
+      visibility: visible;
     }
 
     @mixin atSmall {
