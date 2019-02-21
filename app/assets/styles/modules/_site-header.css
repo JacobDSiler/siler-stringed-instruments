@@ -38,7 +38,7 @@
   &__title {
     position: relative;
     top: 0;
-    left: 0;
+    left: 4rem;
     transform: translateY(-9999rem);
     opacity: 0;
     text-align: center;
@@ -56,12 +56,13 @@
       font-size: 1.5rem;
       opacity: 1;
       visibility: visible;
+      left: 0;
   }
 }
 
   &__contact {
     position: fixed;
-    top: 8%;
+    top: 20px;
     left: -1rem;
     z-index: 4;
 

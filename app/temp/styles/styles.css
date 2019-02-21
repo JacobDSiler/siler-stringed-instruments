@@ -522,6 +522,11 @@ a {
   }
 }
 
+.jacobdsiler__background {
+  width: 22rem;
+  height: 14rem;
+}
+
 .jacobdsiler__image {
   display: block;
   position: relative;
@@ -531,10 +536,10 @@ a {
 }
 
 .jacobdsiler__image--feature {
-  margin-left: auto;
-  margin-right: auto;
+  margin: 1rem auto 0 auto;
   max-height: 18rem;
   max-width: 18rem;
+  background: #e0c999;
   border-radius: 20px;
   border-color: #485872;
   border-style: none;
@@ -547,8 +552,8 @@ a {
 @media (min-width: 800px) {
 
   .jacobdsiler__image--feature {
-    max-height: 15rem;
-    max-width: 25rem;
+    max-height: 14rem;
+    max-width: 22rem;
   }
 }
 
@@ -658,12 +663,6 @@ a {
 .page-section {
   padding: 1.2rem 0;
 
-}
-
-.page-section::after {
-  content: "";
-  clear: both;
-  display: table;
 }
 
 @media (min-width: 800px) {
@@ -1138,7 +1137,7 @@ Instead edit gulp/templates/sprite */
 .site-header__title {
   position: relative;
   top: 0;
-  left: 0;
+  left: 4rem;
   transform: translateY(-9999rem);
   opacity: 0;
   text-align: center;
@@ -1159,12 +1158,13 @@ Instead edit gulp/templates/sprite */
     font-size: 1.5rem;
     opacity: 1;
     visibility: visible;
+    left: 0;
   }
 }
 
 .site-header__contact {
   position: fixed;
-  top: 8%;
+  top: 20px;
   left: -1rem;
   z-index: 4;
 }
@@ -1436,4 +1436,8 @@ Instead edit gulp/templates/sprite */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.backsplash {
+  
 }
