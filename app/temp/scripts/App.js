@@ -11340,7 +11340,8 @@
 	    _classCallCheck(this, Article);
 
 	    this.openArticleButton = (0, _jquery2.default)(".open-article");
-	    this.article = (0, _jquery2.default)("article");
+	    this.article = (0, _jquery2.default)(".article");
+	    this.storyRef = (0, _jquery2.default)("article__story--one");
 	    this.closeArticleButton = (0, _jquery2.default)(".article__close");
 	    this.events();
 	  }
@@ -11354,6 +11355,9 @@
 	      // clicking the x close article button
 	      this.closeArticleButton.click(this.closeArticle.bind(this));
 
+	      //setting the default article.
+	      this.setArticle();
+
 	      // pushes any key
 	      (0, _jquery2.default)(document).keyup(this.keyPressHandler.bind(this));
 	    }
@@ -11363,6 +11367,11 @@
 	      if (e.keyCode == 27) {
 	        this.closeArticle();
 	      }
+	    }
+	  }, {
+	    key: "setArticle",
+	    value: function setArticle() {
+	      this.storyRef.addClass("--visible");
 	    }
 	  }, {
 	    key: "openArticle",

@@ -1445,28 +1445,60 @@ Instead edit gulp/templates/sprite */
   line-height: 1.65;
   opacity: 0;
   visibility: hidden;
-}
-
-.article__story--this-story {
-  opacity: 1;
-  visibility: visible;
+  display: none;
 }
 
 .article__story--image {
   top: 2%;
   right: 5%;
+  display: none;
+  position: absolute;
+  left: -999999px;
+}
+
+.article__story--image--visible {
+  display:block;
+  position: relative;
+  left: 0;
 }
 
 .article__story--one {
   font-size: 2rem;
+  display: none;
+  position: absolute;
+  left: -999999px;
+}
+
+.article__story--one--visible {
+  display:block;
+  position: relative;
+  left: 0;
 }
 
 .article__story--two {
   font-size: 2rem;
+  display: none;
+  position: absolute;
+  left: -999999px;
+}
+
+.article__story--two--visible {
+  display:block;
+  position: relative;
+  left: 0;
 }
 
 .article__story--three {
   font-size: 2rem;
+  display: none;
+  position: absolute;
+  left: -999999px;
+}
+
+.article__story--three--visible {
+  display:block;
+  position: relative;
+  left: 0;
 }
 
 .article__close {

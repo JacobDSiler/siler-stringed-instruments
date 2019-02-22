@@ -3,7 +3,8 @@ import $ from 'jquery';
 class Article {
   constructor() {
     this.openArticleButton = $(".open-article");
-    this.article = $("article");
+    this.article = $(".article");
+    this.storyRef = $("article__story--one");
     this.closeArticleButton = $(".article__close");
     this.events();
   }
@@ -15,6 +16,9 @@ class Article {
     // clicking the x close article button
     this.closeArticleButton.click(this.closeArticle.bind(this));
 
+    //setting the default article.
+    this.setArticle();
+
     // pushes any key
     $(document).keyup(this.keyPressHandler.bind(this));
   }
@@ -23,6 +27,10 @@ class Article {
     if (e.keyCode == 27) {
       this.closeArticle();
     }
+  }
+
+  setArticle() {
+    this.storyRef.addClass("--visible");
   }
 
   openArticle() {
