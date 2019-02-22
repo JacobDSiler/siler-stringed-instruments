@@ -66,15 +66,19 @@
 
 	var _Modal2 = _interopRequireDefault(_Modal);
 
+	var _Article = __webpack_require__(8);
+
+	var _Article2 = _interopRequireDefault(_Article);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var mobileMenu = new _MobileMenu2.default();
 	//import HideTitle from './modules/HideTitle';
-
+	var mobileMenu = new _MobileMenu2.default();
 	new _RevealOnScroll2.default((0, _jquery2.default)(".feature-item"), "85%");
 	//new HideTitle($(".feature-item"), "85%");
 	var stickyHeader = new _StickyHeader2.default();
 	var modal = new _Modal2.default();
+	var article = new _Article2.default();
 
 /***/ }),
 /* 1 */
@@ -11310,6 +11314,73 @@
 	}();
 
 	exports.default = Modal;
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _jquery = __webpack_require__(2);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Article = function () {
+	  function Article() {
+	    _classCallCheck(this, Article);
+
+	    this.openArticleButton = (0, _jquery2.default)(".open-article");
+	    this.article = (0, _jquery2.default)("article");
+	    this.closeArticleButton = (0, _jquery2.default)(".article__close");
+	    this.events();
+	  }
+
+	  _createClass(Article, [{
+	    key: "events",
+	    value: function events() {
+	      // clicking an open article button
+	      this.openArticleButton.click(this.openArticle.bind(this));
+
+	      // clicking the x close article button
+	      this.closeArticleButton.click(this.closeArticle.bind(this));
+
+	      // pushes any key
+	      (0, _jquery2.default)(document).keyup(this.keyPressHandler.bind(this));
+	    }
+	  }, {
+	    key: "keyPressHandler",
+	    value: function keyPressHandler(e) {
+	      if (e.keyCode == 27) {
+	        this.closeArticle();
+	      }
+	    }
+	  }, {
+	    key: "openArticle",
+	    value: function openArticle() {
+	      this.article.addClass("article--open");
+	      return false;
+	    }
+	  }, {
+	    key: "closeArticle",
+	    value: function closeArticle() {
+	      this.article.removeClass("article--open");
+	    }
+	  }]);
+
+	  return Article;
+	}();
+
+	exports.default = Article;
 
 /***/ })
 /******/ ]);

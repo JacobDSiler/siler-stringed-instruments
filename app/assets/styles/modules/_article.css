@@ -1,7 +1,7 @@
-.modal {
+.article {
   position: fixed;
-  z-index: 6;
-  background-color: rgba($mainTan, .94);
+  z-index: 5;
+  background-color: rgba(#FFF, .94);
   top: 0;
   bottom: 0;
   left: 0;
@@ -11,7 +11,7 @@
   transform: scale(1.2);
   transition: all .3s ease-out;
 
-  &--is-visible {
+  &--open {
     opacity: 1;
     visibility: visible;
     transform: scale(1);
@@ -24,11 +24,35 @@
     transform: translateY(-50%);
   }
 
-  &__description {
+  &__story {
     text-align: center;
-    font-size: 1.3rem;
+    font-size: 2.3rem;
     font-weight: 300;
     line-height: 1.65;
+    opacity: 0;
+    visibility: hidden;
+
+    &--this-story {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    &--image {
+    top: 2%;
+    right: 5%;
+    }
+
+    &--one {
+      font-size: 2rem;
+    }
+
+    &--two {
+      font-size: 2rem;
+    }
+
+    &--three {
+      font-size: 2rem;
+    }
   }
 
   &__close {
@@ -42,7 +66,7 @@
     cursor: pointer;
 
     &:hover {
-      color: $mainTan;
+      color: red;
     }
   }
 }

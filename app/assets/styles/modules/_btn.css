@@ -21,7 +21,7 @@
 
   &--fixed{
     display: block;
-    position: relative;
+    position: fixed;
     width: 7rem;
     transform: translateX(2rem) translateY(-1rem);
   }
