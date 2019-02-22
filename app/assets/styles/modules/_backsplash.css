@@ -1,3 +1,12 @@
 .backsplash {
-  
+  position: relative;
+  margin: .0125rem 0 .0125rem 0;
+  padding:1rem;
+  background-color: rgba($frameColor, 0.125);
+  border-radius: 1.5rem;
+
+  @mixin atMedium {
+  height: 14rem;
+  width: 21.5rem;
+  }
 }

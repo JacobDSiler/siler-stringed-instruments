@@ -4,16 +4,16 @@
     width: 22rem;
     height: 14rem;
   }
-  
+
   &__image {
   display: block;
   position: relative;
-  margin-top: 5px;
+  margin-top: 0;
   background-color: $mainTan;
   transition: all .3s ease-out;
 
     &--feature {
-      margin: 1rem auto 0 auto;
+      margin: 0 auto 0 auto;
       max-height: 18rem;
       max-width: 18rem;
       background: $mainTan;
@@ -25,8 +25,8 @@
         }
 
       @mixin atMedium {
-      max-height: 14rem;
-      max-width: 22rem;
+      max-height: 12rem;
+      max-width: 20rem;
       }
     }
   }

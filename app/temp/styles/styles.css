@@ -530,13 +530,13 @@ a {
 .jacobdsiler__image {
   display: block;
   position: relative;
-  margin-top: 5px;
+  margin-top: 0;
   background-color: #e0c999;
   transition: all .3s ease-out;
 }
 
 .jacobdsiler__image--feature {
-  margin: 1rem auto 0 auto;
+  margin: 0 auto 0 auto;
   max-height: 18rem;
   max-width: 18rem;
   background: #e0c999;
@@ -552,8 +552,8 @@ a {
 @media (min-width: 800px) {
 
   .jacobdsiler__image--feature {
-    max-height: 14rem;
-    max-width: 22rem;
+    max-height: 12rem;
+    max-width: 20rem;
   }
 }
 
@@ -1439,5 +1439,17 @@ Instead edit gulp/templates/sprite */
 }
 
 .backsplash {
-  
+  position: relative;
+  margin: .0125rem 0 .0125rem 0;
+  padding:1rem;
+  background-color: rgba(72,88,114, 0.125);
+  border-radius: 1.5rem;
+}
+
+@media (min-width: 800px) {
+
+  .backsplash {
+    height: 14rem;
+    width: 21.5rem;
+  }
 }
