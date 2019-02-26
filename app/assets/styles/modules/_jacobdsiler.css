@@ -1,8 +1,8 @@
 .jacobdsiler {
 
   &__background {
-    width: 22rem;
-    height: 14rem;
+    max-width: 22rem;
+    max-height: 14rem;
   }
 
   &__image {

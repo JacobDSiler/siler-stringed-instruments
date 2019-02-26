@@ -42,7 +42,12 @@
 
     &__three {
       float: left;
-      width: 33.33%;
+      width: 50%;
+
+      @mixin atLarge {
+        float: left;
+        width: 33.33%;
+      }
     }
 
     &__medium-4 {

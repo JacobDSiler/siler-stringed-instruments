@@ -11339,16 +11339,18 @@
 	  function Article() {
 	    _classCallCheck(this, Article);
 
-	    this.openArticleButton = (0, _jquery2.default)(".open-article");
+	    //this.openArticleButton = $(".open-article");
 	    this.article = (0, _jquery2.default)(".article");
 	    //Setting the story references.
 	    this.articleFirst = (0, _jquery2.default)(".article__story__one");
 	    this.articleSecond = (0, _jquery2.default)(".article__story__two");
 	    this.articleThird = (0, _jquery2.default)(".article__story__three");
-	    ///////////////////////////////////////////////
+	    this.articleFourth = (0, _jquery2.default)(".article__story__four");
+	    ///////More//////References/////////////////////
 	    this.articleFirstClick = (0, _jquery2.default)(".story--one");
 	    this.articleSecondClick = (0, _jquery2.default)(".story--two");
 	    this.articleThirdClick = (0, _jquery2.default)(".story--three");
+	    this.articleFourthClick = (0, _jquery2.default)(".story--four");
 	    ///////////////////////////////////////////////
 	    this.closeArticleButton = (0, _jquery2.default)(".article__close");
 	    this.events();
@@ -11367,6 +11369,7 @@
 	      this.articleFirstClick.click(this.setArticleOne.bind(this));
 	      this.articleSecondClick.click(this.setArticleTwo.bind(this));
 	      this.articleThirdClick.click(this.setArticleThree.bind(this));
+	      this.articleFourthClick.click(this.setArticleFour.bind(this));
 
 	      // pushes any key
 	      (0, _jquery2.default)(document).keyup(this.keyPressHandler.bind(this));
@@ -11400,6 +11403,13 @@
 	      this.openArticle();
 	    }
 	  }, {
+	    key: "setArticleFour",
+	    value: function setArticleFour() {
+	      //alert("Four : was clicked.");
+	      this.articleFourth.addClass("article__story__four--visible");
+	      this.openArticle();
+	    }
+	  }, {
 	    key: "openArticle",
 	    value: function openArticle() {
 	      this.article.addClass("article--open");
@@ -11412,6 +11422,7 @@
 	      this.articleFirst.removeClass("article__story__one--visible");
 	      this.articleSecond.removeClass("article__story__two--visible");
 	      this.articleThird.removeClass("article__story__three--visible");
+	      this.articleFourth.removeClass("article__story__four--visible");
 	    }
 	  }]);
 

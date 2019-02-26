@@ -456,8 +456,8 @@ a {
 }
 
 .headline__main {
-  opacity: 0;
-  visibility: hidden;
+  opacity: 1;
+  visibility: visible;
   padding-top: 88px;
   padding-bottom: 40px;
   position: absolute;
@@ -468,11 +468,9 @@ a {
   width: 100%;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 530px) {
 
   .headline__main {
-    opacity: 1;
-    visibility: visible;
     font-size: 2.5rem;
     padding-top: 60px;
   }
@@ -523,8 +521,8 @@ a {
 }
 
 .jacobdsiler__background {
-  width: 22rem;
-  height: 14rem;
+  max-width: 22rem;
+  max-height: 14rem;
 }
 
 .jacobdsiler__image {
@@ -549,7 +547,7 @@ a {
   transform:scale(1.1);
 }
 
-@media (min-width: 800px) {
+@media (min-width: 740px) {
 
   .jacobdsiler__image--feature {
     max-height: 12rem;
@@ -623,7 +621,7 @@ a {
   padding-right: 0;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 740px) {
 
   .wrapper--no-padding-until-medium {
     padding-left: 18px;
@@ -665,7 +663,7 @@ a {
 
 }
 
-@media (min-width: 800px) {
+@media (min-width: 740px) {
 
   .page-section {
     padding: 4.5rem 0;
@@ -676,7 +674,7 @@ a {
   padding-bottom: 0;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 740px) {
 
   .page-section--no-b-padding-until-medium {
     padding-bottom: 4.5rem;
@@ -749,7 +747,7 @@ a {
   margin-bottom: 1rem;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 740px) {
 
   .row__b-margin-until-medium {
     margin-bottom: 0;
@@ -757,7 +755,15 @@ a {
 
   .row__three {
     float: left;
-    width: 33.33%;
+    width: 50%;
+  }
+
+  @media (min-width: 1010px) {
+
+    .row__three {
+      float: left;
+      width: 33.33%;
+    }
   }
 
   .row__medium-4 {
@@ -816,7 +822,7 @@ a {
 
 /* Begin Equal Height Rules */
 
-@media (min-width: 800px) {
+@media (min-width: 740px) {
 
   .flexbox .row--equal-height-at-medium {
     display: -ms-flexbox;
@@ -1041,7 +1047,7 @@ Instead edit gulp/templates/sprite */
   font-weight: 200;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 740px) {
 
   .site-footer__text {
     display: inline;
@@ -1054,10 +1060,11 @@ Instead edit gulp/templates/sprite */
   background-color: #e0c999;
   padding: .5rem 0;
   opacity: 1;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
+  overflow: hidden;
   height: .5rem;
   z-index: 2;
   transition: all .100s ease-out;
@@ -1071,7 +1078,7 @@ Instead edit gulp/templates/sprite */
   background-color: rgba(175,203,227, .55);
 }
 
-@media (min-width: 800px) {
+@media (min-width: 740px) {
 
   .site-header {
     position: fixed;
@@ -1084,7 +1091,7 @@ Instead edit gulp/templates/sprite */
   }
 }
 
-@media (min-width: 800px) {
+@media (min-width: 740px) {
 
   .site-header__btn-container {
     float: right;
@@ -1126,7 +1133,7 @@ Instead edit gulp/templates/sprite */
   z-index: 4;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 740px) {
 
   .site-header__contact {
     top: 4%;
@@ -1182,7 +1189,7 @@ Instead edit gulp/templates/sprite */
   transition: transform .3s ease-out;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 740px) {
 
   .site-header__menu-icon {
     display: none;
@@ -1212,7 +1219,7 @@ Instead edit gulp/templates/sprite */
   text-align: center;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 740px) {
 
   .site-header__menu-content {
     opacity: 1;
@@ -1233,14 +1240,14 @@ Instead edit gulp/templates/sprite */
   transform: translateY(-6.25rem);
 }
 
-@media (min-width: 800px) {
+@media (min-width: 740px) {
 
   .primary-nav {
     padding-top: 0;
   }
 }
 
-@media (min-width: 800px) {
+@media (min-width: 740px) {
 
   .primary-nav--pull-right {
     float: right;
@@ -1264,7 +1271,7 @@ Instead edit gulp/templates/sprite */
   padding-right: 7px;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 740px) {
 
   .primary-nav li {
     padding-right: 20px;
@@ -1277,7 +1284,7 @@ Instead edit gulp/templates/sprite */
   padding-right: 0;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 740px) {
 
   .primary-nav li:last-child {
     padding-right: 20px;
@@ -1294,7 +1301,7 @@ Instead edit gulp/templates/sprite */
   background-color: rgba(175,203,227, .5);
 }
 
-@media (min-width: 800px) {
+@media (min-width: 740px) {
 
   .primary-nav a {
     font-size: 1rem;/*padding: 1px 0;*/
@@ -1403,7 +1410,14 @@ Instead edit gulp/templates/sprite */
   border-radius: 1.5rem;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 530px) {
+
+  .backsplash {
+    width: 20.5rem;
+  }
+}
+
+@media (min-width: 740px) {
 
   .backsplash {
     height: 14rem;
@@ -1448,17 +1462,15 @@ Instead edit gulp/templates/sprite */
   display: none;
 }
 
-.article__story__image {
-  top: 1%;
-  right: 5%;
-  max-width: 75%;
+.article__story--image {
   display: none;
   position: absolute;
   left: -999999px;
   transition: all .500s ease-out;
+  max-height: 50%;
 }
 
-.article__story__image--visible {
+.article__story--image--visible {
   display:block;
   position: relative;
   left: 0;
@@ -1498,6 +1510,19 @@ Instead edit gulp/templates/sprite */
 }
 
 .article__story__three--visible {
+  display:block;
+  position: relative;
+  left: 0;
+}
+
+.article__story__four {
+  font-size: 2rem;
+  display: none;
+  position: absolute;
+  left: -999999px;
+}
+
+.article__story__four--visible {
   display:block;
   position: relative;
   left: 0;

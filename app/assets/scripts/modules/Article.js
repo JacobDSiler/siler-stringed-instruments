@@ -2,16 +2,18 @@ import $ from 'jquery';
 
 class Article {
   constructor() {
-    this.openArticleButton = $(".open-article");
+    //this.openArticleButton = $(".open-article");
     this.article = $(".article");
     //Setting the story references.
     this.articleFirst = $(".article__story__one");
     this.articleSecond = $(".article__story__two");
     this.articleThird = $(".article__story__three");
-    ///////////////////////////////////////////////
+    this.articleFourth = $(".article__story__four");
+    ///////More//////References/////////////////////
     this.articleFirstClick = $(".story--one");
     this.articleSecondClick = $(".story--two");
     this.articleThirdClick = $(".story--three");
+    this.articleFourthClick = $(".story--four");
     ///////////////////////////////////////////////
     this.closeArticleButton = $(".article__close");
     this.events();
@@ -28,6 +30,7 @@ class Article {
     this.articleFirstClick.click(this.setArticleOne.bind(this));
     this.articleSecondClick.click(this.setArticleTwo.bind(this));
     this.articleThirdClick.click(this.setArticleThree.bind(this));
+    this.articleFourthClick.click(this.setArticleFour.bind(this));
 
     // pushes any key
     $(document).keyup(this.keyPressHandler.bind(this));
@@ -57,6 +60,12 @@ class Article {
     this.openArticle();
   }
 
+  setArticleFour() {
+    //alert("Four : was clicked.");
+    this.articleFourth.addClass("article__story__four--visible");
+    this.openArticle();
+  }
+
   openArticle() {
     this.article.addClass("article--open");
     return false;
@@ -67,6 +76,7 @@ class Article {
     this.articleFirst.removeClass("article__story__one--visible");
     this.articleSecond.removeClass("article__story__two--visible");
     this.articleThird.removeClass("article__story__three--visible");
+    this.articleFourth.removeClass("article__story__four--visible");
   }
 }
 

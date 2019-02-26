@@ -2,10 +2,11 @@
   background-color: $mainTan;
   padding: .5rem 0;
   opacity: 1;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
+  overflow: hidden;
   height: .5rem;
   z-index: 2;
   transition: all .100s ease-out;

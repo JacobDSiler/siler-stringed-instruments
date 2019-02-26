@@ -33,14 +33,12 @@
     visibility: hidden;
     display: none;
 
-    &__image {
-    top: 1%;
-    right: 5%;
-    max-width: 75%;
+    &--image {
     display: none;
     position: absolute;
     left: -999999px;
     transition: all .500s ease-out;
+    max-height: 50%;
 
       &--visible {
         display:block;
@@ -87,6 +85,19 @@
             left: 0;
         }
     }
+
+    &__four {
+      font-size: 2rem;
+      display: none;
+      position: absolute;
+      left: -999999px;
+
+        &--visible {
+            display:block;
+            position: relative;
+            left: 0;
+        }
+    }
   }
 
   &__close {
@@ -98,6 +109,7 @@
     transform-origin: 100% 0;
     color: $mainBack;
     cursor: pointer;
+
 
     &:hover {
       color: red;
