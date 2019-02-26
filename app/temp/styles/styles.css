@@ -1448,54 +1448,56 @@ Instead edit gulp/templates/sprite */
   display: none;
 }
 
-.article__story--image {
-  top: 2%;
+.article__story__image {
+  top: 1%;
   right: 5%;
+  max-width: 75%;
   display: none;
   position: absolute;
   left: -999999px;
+  transition: all .500s ease-out;
 }
 
-.article__story--image--visible {
+.article__story__image--visible {
   display:block;
   position: relative;
   left: 0;
 }
 
-.article__story--one {
+.article__story__one {
   font-size: 2rem;
   display: none;
   position: absolute;
   left: -999999px;
 }
 
-.article__story--one--visible {
+.article__story__one--visible {
   display:block;
   position: relative;
   left: 0;
 }
 
-.article__story--two {
+.article__story__two {
   font-size: 2rem;
   display: none;
   position: absolute;
   left: -999999px;
 }
 
-.article__story--two--visible {
+.article__story__two--visible {
   display:block;
   position: relative;
   left: 0;
 }
 
-.article__story--three {
+.article__story__three {
   font-size: 2rem;
   display: none;
   position: absolute;
   left: -999999px;
 }
 
-.article__story--three--visible {
+.article__story__three--visible {
   display:block;
   position: relative;
   left: 0;

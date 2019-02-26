@@ -11341,7 +11341,15 @@
 
 	    this.openArticleButton = (0, _jquery2.default)(".open-article");
 	    this.article = (0, _jquery2.default)(".article");
-	    this.storyRef = (0, _jquery2.default)("article__story--one");
+	    //Setting the story references.
+	    this.articleFirst = (0, _jquery2.default)(".article__story__one");
+	    this.articleSecond = (0, _jquery2.default)(".article__story__two");
+	    this.articleThird = (0, _jquery2.default)(".article__story__three");
+	    ///////////////////////////////////////////////
+	    this.articleFirstClick = (0, _jquery2.default)(".story--one");
+	    this.articleSecondClick = (0, _jquery2.default)(".story--two");
+	    this.articleThirdClick = (0, _jquery2.default)(".story--three");
+	    ///////////////////////////////////////////////
 	    this.closeArticleButton = (0, _jquery2.default)(".article__close");
 	    this.events();
 	  }
@@ -11350,13 +11358,15 @@
 	    key: "events",
 	    value: function events() {
 	      // clicking an open article button
-	      this.openArticleButton.click(this.openArticle.bind(this));
+	      //this.openArticleButton.click(this.openArticle.bind(this));
 
 	      // clicking the x close article button
 	      this.closeArticleButton.click(this.closeArticle.bind(this));
 
-	      //setting the default article.
-	      this.setArticle();
+	      //Setting the article click behaviors.
+	      this.articleFirstClick.click(this.setArticleOne.bind(this));
+	      this.articleSecondClick.click(this.setArticleTwo.bind(this));
+	      this.articleThirdClick.click(this.setArticleThree.bind(this));
 
 	      // pushes any key
 	      (0, _jquery2.default)(document).keyup(this.keyPressHandler.bind(this));
@@ -11369,9 +11379,25 @@
 	      }
 	    }
 	  }, {
-	    key: "setArticle",
-	    value: function setArticle() {
-	      this.storyRef.addClass("--visible");
+	    key: "setArticleOne",
+	    value: function setArticleOne() {
+	      //alert("One : was clicked.");
+	      this.articleFirst.addClass("article__story__one--visible");
+	      this.openArticle();
+	    }
+	  }, {
+	    key: "setArticleTwo",
+	    value: function setArticleTwo() {
+	      //alert("Two : was clicked.");
+	      this.articleSecond.addClass("article__story__two--visible");
+	      this.openArticle();
+	    }
+	  }, {
+	    key: "setArticleThree",
+	    value: function setArticleThree() {
+	      //alert("Three : was clicked.");
+	      this.articleThird.addClass("article__story__three--visible");
+	      this.openArticle();
 	    }
 	  }, {
 	    key: "openArticle",
@@ -11383,6 +11409,9 @@
 	    key: "closeArticle",
 	    value: function closeArticle() {
 	      this.article.removeClass("article--open");
+	      this.articleFirst.removeClass("article__story__one--visible");
+	      this.articleSecond.removeClass("article__story__two--visible");
+	      this.articleThird.removeClass("article__story__three--visible");
 	    }
 	  }]);
 

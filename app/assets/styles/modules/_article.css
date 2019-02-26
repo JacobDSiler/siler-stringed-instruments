@@ -33,12 +33,14 @@
     visibility: hidden;
     display: none;
 
-    &--image {
-    top: 2%;
+    &__image {
+    top: 1%;
     right: 5%;
+    max-width: 75%;
     display: none;
     position: absolute;
     left: -999999px;
+    transition: all .500s ease-out;
 
       &--visible {
         display:block;
@@ -47,7 +49,7 @@
       }
     }
 
-    &--one {
+    &__one {
       font-size: 2rem;
       display: none;
       position: absolute;
@@ -60,7 +62,7 @@
         }
     }
 
-    &--two {
+    &__two {
       font-size: 2rem;
       display: none;
       position: absolute;
@@ -73,7 +75,7 @@
         }
     }
 
-    &--three {
+    &__three {
       font-size: 2rem;
       display: none;
       position: absolute;
