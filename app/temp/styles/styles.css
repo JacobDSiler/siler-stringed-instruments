@@ -709,6 +709,13 @@ a {
   }
 }
 
+.row {
+
+  margin-left: auto;
+  margin-right: auto;
+
+}
+
 .row::after {
   content: "";
   clear: both;
@@ -954,8 +961,6 @@ a {
     font-size: 1.875rem;
   }
 }
-
-/*@import "modules/_testimonial";*/
 
 /* Do not edit modules/_sprite directly as it is generated automatically by Gulp.
 Instead edit gulp/templates/sprite */
@@ -1404,7 +1409,7 @@ Instead edit gulp/templates/sprite */
 
 .backsplash {
   position: relative;
-  margin: .0125rem 0 .0125rem 0;
+  margin: .0125rem;
   padding:1rem;
   background-color: rgba(72,88,114, 0.125);
   border-radius: 1.5rem;
@@ -1421,7 +1426,7 @@ Instead edit gulp/templates/sprite */
 
   .backsplash {
     height: 14rem;
-    width: 21.5rem;
+    width: 21rem;
   }
 }
 

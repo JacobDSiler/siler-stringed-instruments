@@ -2,6 +2,9 @@
 
   @mixin clearfix;
 
+  margin-left: auto;
+  margin-right: auto;
+
   &--t-padding {
     padding-top: 80px;
   }
