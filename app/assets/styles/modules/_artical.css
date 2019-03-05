@@ -1,4 +1,4 @@
-.article {
+.artical {
   position: fixed;
   z-index: 5;
   background-color: rgba(#FFF, .94);
@@ -20,37 +20,34 @@
   &__inner {
     position: absolute;
     width: 100%;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 3rem;
+    left: 50%;
+    transform: translate(-50%, 0);
+  }
+
+  img {
+  transition: all .500s ease-out;
+  margin-top: 1rem;
   }
 
   &__story {
     text-align: center;
-    font-size: 2.3rem;
+    font-size: 2rem;
     font-weight: 300;
     line-height: 1.75;
     opacity: 0;
     visibility: hidden;
     display: none;
 
-    &--image {
-    display: none;
-    position: absolute;
-    left: -999999px;
-    transition: all .500s ease-out;
-    max-height: 50%;
-
-      &--visible {
-        display:block;
-        position: relative;
-        left: 0;
-      }
+    &--visible {
+      display:block;
+      position: absolute;
+      left: 0;
     }
 
     &__one {
-      font-size: 2rem;
       display: none;
-      position: absolute;
+      position: relative;
       left: -999999px;
 
         &--visible {
@@ -58,31 +55,49 @@
           position: relative;
           left: 0;
         }
+
+        @mixin atSmall {
+          font-size: 2rem;
+        }
+
+        @mixin atMedium {
+          font-size: 2.5rem;
+        }
+
     }
 
     &__two {
-      font-size: 2rem;
       display: none;
       position: absolute;
       left: -999999px;
+      max-width: 80%;
 
         &--visible {
           display:block;
           position: relative;
           left: 0;
+        }
+
+        @mixin atMedium {
+          font-size: 2rem;
         }
     }
 
     &__three {
-      font-size: 2rem;
       display: none;
       position: absolute;
       left: -999999px;
+      max-width: 80%;
+      height: auto;
 
         &--visible {
             display:block;
             position: relative;
             left: 0;
+        }
+
+        @mixin atMedium {
+          font-size: 2rem;
         }
     }
 
@@ -96,6 +111,10 @@
             display:block;
             position: relative;
             left: 0;
+        }
+
+        @mixin atMedium {
+          font-size: 2rem;
         }
     }
   }

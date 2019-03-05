@@ -1233,84 +1233,6 @@ Instead edit gulp/templates/sprite */
   transform: scale(1);
 }
 
-.primary-nav {
-  padding-top: 10px;
-  transform: translateY(-6.25rem);
-}
-
-@media (min-width: 740px) {
-
-  .primary-nav {
-    padding-top: 0;
-  }
-}
-
-@media (min-width: 740px) {
-
-  .primary-nav--pull-right {
-    float: right;
-  }
-}
-
-.primary-nav ul {
-  margin: 0;
-  padding: 0;
-}
-
-.primary-nav ul::after {
-  content: "";
-  clear: both;
-  display: table;
-}
-
-.primary-nav li {
-  list-style: none;
-  display: inline-block;
-  padding-right: 7px;
-}
-
-@media (min-width: 740px) {
-
-  .primary-nav li {
-    padding-right: 20px;
-    float: left;
-    display: block;
-  }
-}
-
-.primary-nav li:last-child {
-  padding-right: 0;
-}
-
-@media (min-width: 740px) {
-
-  .primary-nav li:last-child {
-    padding-right: 20px;
-  }
-}
-
-.primary-nav a {
-  color: #FFF;
-  font-weight: 300;
-  text-decoration: none;
-  display: block;
-  padding: 0px 8px;
-  font-size: .8rem;
-  background-color: rgba(175,203,227, .5);
-}
-
-@media (min-width: 740px) {
-
-  .primary-nav a {
-    font-size: 1rem;/*padding: 1px 0;*/
-    background-color: transparent;
-  }
-
-  .primary-nav a.is-current-link {
-    color: #fabb69;
-  }
-}
-
 .reveal-item {
   opacity: 0;
   transition: all 1.5s ease-out;
@@ -1417,7 +1339,7 @@ Instead edit gulp/templates/sprite */
   }
 }
 
-.article {
+.artical {
   position: fixed;
   z-index: 5;
   background-color: rgba(255,255,255, .94);
@@ -1431,22 +1353,28 @@ Instead edit gulp/templates/sprite */
   transition: all .3s ease-out;
 }
 
-.article--open {
+.artical--open {
   opacity: 1;
   visibility: visible;
   transform: scale(1);
 }
 
-.article__inner {
+.artical__inner {
   position: absolute;
   width: 100%;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 3rem;
+  left: 50%;
+  transform: translate(-50%, 0);
 }
 
-.article__story {
+.artical img {
+  transition: all .500s ease-out;
+  margin-top: 1rem;
+}
+
+.artical__story {
   text-align: center;
-  font-size: 2.3rem;
+  font-size: 2rem;
   font-weight: 300;
   line-height: 1.75;
   opacity: 0;
@@ -1454,73 +1382,100 @@ Instead edit gulp/templates/sprite */
   display: none;
 }
 
-.article__story--image {
-  display: none;
+.artical__story--visible {
+  display:block;
   position: absolute;
-  left: -999999px;
-  transition: all .500s ease-out;
-  max-height: 50%;
+  left: 0;
 }
 
-.article__story--image--visible {
+.artical__story__one {
+  display: none;
+  position: relative;
+  left: -999999px;
+}
+
+.artical__story__one--visible {
   display:block;
   position: relative;
   left: 0;
 }
 
-.article__story__one {
+@media (min-width: 530px) {
+
+  .artical__story__one {
+    font-size: 2rem;
+  }
+}
+
+@media (min-width: 740px) {
+
+  .artical__story__one {
+    font-size: 2.5rem;
+  }
+}
+
+.artical__story__two {
+  display: none;
+  position: absolute;
+  left: -999999px;
+  max-width: 80%;
+}
+
+.artical__story__two--visible {
+  display:block;
+  position: relative;
+  left: 0;
+}
+
+@media (min-width: 740px) {
+
+  .artical__story__two {
+    font-size: 2rem;
+  }
+}
+
+.artical__story__three {
+  display: none;
+  position: absolute;
+  left: -999999px;
+  max-width: 80%;
+  height: auto;
+}
+
+.artical__story__three--visible {
+  display:block;
+  position: relative;
+  left: 0;
+}
+
+@media (min-width: 740px) {
+
+  .artical__story__three {
+    font-size: 2rem;
+  }
+}
+
+.artical__story__four {
   font-size: 2rem;
   display: none;
   position: absolute;
   left: -999999px;
 }
 
-.article__story__one--visible {
+.artical__story__four--visible {
   display:block;
   position: relative;
   left: 0;
 }
 
-.article__story__two {
-  font-size: 2rem;
-  display: none;
-  position: absolute;
-  left: -999999px;
+@media (min-width: 740px) {
+
+  .artical__story__four {
+    font-size: 2rem;
+  }
 }
 
-.article__story__two--visible {
-  display:block;
-  position: relative;
-  left: 0;
-}
-
-.article__story__three {
-  font-size: 2rem;
-  display: none;
-  position: absolute;
-  left: -999999px;
-}
-
-.article__story__three--visible {
-  display:block;
-  position: relative;
-  left: 0;
-}
-
-.article__story__four {
-  font-size: 2rem;
-  display: none;
-  position: absolute;
-  left: -999999px;
-}
-
-.article__story__four--visible {
-  display:block;
-  position: relative;
-  left: 0;
-}
-
-.article__close {
+.artical__close {
   position: absolute;
   top: 15px;
   right: 15px;
@@ -1531,6 +1486,6 @@ Instead edit gulp/templates/sprite */
   cursor: pointer;
 }
 
-.article__close:hover {
+.artical__close:hover {
   color: red;
 }

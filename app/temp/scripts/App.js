@@ -66,9 +66,9 @@
 
 	var _Modal2 = _interopRequireDefault(_Modal);
 
-	var _Article = __webpack_require__(8);
+	var _Artical = __webpack_require__(8);
 
-	var _Article2 = _interopRequireDefault(_Article);
+	var _Artical2 = _interopRequireDefault(_Artical);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -78,7 +78,7 @@
 	//new HideTitle($(".feature-item"), "85%");
 	var stickyHeader = new _StickyHeader2.default();
 	var modal = new _Modal2.default();
-	var article = new _Article2.default();
+	var artical = new _Artical2.default();
 
 /***/ }),
 /* 1 */
@@ -11335,41 +11335,56 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var Article = function () {
-	  function Article() {
-	    _classCallCheck(this, Article);
+	var Artical = function () {
+	  function Artical() {
+	    _classCallCheck(this, Artical);
 
-	    //this.openArticleButton = $(".open-article");
-	    this.article = (0, _jquery2.default)(".article");
+	    //this.openArticalButton = $(".open-artical");
+	    this.artical = (0, _jquery2.default)(".artical");
 	    //Setting the story references.
-	    this.articleFirst = (0, _jquery2.default)(".article__story__one");
-	    this.articleSecond = (0, _jquery2.default)(".article__story__two");
-	    this.articleThird = (0, _jquery2.default)(".article__story__three");
-	    this.articleFourth = (0, _jquery2.default)(".article__story__four");
+	    this.articalFirst = (0, _jquery2.default)(".artical__story__one");
+	    this.articalSecond = (0, _jquery2.default)(".artical__story__two");
+	    this.articalThird = (0, _jquery2.default)(".artical__story__three");
+	    this.articalFourth = (0, _jquery2.default)(".artical__story__four");
 	    ///////More//////References/////////////////////
-	    this.articleFirstClick = (0, _jquery2.default)(".story--one");
-	    this.articleSecondClick = (0, _jquery2.default)(".story--two");
-	    this.articleThirdClick = (0, _jquery2.default)(".story--three");
-	    this.articleFourthClick = (0, _jquery2.default)(".story--four");
+	    this.articalFirstClick = (0, _jquery2.default)(".story--one");
+	    this.articalSecondClick = (0, _jquery2.default)(".story--two");
+	    this.articalThirdClick = (0, _jquery2.default)(".story--three");
+	    this.articalFourthClick = (0, _jquery2.default)(".story--four");
 	    ///////////////////////////////////////////////
-	    this.closeArticleButton = (0, _jquery2.default)(".article__close");
+	    this.closeArticalButton = (0, _jquery2.default)(".artical__close");
 	    this.events();
 	  }
 
-	  _createClass(Article, [{
+	  _createClass(Artical, [{
 	    key: "events",
 	    value: function events() {
-	      // clicking an open article button
-	      //this.openArticleButton.click(this.openArticle.bind(this));
+	      //Setting 'then' to 'this'.
+	      var then = this;
 
-	      // clicking the x close article button
-	      this.closeArticleButton.click(this.closeArticle.bind(this));
+	      // clicking the x close artical button
+	      this.closeArticalButton.click(this.closeArtical.bind(this));
 
-	      //Setting the article click behaviors.
-	      this.articleFirstClick.click(this.setArticleOne.bind(this));
-	      this.articleSecondClick.click(this.setArticleTwo.bind(this));
-	      this.articleThirdClick.click(this.setArticleThree.bind(this));
-	      this.articleFourthClick.click(this.setArticleFour.bind(this));
+	      /*If the site address has a change, check if
+	       the artical is open when it happens. If so,
+	      close it. So, if the back button, or the
+	      refresh button are pressed, it will simply
+	      appear to close the artical.*/
+
+	      window.onhashchange = function (e) {
+	        if (location.hash === '#artical') {
+	          console.log("You're visiting a cool feature!");
+	        } else {
+	          console.log("An Artical was open, but we will close it now.");
+	          then.closeArtical();
+	        }
+	      };
+
+	      //Setting the artical click behaviors.
+	      this.articalFirstClick.click(this.setArticalOne.bind(this));
+	      this.articalSecondClick.click(this.setArticalTwo.bind(this));
+	      this.articalThirdClick.click(this.setArticalThree.bind(this));
+	      this.articalFourthClick.click(this.setArticalFour.bind(this));
 
 	      // pushes any key
 	      (0, _jquery2.default)(document).keyup(this.keyPressHandler.bind(this));
@@ -11378,58 +11393,59 @@
 	    key: "keyPressHandler",
 	    value: function keyPressHandler(e) {
 	      if (e.keyCode == 27) {
-	        this.closeArticle();
+	        this.closeArtical();
 	      }
 	    }
 	  }, {
-	    key: "setArticleOne",
-	    value: function setArticleOne() {
-	      //alert("One : was clicked.");
-	      this.articleFirst.addClass("article__story__one--visible");
-	      this.openArticle();
+	    key: "setArticalOne",
+	    value: function setArticalOne() {
+	      this.articalFirst.addClass("artical__story__one--visible");
+	      this.openArtical();
 	    }
 	  }, {
-	    key: "setArticleTwo",
-	    value: function setArticleTwo() {
-	      //alert("Two : was clicked.");
-	      this.articleSecond.addClass("article__story__two--visible");
-	      this.openArticle();
+	    key: "setArticalTwo",
+	    value: function setArticalTwo() {
+	      this.articalSecond.addClass("artical__story__two--visible");
+	      this.openArtical();
 	    }
 	  }, {
-	    key: "setArticleThree",
-	    value: function setArticleThree() {
-	      //alert("Three : was clicked.");
-	      this.articleThird.addClass("article__story__three--visible");
-	      this.openArticle();
+	    key: "setArticalThree",
+	    value: function setArticalThree() {
+	      this.articalThird.addClass("artical__story__three--visible");
+	      this.openArtical();
 	    }
 	  }, {
-	    key: "setArticleFour",
-	    value: function setArticleFour() {
-	      //alert("Four : was clicked.");
-	      this.articleFourth.addClass("article__story__four--visible");
-	      this.openArticle();
+	    key: "setArticalFour",
+	    value: function setArticalFour() {
+	      this.articalFourth.addClass("artical__story__four--visible");
+	      this.openArtical();
 	    }
 	  }, {
-	    key: "openArticle",
-	    value: function openArticle() {
-	      this.article.addClass("article--open");
+	    key: "openArtical",
+	    value: function openArtical() {
+	      this.artical.addClass("artical--open");
 	      return false;
 	    }
 	  }, {
-	    key: "closeArticle",
-	    value: function closeArticle() {
-	      this.article.removeClass("article--open");
-	      this.articleFirst.removeClass("article__story__one--visible");
-	      this.articleSecond.removeClass("article__story__two--visible");
-	      this.articleThird.removeClass("article__story__three--visible");
-	      this.articleFourth.removeClass("article__story__four--visible");
+	    key: "clearArticals",
+	    value: function clearArticals() {
+	      this.articalFirst.removeClass("artical__story__one--visible");
+	      this.articalSecond.removeClass("artical__story__two--visible");
+	      this.articalThird.removeClass("artical__story__three--visible");
+	      this.articalFourth.removeClass("artical__story__four--visible");
+	    }
+	  }, {
+	    key: "closeArtical",
+	    value: function closeArtical() {
+	      this.artical.removeClass("artical--open");
+	      this.clearArticals();
 	    }
 	  }]);
 
-	  return Article;
+	  return Artical;
 	}();
 
-	exports.default = Article;
+	exports.default = Artical;
 
 /***/ })
 /******/ ]);
