@@ -70,7 +70,6 @@
       display: none;
       position: absolute;
       left: -999999px;
-      max-width: 80%;
 
         &--visible {
           display:block;
@@ -78,8 +77,12 @@
           left: 0;
         }
 
-        @mixin atMedium {
+        @mixin atSmall {
           font-size: 2rem;
+        }
+
+        @mixin atMedium {
+          font-size: 2.5rem;
         }
     }
 
@@ -87,8 +90,6 @@
       display: none;
       position: absolute;
       left: -999999px;
-      max-width: 80%;
-      height: auto;
 
         &--visible {
             display:block;
@@ -96,8 +97,12 @@
             left: 0;
         }
 
-        @mixin atMedium {
+        @mixin atSmall {
           font-size: 2rem;
+        }
+
+        @mixin atMedium {
+          font-size: 2.5rem;
         }
     }
 
@@ -113,8 +118,14 @@
             left: 0;
         }
 
-        @mixin atMedium {
+        @mixin atSmall {
+          a{
           font-size: 2rem;
+          }
+        }
+
+        @mixin atMedium {
+          font-size: 2.5rem;
         }
     }
   }

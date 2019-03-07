@@ -11373,9 +11373,9 @@
 
 	      window.onhashchange = function (e) {
 	        if (location.hash === '#artical') {
-	          console.log("You're visiting a cool feature!");
+	          //console.log("You're visiting a cool feature!");
 	        } else {
-	          console.log("An Artical was open, but we will close it now.");
+	          //console.log("An Artical was open, but we will close it now.");
 	          then.closeArtical();
 	        }
 	      };

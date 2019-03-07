@@ -1418,7 +1418,6 @@ Instead edit gulp/templates/sprite */
   display: none;
   position: absolute;
   left: -999999px;
-  max-width: 80%;
 }
 
 .artical__story__two--visible {
@@ -1427,10 +1426,17 @@ Instead edit gulp/templates/sprite */
   left: 0;
 }
 
-@media (min-width: 740px) {
+@media (min-width: 530px) {
 
   .artical__story__two {
     font-size: 2rem;
+  }
+}
+
+@media (min-width: 740px) {
+
+  .artical__story__two {
+    font-size: 2.5rem;
   }
 }
 
@@ -1438,8 +1444,6 @@ Instead edit gulp/templates/sprite */
   display: none;
   position: absolute;
   left: -999999px;
-  max-width: 80%;
-  height: auto;
 }
 
 .artical__story__three--visible {
@@ -1448,10 +1452,17 @@ Instead edit gulp/templates/sprite */
   left: 0;
 }
 
-@media (min-width: 740px) {
+@media (min-width: 530px) {
 
   .artical__story__three {
     font-size: 2rem;
+  }
+}
+
+@media (min-width: 740px) {
+
+  .artical__story__three {
+    font-size: 2.5rem;
   }
 }
 
@@ -1468,10 +1479,17 @@ Instead edit gulp/templates/sprite */
   left: 0;
 }
 
+@media (min-width: 530px) {
+
+  .artical__story__four a {
+    font-size: 2rem;
+  }
+}
+
 @media (min-width: 740px) {
 
   .artical__story__four {
-    font-size: 2rem;
+    font-size: 2.5rem;
   }
 }
 
