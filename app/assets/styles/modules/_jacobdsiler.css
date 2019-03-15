@@ -14,8 +14,6 @@
 
     &--feature {
       margin: 0 auto 0 auto;
-      max-height: 18rem;
-      max-width: 18rem;
       background: $mainTan;
       border-radius: 20px;
       border-color: $frameColor;
@@ -25,8 +23,8 @@
         }
 
       @mixin atMedium {
-      max-height: 12rem;
-      max-width: 20rem;
+      max-height: 10rem;
+      max-width: 16rem;
       }
     }
   }

@@ -4,10 +4,10 @@
   padding:1rem;
   background-color: rgba($frameColor, 0.125);
   border-radius: 1.5rem;
-  width: 20.5rem;
+  max-width: 17rem;
 
   @mixin atMedium {
-  height: 14rem;
-  width: 21.5rem;
+  max-height: 15rem;
+  max-width: 19rem;
   }
 }

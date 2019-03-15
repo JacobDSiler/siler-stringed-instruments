@@ -535,8 +535,6 @@ a {
 
 .jacobdsiler__image--feature {
   margin: 0 auto 0 auto;
-  max-height: 18rem;
-  max-width: 18rem;
   background: #e0c999;
   border-radius: 20px;
   border-color: #485872;
@@ -547,11 +545,11 @@ a {
   transform:scale(1.1);
 }
 
-@media (min-width: 740px) {
+@media (min-width: 700px) {
 
   .jacobdsiler__image--feature {
-    max-height: 12rem;
-    max-width: 20rem;
+    max-height: 10rem;
+    max-width: 16rem;
   }
 }
 
@@ -621,7 +619,7 @@ a {
   padding-right: 0;
 }
 
-@media (min-width: 740px) {
+@media (min-width: 700px) {
 
   .wrapper--no-padding-until-medium {
     padding-left: 18px;
@@ -663,7 +661,7 @@ a {
 
 }
 
-@media (min-width: 740px) {
+@media (min-width: 700px) {
 
   .page-section {
     padding: 4.5rem 0;
@@ -674,7 +672,7 @@ a {
   padding-bottom: 0;
 }
 
-@media (min-width: 740px) {
+@media (min-width: 700px) {
 
   .page-section--no-b-padding-until-medium {
     padding-bottom: 4.5rem;
@@ -747,7 +745,7 @@ a {
   margin-bottom: 1rem;
 }
 
-@media (min-width: 740px) {
+@media (min-width: 700px) {
 
   .row__b-margin-until-medium {
     margin-bottom: 0;
@@ -822,7 +820,7 @@ a {
 
 /* Begin Equal Height Rules */
 
-@media (min-width: 740px) {
+@media (min-width: 700px) {
 
   .flexbox .row--equal-height-at-medium {
     display: -ms-flexbox;
@@ -1045,7 +1043,7 @@ Instead edit gulp/templates/sprite */
   font-weight: 200;
 }
 
-@media (min-width: 740px) {
+@media (min-width: 700px) {
 
   .site-footer__text {
     display: inline;
@@ -1076,7 +1074,7 @@ Instead edit gulp/templates/sprite */
   background-color: rgba(175,203,227, .55);
 }
 
-@media (min-width: 740px) {
+@media (min-width: 700px) {
 
   .site-header {
     position: fixed;
@@ -1089,7 +1087,7 @@ Instead edit gulp/templates/sprite */
   }
 }
 
-@media (min-width: 740px) {
+@media (min-width: 700px) {
 
   .site-header__btn-container {
     float: right;
@@ -1131,7 +1129,7 @@ Instead edit gulp/templates/sprite */
   z-index: 4;
 }
 
-@media (min-width: 740px) {
+@media (min-width: 700px) {
 
   .site-header__contact {
     top: 4%;
@@ -1187,7 +1185,7 @@ Instead edit gulp/templates/sprite */
   transition: transform .3s ease-out;
 }
 
-@media (min-width: 740px) {
+@media (min-width: 700px) {
 
   .site-header__menu-icon {
     display: none;
@@ -1217,7 +1215,7 @@ Instead edit gulp/templates/sprite */
   text-align: center;
 }
 
-@media (min-width: 740px) {
+@media (min-width: 700px) {
 
   .site-header__menu-content {
     opacity: 1;
@@ -1328,14 +1326,14 @@ Instead edit gulp/templates/sprite */
   padding:1rem;
   background-color: rgba(72,88,114, 0.125);
   border-radius: 1.5rem;
-  width: 20.5rem;
+  max-width: 17rem;
 }
 
-@media (min-width: 740px) {
+@media (min-width: 700px) {
 
   .backsplash {
-    height: 14rem;
-    width: 21.5rem;
+    max-height: 15rem;
+    max-width: 19rem;
   }
 }
 
@@ -1351,6 +1349,7 @@ Instead edit gulp/templates/sprite */
   visibility: hidden;
   transform: scale(1.2);
   transition: all .3s ease-out;
+  font-size: 1.5rem;
 }
 
 .artical--open {
@@ -1362,6 +1361,7 @@ Instead edit gulp/templates/sprite */
 .artical__inner {
   position: absolute;
   width: 100%;
+  max-height: 100%;
   top: 3rem;
   left: 50%;
   transform: translate(-50%, 0);
@@ -1407,7 +1407,7 @@ Instead edit gulp/templates/sprite */
   }
 }
 
-@media (min-width: 740px) {
+@media (min-width: 700px) {
 
   .artical__story__one {
     font-size: 2.5rem;
@@ -1433,7 +1433,7 @@ Instead edit gulp/templates/sprite */
   }
 }
 
-@media (min-width: 740px) {
+@media (min-width: 700px) {
 
   .artical__story__two {
     font-size: 2.5rem;
@@ -1459,7 +1459,7 @@ Instead edit gulp/templates/sprite */
   }
 }
 
-@media (min-width: 740px) {
+@media (min-width: 700px) {
 
   .artical__story__three {
     font-size: 2.5rem;
@@ -1486,7 +1486,7 @@ Instead edit gulp/templates/sprite */
   }
 }
 
-@media (min-width: 740px) {
+@media (min-width: 700px) {
 
   .artical__story__four {
     font-size: 2.5rem;
