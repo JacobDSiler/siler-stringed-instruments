@@ -1,5 +1,5 @@
 body {
-  font-family: 'Noto Serif', serif;
+  font-family: 'Abel', sans-serif;
   color: #333;
   background-color: $mainBack;
 }
@@ -15,4 +15,6 @@ img {
 
 a {
   color: black;
+  padding: 0px 6px;
+  text-decoration: none;
 }
