@@ -1,7 +1,8 @@
 body {
-  font-family: 'Abel', sans-serif;
+  font-family: 'Cinzel', serif;
   color: #333;
   background-color: $mainBack;
+  display: table;
 }
 
 img {
@@ -17,4 +18,8 @@ a {
   color: black;
   padding: 0px 6px;
   text-decoration: none;
+}
+
+li ul{
+  list-style: none;
 }

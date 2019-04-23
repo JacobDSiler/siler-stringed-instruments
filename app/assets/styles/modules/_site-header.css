@@ -1,31 +1,29 @@
 .site-header {
-  background-color: $mainBack;
-  opacity: 1;
   position: absolute;
+  background-color: $mainBack;
+  display: table;
   top: 0;
   left: 0;
+  height: 100%;
   width: 100%;
-  overflow: hidden;
-  height: 9rem;
-  z-index: 2;
+  letter-spacing: -.01em;
+  z-index: 3;
 
   &__text {
-    position: absolute;
-    top: -.5rem;
-    left: 16%;
-    display: inline;
-    text-align: left;
+    display: inline-block;
+    text-align: center;
     font-weight: 100;
-    font-size: 3rem;
-    padding: 3rem 5rem;
+    font-size: 9vw;
+    margin: 3rem 5vw 2rem 5vw;
 
-    &--nav {
-      position: relative;
-      font-size: 1rem;
-      margin-left: 6rem;
-      a {
+    @mixin atSmall{
+    text-align: left;
+    font-size: 3.4vw;
+    margin-left: 15vw;
+    }
 
-      }
+    @mixin atMedium {
+      margin-left: 10vw;
     }
 
   }

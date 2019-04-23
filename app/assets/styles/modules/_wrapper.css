@@ -1,0 +1,27 @@
+.wrapper {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  padding: 20px;
+
+  &__splashscreen {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  &--header
+  {
+    height: auto;
+    width: auto;
+    padding: 5px;
+  }
+
+  &--center {
+    margin-left: 18%;
+
+    @mixin atMedium{
+      margin-left: 40%;
+    }
+  }
+
+}

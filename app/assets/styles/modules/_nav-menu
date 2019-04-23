@@ -1,3 +1,46 @@
 .nav-menu {
+position: relative;
+display: inline-block;
+font-size: .8vw;
+margin-top: 2rem;
+margin-left: 0;
+width:200px;
+height:100px;
+list-style: none;
+background: none;
+
+
+ul {
+    float: left;
+    text-align: center;
+}
+
+li {
+float: left;
+}
+
+
+&__content {
+position: relative;
+display: inline-block;
+min-width: 10rem;
+/*box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);*/
+padding: 12px 16px;
+
+
+  @mixin atMedium {
+    font-size: .8vw;
+    margin-left: 4vw;
+    display: inline-block;
+
+    li {
+        display: inline-block;
+    }
+
+    ul {
+        text-align: center;
+    }
+  }
+}
 
 }
