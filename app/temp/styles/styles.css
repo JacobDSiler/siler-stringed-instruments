@@ -461,7 +461,7 @@ li ul{
   transition: fade6 30s infinite;
   padding: 0;
   margin: 0;
-  z-index: 0;
+  z-index: -10;
   }
 
 .splashimage__slide {}
@@ -493,7 +493,7 @@ li ul{
   text-align: center;
   font-weight: 100;
   font-size: 9vw;
-  margin: 3rem 5vw 2rem 5vw;
+  margin: 3rem 5vw 14rem 5vw;
 }
 
 @media (min-width: 530px) {
@@ -501,60 +501,63 @@ li ul{
   .site-header__text {
     text-align: left;
     font-size: 3.4vw;
-    margin-left: 15vw;
+    margin: 3rem 5vw 2rem 5vw;
   }
 }
 
-@media (min-width: 700px) {
+@media (min-width: 530px) {
 
   .site-header__text {
-    margin-left: 10vw;
+    margin-left: 5vw;
   }
 }
 
 .nav-menu {
-position: relative;
-display: inline-block;
-font-size: .8vw;
-margin-top: 2rem;
-margin-left: 0;
-width:200px;
-height:100px;
-list-style: none;
-background: none;
+  position: absolute;
+  display: block;
+  font-size: 4vw;
+  margin-top: 2rem;
+  margin-left: 0;
+  width:200px;
+  height:100px;
+  list-style: none;
+  background: none;
 
-}
-
-.nav-menu ul {
-  float: left;
-  text-align: center;
-}
-
-.nav-menu li {
-  float: left;
 }
 
 .nav-menu__content {
   position: relative;
-  display: inline-block;
-  min-width: 10rem;/*box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);*/
-  padding: 12px 16px;
+  display: block;
+  min-width: 10rem;
+  list-style: none;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0);
+  transform: translate(10vw,-2.5rem);
+  float: left;
+  padding: 10px;
+  z-index: 5;
 }
 
-@media (min-width: 700px) {
+@media (min-width: 530px) {
 
   .nav-menu__content {
     font-size: .8vw;
     margin-left: 4vw;
-    display: inline-block;
+    transform: translate(21vw,-6rem);
   }
 
   .nav-menu__content li {
     display: inline-block;
   }
+}
 
-  .nav-menu__content ul {
-    text-align: center;
+@media (min-width: 530px) {
+
+  .nav-menu__content {
+    transform: translate(21vw,-260%);
+    font-size: .8vw;
+    margin-left: 4vw;
+    display: inline-block;
+    box-shadow: none;
   }
 }
 
@@ -582,7 +585,7 @@ background: none;
   margin-left: 18%;
 }
 
-@media (min-width: 700px) {
+@media (min-width: 530px) {
 
   .wrapper--center {
     margin-left: 40%;

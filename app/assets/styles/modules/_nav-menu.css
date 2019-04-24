@@ -1,0 +1,47 @@
+.nav-menu {
+  position: absolute;
+  display: block;
+  font-size: 4vw;
+  margin-top: 2rem;
+  margin-left: 0;
+  width:200px;
+  height:100px;
+  list-style: none;
+  background: none;
+
+
+  &__content {
+    position: relative;
+    display: block;
+    min-width: 10rem;
+    list-style: none;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0);
+    transform: translate(10vw,-2.5rem);
+    float: left;
+    padding: 10px;
+    z-index: 5;
+
+
+    @mixin atMedium {
+      font-size: .8vw;
+      margin-left: 4vw;
+      transform: translate(21vw,-6rem);
+
+      li{
+        display: inline-block;
+
+      }
+
+    }
+
+    @mixin atSmall {
+      transform: translate(21vw,-260%);
+      font-size: .8vw;
+      margin-left: 4vw;
+      display: inline-block;
+      box-shadow: none;
+    }
+
+  }
+
+}
