@@ -2,8 +2,7 @@
   position: absolute;
   display: block;
   font-size: 4vw;
-  margin-top: 2rem;
-  margin-left: 0;
+  margin: 2rem auto;
   width:200px;
   height:100px;
   list-style: none;
@@ -13,13 +12,26 @@
   &__content {
     position: relative;
     display: block;
-    min-width: 10rem;
+    min-width: 100%;
     list-style: none;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0);
+    background-color: slategrey;
+
     transform: translate(10vw,-2.5rem);
     float: left;
     padding: 10px;
     z-index: 5;
+
+    a {
+      color: white;
+      line-height: 1.6;
+      transition:.4s;
+    }
+    a:hover {
+      color: orange;
+    }
+    a:active {
+      color: green;
+    }
 
 
     @mixin atMedium {
@@ -38,8 +50,14 @@
       transform: translate(21vw,-260%);
       font-size: .8vw;
       margin-left: 4vw;
+      background-color: white;
       display: inline-block;
       box-shadow: none;
+
+      a {
+        color: black;
+      }
+
     }
 
   }

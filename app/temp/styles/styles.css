@@ -458,13 +458,17 @@ li ul{
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  transition: fade6 30s infinite;
+  transition: all 30s ease-out;
   padding: 0;
   margin: 0;
   z-index: -10;
   }
 
 .splashimage__slide {}
+
+.splashimage mySlides {
+  transition: all 30s ease-out;
+}
 
 .site-footer {
   display: inline-block;
@@ -483,7 +487,7 @@ li ul{
   top: 0;
   left: 0;
   height: 100%;
-  width: 100%;
+  min-width: 100%;
   letter-spacing: -.01em;
   z-index: 3;
 }
@@ -493,7 +497,7 @@ li ul{
   text-align: center;
   font-weight: 100;
   font-size: 9vw;
-  margin: 3rem 5vw 14rem 5vw;
+  margin: 3rem auto 14rem auto;
 }
 
 @media (min-width: 530px) {
@@ -516,8 +520,7 @@ li ul{
   position: absolute;
   display: block;
   font-size: 4vw;
-  margin-top: 2rem;
-  margin-left: 0;
+  margin: 2rem auto;
   width:200px;
   height:100px;
   list-style: none;
@@ -528,13 +531,27 @@ li ul{
 .nav-menu__content {
   position: relative;
   display: block;
-  min-width: 10rem;
+  min-width: 100%;
   list-style: none;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0);
+  background-color: slategrey;
   transform: translate(10vw,-2.5rem);
   float: left;
   padding: 10px;
   z-index: 5;
+}
+
+.nav-menu__content a {
+  color: white;
+  line-height: 1.6;
+  transition:.4s;
+}
+
+.nav-menu__content a:hover {
+  color: orange;
+}
+
+.nav-menu__content a:active {
+  color: green;
 }
 
 @media (min-width: 530px) {
@@ -556,15 +573,20 @@ li ul{
     transform: translate(21vw,-260%);
     font-size: .8vw;
     margin-left: 4vw;
+    background-color: white;
     display: inline-block;
     box-shadow: none;
+  }
+
+  .nav-menu__content a {
+    color: black;
   }
 }
 
 .wrapper {
   position: relative;
   height: 100%;
-  width: 100%;
+  min-width: 100%;
   padding: 20px;
 
 }

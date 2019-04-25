@@ -9,12 +9,16 @@
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  transition: fade6 30s infinite;
+  transition: all 30s ease-out;
   padding: 0;
   margin: 0;
   z-index: -10;
 
 
   &__slide {
+    }
+
+    mySlides {
+        transition: all 30s ease-out;
     }
   }

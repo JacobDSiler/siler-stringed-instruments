@@ -52,10 +52,50 @@
       <img
       src="assets/images/siler-stringed-instruments-high-quality.jpg"
       alt=""
-      class="lazyload splashimage">
+      class="mySlides lazyload splashimage">
     </picture>
+
+    <picture>
+      <img
+      src="assets/images/gutar-back-01.jpg"
+      alt=""
+      class="mySlides lazyload splashimage">
+    </picture>
+
+    <picture>
+      <img
+      src="assets/images/guitar-player-soundport-01.jpg"
+      alt=""
+      class="mySlides lazyload splashimage">
+    </picture>
+
+    <picture>
+      <img
+      src="assets/images/guitar-soundhole.jpg"
+      alt=""
+      class="mySlides lazyload splashimage">
+    </picture>
+
   </div>
 </div>
+
+<script>
+var slideIndex = 0;
+carousel();
+
+function carousel() {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+  }
+  slideIndex++;
+  if (slideIndex > x.length) {slideIndex = 1}
+  x[slideIndex-1].style.display = "block";
+  setTimeout(carousel, 5000); // Change image every 2 seconds
+}
+</script>
+
 
 <footer class="site-footer wrapper wrapper--center">
   <span class="site-footer__text">Copyright &copy; Dennis J Siler 2019.</span>
