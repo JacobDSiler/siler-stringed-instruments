@@ -2,8 +2,6 @@ body {
   font-family: 'Cinzel', serif;
   color: #333;
   background-color: $mainBack;
-  display: table;
-  overflow-x: hidden;
   position: relative
 }
 

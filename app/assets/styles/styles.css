@@ -2,7 +2,9 @@
 @import "base/_variables";
 @import "base/_mixins";
 @import "base/_global";
+@import "modules/_w3";
 @import "modules/_splashimage";
+@import "modules/_bio";
 @import "modules/_site-footer";
 @import "modules/_site-header";
 @import "modules/_nav-menu";

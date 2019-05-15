@@ -102,9 +102,9 @@
 	  function MobileMenu() {
 	    _classCallCheck(this, MobileMenu);
 
-	    this.siteHeader = (0, _jquery2.default)(".site-header");
-	    this.menuIcon = (0, _jquery2.default)(".site-header__menu-icon");
-	    this.menuContent = (0, _jquery2.default)(".site-header__menu-content");
+	    this.siteHeader = (0, _jquery2.default)(".nav-menu");
+	    this.menuIcon = (0, _jquery2.default)(".nav-menu__content-icon");
+	    this.menuContent = (0, _jquery2.default)(".nav-menu__content");
 	    this.events();
 	  }
 
@@ -116,9 +116,9 @@
 	  }, {
 	    key: "toggleTheMenu",
 	    value: function toggleTheMenu() {
-	      this.menuContent.toggleClass("site-header__menu-content--is-visible");
-	      this.siteHeader.toggleClass("site-header--is-expanded");
-	      this.menuIcon.toggleClass("site-header__menu-icon--close-x");
+	      this.menuContent.toggleClass("nav-menu__content--is-visible");
+	      this.siteHeader.toggleClass("nav-menu--is-expanded");
+	      this.menuIcon.toggleClass("nav-menu__content-icon--close-x");
 	    }
 	  }]);
 

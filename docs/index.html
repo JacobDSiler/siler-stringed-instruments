@@ -10,7 +10,7 @@
   <link rel="icon" href="assets/images/icons/favicon.png" type="image/x-icon">-->
   <link href="https://fonts.googleapis.com/css?family=Cinzel" rel="stylesheet">
 
-  <link rel="stylesheet" href="assets/styles/styles-7a82a9305f.css"/>
+  <link rel="stylesheet" href="assets/styles/styles-581856d111.css"/>
 
   <script src="assets/scripts/Vendor-e10115116c.js"></script>
 
@@ -48,35 +48,35 @@
       <img
       src="assets/images/siler-stringed-instruments-high-quality.jpg"
       alt=""
-      class="mySlides lazyload splashimage">
+      class="mySlides animate-fading lazyload splashimage">
     </picture>
 
     <picture>
       <img
       src="assets/images/gutar-back-01.jpg"
       alt=""
-      class="mySlides lazyload splashimage">
+      class="mySlides animate-fading lazyload splashimage">
     </picture>
 
     <picture>
       <img
       src="assets/images/guitar-player-soundport-01.jpg"
       alt=""
-      class="mySlides lazyload splashimage">
+      class="mySlides animate-fading lazyload splashimage">
     </picture>
 
     <picture>
       <img
       src="assets/images/guitar-soundhole.jpg"
       alt=""
-      class="mySlides lazyload splashimage">
+      class="mySlides animate-fading lazyload splashimage">
     </picture>
 
   </div>
 </div>
 
 <script>
-var slideIndex = 0;
+var myIndex = 0;
 carousel();
 
 function carousel() {
@@ -85,10 +85,10 @@ function carousel() {
   for (i = 0; i < x.length; i++) {
     x[i].style.display = "none";
   }
-  slideIndex++;
-  if (slideIndex > x.length) {slideIndex = 1}
-  x[slideIndex-1].style.display = "block";
-  setTimeout(carousel, 5000); // Change image every 2 seconds
+  myIndex++;
+  if (myIndex > x.length) {myIndex = 1}
+  x[myIndex-1].style.display = "block";
+  setTimeout(carousel, 9000);
 }
 </script>
 
@@ -98,7 +98,7 @@ function carousel() {
 </footer>
 
 
-<script src="assets/scripts/App-c7fd83d65b.js"></script>
+<script src="assets/scripts/App-28799a6bf8.js"></script>
 
 </body>
 </html>

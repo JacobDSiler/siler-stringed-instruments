@@ -6,6 +6,7 @@
   height: 100%;
   display: inline-block;
   overflow: hidden;
+  background-color: black;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -17,6 +18,7 @@
 
   &__slide {
     }
+    .animate-fading{animation:fading 10s infinite;}
 
     mySlides {
         transition: all 30s ease-out;

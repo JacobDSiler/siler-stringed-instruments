@@ -52,35 +52,35 @@
       <img
       src="assets/images/siler-stringed-instruments-high-quality.jpg"
       alt=""
-      class="mySlides lazyload splashimage">
+      class="mySlides animate-fading lazyload splashimage">
     </picture>
 
     <picture>
       <img
       src="assets/images/gutar-back-01.jpg"
       alt=""
-      class="mySlides lazyload splashimage">
+      class="mySlides animate-fading lazyload splashimage">
     </picture>
 
     <picture>
       <img
       src="assets/images/guitar-player-soundport-01.jpg"
       alt=""
-      class="mySlides lazyload splashimage">
+      class="mySlides animate-fading lazyload splashimage">
     </picture>
 
     <picture>
       <img
       src="assets/images/guitar-soundhole.jpg"
       alt=""
-      class="mySlides lazyload splashimage">
+      class="mySlides animate-fading lazyload splashimage">
     </picture>
 
   </div>
 </div>
 
 <script>
-var slideIndex = 0;
+var myIndex = 0;
 carousel();
 
 function carousel() {
@@ -89,10 +89,10 @@ function carousel() {
   for (i = 0; i < x.length; i++) {
     x[i].style.display = "none";
   }
-  slideIndex++;
-  if (slideIndex > x.length) {slideIndex = 1}
-  x[slideIndex-1].style.display = "block";
-  setTimeout(carousel, 5000); // Change image every 2 seconds
+  myIndex++;
+  if (myIndex > x.length) {myIndex = 1}
+  x[myIndex-1].style.display = "block";
+  setTimeout(carousel, 9000);
 }
 </script>
 

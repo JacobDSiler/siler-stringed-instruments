@@ -13,16 +13,23 @@
     text-align: center;
     font-weight: 100;
     font-size: 9vw;
-    margin: 3rem auto 14rem auto;
+    margin: 3rem 0 18rem 0;
 
     @mixin atSmall{
     text-align: left;
     font-size: 3.4vw;
-    margin: 3rem 5vw 2rem 0;
+    margin: 3rem 0 2rem 0;
+    &--closed
+    {
+      visibility: hidden;
+      display: none;
+      transform: translate(1000rem,-2.5rem);
+    }
+
     }
 
     @mixin atMedium {
-      margin-left: 0;
+      margin-right: 0;
     }
 
   }

@@ -9,6 +9,18 @@
 
   }
 
+  &__artical
+  {
+    top: 3rem;
+    height: 100%;
+    width: 75%;
+    padding: 5px;
+    padding-bottom: -5rem;
+    background-color: #fef8f4;
+    border: 5px solid #fef1e9;
+    border-radius: 30px;
+  }
+
   &--header
   {
     height: auto;
@@ -16,8 +28,10 @@
     padding: 5px;
   }
 
-  &--center {
 
+
+  &--center {
+    margin: 0 auto;
   }
 
 }

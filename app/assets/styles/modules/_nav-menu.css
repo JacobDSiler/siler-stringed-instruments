@@ -2,29 +2,34 @@
   position: absolute;
   display: block;
   font-size: 4vw;
-  margin: 2rem auto;
+  margin: 2rem 0;
   width:200px;
   height:100px;
   list-style: none;
   background: none;
 
 
+
   &__content {
     position: relative;
     display: block;
-    width: 100%;
+    width: auto;
     list-style: none;
     background-color: slategrey;
-
     transform: translate(10vw,-2.5rem);
     float: left;
     padding: 10px;
     z-index: 5;
 
+    &-icon {
+      
+    }
+
+
     a {
       color: white;
       line-height: 1.6;
-      transition:.4s;
+      transition:1s;
     }
     a:hover {
       color: orange;
@@ -41,7 +46,6 @@
 
       li{
         display: inline-block;
-
       }
 
     }
