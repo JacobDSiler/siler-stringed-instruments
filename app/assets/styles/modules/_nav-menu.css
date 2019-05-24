@@ -2,8 +2,8 @@
   position: absolute;
   display: block;
   font-size: 4vw;
-  margin: 2rem 0;
-  width:200px;
+  margin: 3rem 0;
+  width:300px;
   height:100px;
   list-style: none;
   background: none;
@@ -13,21 +13,20 @@
   &__content {
     position: relative;
     display: block;
-    width: auto;
+    width: 135%;
     list-style: none;
     background-color: slategrey;
-    transform: translate(10vw,-2.5rem);
-    float: left;
+    transform: translate(3.8vw,-2.5rem);
     padding: 10px;
     z-index: 5;
 
     &-icon {
-      
+
     }
 
 
     a {
-      color: white;
+      color: black;
       line-height: 1.6;
       transition:1s;
     }
@@ -42,7 +41,7 @@
     @mixin atMedium {
       font-size: .8vw;
       margin-left: 4vw;
-      transform: translate(21vw,-6rem);
+      transform: translate(21vw, -10rem);
 
       li{
         display: inline-block;
@@ -51,10 +50,11 @@
     }
 
     @mixin atSmall {
-      transform: translate(21vw,-260%);
+      transform: translate(21vw, -3.8vw);
+      top: -6rem;
       font-size: .8vw;
       margin-left: 4vw;
-      background-color: white;
+      background-color: $mainBack;
       display: inline-block;
       box-shadow: none;
 

@@ -424,7 +424,7 @@ textarea {
 body {
   font-family: 'Cinzel', serif;
   color: #333;
-  background-color: #FFF;
+  background-color: darkolivegreen;
   position: relative
 }
 
@@ -1156,7 +1156,7 @@ a{color:inherit}
 
 .site-header {
   position: absolute;
-  background-color: #FFF;
+  background-color: darkolivegreen;
   display: table;
   top: 0;
   left: 0;
@@ -1169,7 +1169,7 @@ a{color:inherit}
   display: inline-block;
   text-align: center;
   font-weight: 100;
-  font-size: 9vw;
+  font-size: 11vw;
   margin: 3rem 0 18rem 0;
 }
 
@@ -1199,8 +1199,8 @@ a{color:inherit}
   position: absolute;
   display: block;
   font-size: 4vw;
-  margin: 2rem 0;
-  width:200px;
+  margin: 3rem 0;
+  width:300px;
   height:100px;
   list-style: none;
   background: none;
@@ -1210,11 +1210,10 @@ a{color:inherit}
 .nav-menu__content {
   position: relative;
   display: block;
-  width: auto;
+  width: 135%;
   list-style: none;
   background-color: slategrey;
-  transform: translate(10vw,-2.5rem);
-  float: left;
+  transform: translate(3.8vw,-2.5rem);
   padding: 10px;
   z-index: 5;
 }
@@ -1222,7 +1221,7 @@ a{color:inherit}
 .nav-menu__content-icon {}
 
 .nav-menu__content a {
-  color: white;
+  color: black;
   line-height: 1.6;
   transition:1s;
 }
@@ -1240,7 +1239,7 @@ a{color:inherit}
   .nav-menu__content {
     font-size: .8vw;
     margin-left: 4vw;
-    transform: translate(21vw,-6rem);
+    transform: translate(21vw, -10rem);
   }
 
   .nav-menu__content li {
@@ -1251,10 +1250,11 @@ a{color:inherit}
 @media (min-width: 530px) {
 
   .nav-menu__content {
-    transform: translate(21vw,-260%);
+    transform: translate(21vw, -3.8vw);
+    top: -6rem;
     font-size: .8vw;
     margin-left: 4vw;
-    background-color: white;
+    background-color: darkolivegreen;
     display: inline-block;
     box-shadow: none;
   }

@@ -12,13 +12,14 @@
     display: inline-block;
     text-align: center;
     font-weight: 100;
-    font-size: 9vw;
+    font-size: 11vw;
     margin: 3rem 0 18rem 0;
 
     @mixin atSmall{
     text-align: left;
     font-size: 3.4vw;
     margin: 3rem 0 2rem 0;
+
     &--closed
     {
       visibility: hidden;
