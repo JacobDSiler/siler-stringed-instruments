@@ -23,7 +23,7 @@
 
   &--header
   {
-    height: auto;
+    height: 100%;
     width: auto;
     padding: 5px;
   }

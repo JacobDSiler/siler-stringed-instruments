@@ -24,3 +24,14 @@
         transition: all 30s ease-out;
     }
   }
+
+  .left_column {
+        float: left;
+        padding: 0 10rem;
+        margin-bottom: 3rem;
+        text-align: center;
+  }
+  .right_column {
+    float: left;
+            text-align: center;
+  }

@@ -424,7 +424,7 @@ textarea {
 body {
   font-family: 'Cinzel', serif;
   color: #333;
-  background-color: darkolivegreen;
+  background-color: #137864;
   position: relative
 }
 
@@ -1141,6 +1141,18 @@ a{color:inherit}
   transition: all 30s ease-out;
 }
 
+.left_column {
+        float: left;
+        padding: 0 10rem;
+        margin-bottom: 3rem;
+        text-align: center;
+  }
+
+.right_column {
+    float: left;
+            text-align: center;
+  }
+
 .bio__text {
   font-size: 2rem;
   line-height: 1.6;
@@ -1156,7 +1168,7 @@ a{color:inherit}
 
 .site-header {
   position: absolute;
-  background-color: darkolivegreen;
+  background-color: #137864;
   display: table;
   top: 0;
   left: 0;
@@ -1202,23 +1214,29 @@ a{color:inherit}
   margin: 3rem 0;
   width:300px;
   height:100px;
-  list-style: none;
   background: none;
 
 }
 
-.nav-menu__content {
-  position: relative;
-  display: block;
-  width: 135%;
+.nav-menu__content {/*visibility: hidden;*/
   list-style: none;
+  position: relative;
+  width: 135%;
   background-color: slategrey;
   transform: translate(3.8vw,-2.5rem);
   padding: 10px;
   z-index: 5;
 }
 
-.nav-menu__content-icon {}
+.nav-menu__content-icon {
+  width:200px;
+  height:100px;
+  background:blue;
+}
+
+.nav-menu__content--is-expanded {
+  visibility: visible;
+}
 
 .nav-menu__content a {
   color: black;
@@ -1250,11 +1268,12 @@ a{color:inherit}
 @media (min-width: 530px) {
 
   .nav-menu__content {
+    visibility: visible;
     transform: translate(21vw, -3.8vw);
     top: -6rem;
     font-size: .8vw;
     margin-left: 4vw;
-    background-color: darkolivegreen;
+    background-color: #137864;
     display: inline-block;
     box-shadow: none;
   }
@@ -1290,13 +1309,34 @@ a{color:inherit}
 
 .wrapper--header
   {
-  height: auto;
+  height: 100%;
   width: auto;
   padding: 5px;
 }
 
 .wrapper--center {
   margin: 0 auto;
+}
+
+.contact {
+  background-color: #418AB3;
+}
+
+.grid-container {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: auto auto auto;
+      grid-template-columns: auto auto auto;
+  background-color: #2196F3;
+  padding: 10px;
+}
+
+.grid-item {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  font-size: 30px;
+  text-align: center;
 }
 
 /*@import "modules/_headline";
