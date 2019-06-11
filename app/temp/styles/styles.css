@@ -424,7 +424,7 @@ textarea {
 body {
   font-family: 'Cinzel', serif;
   color: #333;
-  background-color: #137864;
+  background-color: #00796B;
   position: relative
 }
 
@@ -1168,7 +1168,7 @@ a{color:inherit}
 
 .site-header {
   position: absolute;
-  background-color: #137864;
+  background-color: #00796B;
   display: table;
   top: 0;
   left: 0;
@@ -1273,7 +1273,7 @@ a{color:inherit}
     top: -6rem;
     font-size: .8vw;
     margin-left: 4vw;
-    background-color: #137864;
+    background-color: #00796B;
     display: inline-block;
     box-shadow: none;
   }
