@@ -1146,11 +1146,13 @@ a{color:inherit}
         padding: 0 10rem;
         margin-bottom: 3rem;
         text-align: center;
+        border-radius: 1rem;
   }
 
 .right_column {
     float: left;
             text-align: center;
+            border-radius: 1rem;
   }
 
 .bio__text {
@@ -1219,7 +1221,17 @@ a{color:inherit}
 }
 
 .navbar-brand {
-  font-size: 5rem;
+  font-size: 12vw;
+  /* &::after {
+    content: '\A';
+  } */
+}
+
+@media (min-width: 530px) {
+
+  .navbar-brand {
+    font-size: 5rem;
+  }
 }
 
 .wrapper {
