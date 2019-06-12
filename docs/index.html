@@ -12,14 +12,14 @@
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-  <link rel="stylesheet" href="assets/styles/styles-05dba21b01.css"/>
+  <link rel="stylesheet" href="assets/styles/styles-5d1027dc6f.css"/>
 
   <script src="assets/scripts/Vendor-cddb5e4645.js"></script>
 
 </head>
 <body>
   <header>
-    <span class="site-header wrapper">
+    <!-- <span class="site-header wrapper">
       <span class="site-header__text wrapper">
         <a>Dennis J Siler</a>
         <span class="nav-menu wrapper--header">
@@ -35,43 +35,49 @@
         </span>
 
       </span>
-    </span>
+    </span> -->
 
-    <!--<span class="nav-menu">
-    <a href="#" href="#" class="btn btn--fixed open-modal">contact</a>
-  </span>-->
+ <!-- Nav Menu -->
+ <nav class="navbar navbar-expand-lg navbar-light">
+   <a class="navbar-brand" href="">Dennis Siler</a>
+   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-switch" aria-controls="navbar-switch" aria-expanded="false" aria-label="Toggle navigation">
+     <span class="navbar-toggler-icon"></span>
+   </button>
+   <div class="collapse navbar-collapse" id="navbar-switch">
+
+     <ul class="navbar-nav ml-auto">
+       <li class="nav-item">
+         <a class="nav-link" href="#">About</a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" href="#">Guitars</a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" href="#">Other Instruments</a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" href="#">Videos</a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" href="#">Teaching</a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" href="#">Repair and Restoration</a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" href="#">Contact Us</a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" href="#">🔍</a></a>
+       </li>
+     </ul>
+   </div>
+ </nav>
 
 </header>
 
 <div class="splashimage">
   <div class="wrapper wrapper__splashscreen">
-    <!-- <picture>
-      <img
-      src="assets/images/siler-stringed-instruments-high-quality.jpg"
-      alt=""
-      class="mySlides animate-fading lazyload splashimage">
-    </picture>
-
-    <picture>
-      <img
-      src="assets/images/gutar-back-01.jpg"
-      alt=""
-      class="mySlides animate-fading lazyload splashimage">
-    </picture>
-
-    <picture>
-      <img
-      src="assets/images/guitar-player-soundport-01.jpg"
-      alt=""
-      class="mySlides animate-fading lazyload splashimage">
-    </picture>
-
-    <picture>
-      <img
-      src="assets/images/guitar-soundhole.jpg"
-      alt=""
-      class="mySlides animate-fading lazyload splashimage">
-    </picture> -->
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="10000">
   <ol class="carousel-indicators">
     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -101,24 +107,6 @@
 
   </div>
 </div>
-
-<!-- <script>
-var myIndex = 0;
-carousel();
-
-function carousel() {
-  var i;
-  var x = document.getElementsByClassName("mySlides");
-  for (i = 0; i < x.length; i++) {
-    x[i].style.display = "none";
-  }
-  myIndex++;
-  if (myIndex > x.length) {myIndex = 1}
-  x[myIndex-1].style.display = "block";
-  setTimeout(carousel, 9000);
-}
-</script> -->
-
 
 <footer class="site-footer wrapper wrapper--center">
   <span class="site-footer__text">Copyright &copy; Dennis J Siler 2019.</span>

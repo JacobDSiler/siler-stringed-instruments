@@ -1,73 +1,14 @@
-.nav-menu {
-  position: absolute;
-  display: block;
-  font-size: 4vw;
+.navbar {
   margin: 3rem 0;
-  width:300px;
-  height:100px;
-  background: none;
+  min-height:100px;
+  font-family: 'Cinzel', serif;
+  color: #333;
 
-
-
-  &__content {
-    /*visibility: hidden;*/
-    list-style: none;
-    position: relative;
-    width: 135%;
-    background-color: slategrey;
-    transform: translate(3.8vw,-2.5rem);
-    padding: 10px;
-    z-index: 5;
-
-    &-icon {
-      width:200px;
-      height:100px;
-      background:blue;
-    }
-
-    &--is-expanded {
-      visibility: visible;
-    }
-
-
-    a {
-      color: black;
-      line-height: 1.6;
-      transition:1s;
-    }
-    a:hover {
-      color: orange;
-    }
-    a:active {
-      color: green;
-    }
-
-
-    @mixin atMedium {
-      font-size: .8vw;
-      margin-left: 4vw;
-      transform: translate(21vw, -10rem);
-
-      li{
-        display: inline-block;
-      }
-    }
-
-    @mixin atSmall {
-      visibility: visible;
-      transform: translate(21vw, -3.8vw);
-      top: -6rem;
-      font-size: .8vw;
-      margin-left: 4vw;
-      background-color: $mainBack;
-      display: inline-block;
-      box-shadow: none;
-
-      a {
-        color: black;
-      }
-
-    }
+  li {
+    text-align: center;
   }
+}
 
+.navbar-brand {
+  font-size: 5rem;
 }
