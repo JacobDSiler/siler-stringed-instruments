@@ -25,5 +25,23 @@ li ul{
 }
 
 .top-space {
-  padding: 10rem;
+  padding-top: 4rem;
+}
+
+.line-space {
+      padding-top: 2rem;
+}
+
+.mid-space {
+  @mixin atMedium {
+    padding-top: 4rem;
+  }
+}
+
+.centered-text {
+  text-align: center;
+}
+
+.centered-margin {
+  margin:auto; 
 }

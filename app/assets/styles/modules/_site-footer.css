@@ -1,9 +1,6 @@
 .site-footer {
   display: inline-block;
-  text-align: center;
+  /* text-align: center; */
   font-weight: 200;
 
-  &__text {
-
-  }
 }
