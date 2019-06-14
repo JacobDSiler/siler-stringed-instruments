@@ -452,7 +452,7 @@ li ul{
 }
 
 .line-space {
-      padding-top: 2rem;
+  padding-top: 2rem;
 }
 
 @media (min-width: 530px) {
@@ -467,54 +467,13 @@ li ul{
 }
 
 .centered-margin {
-  margin:auto; 
+  margin:auto;
 }
 
 .bio__text {
   font-family: "Arial", sans-serif;
   font-size: 2rem;
   line-height: 1.6;
-}
-
-.site-header {
-  position: absolute;
-  background-color: #00796B;
-  display: table;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  z-index: 3;
-}
-
-.site-header__text {
-  display: inline-block;
-  text-align: center;
-  font-weight: 100;
-  font-size: 11vw;
-  margin: 3rem 0 18rem 0;
-}
-
-@media (min-width: 530px) {
-
-  .site-header__text {
-    text-align: left;
-    font-size: 3.4vw;
-    margin: 3rem 0 2rem 0;
-  }
-
-  .site-header__text--closed {
-    visibility: hidden;
-    display: none;
-    transform: translate(1000rem,-2.5rem);
-  }
-}
-
-@media (min-width: 530px) {
-
-  .site-header__text {
-    margin-right: 0;
-  }
 }
 
 .navbar {
