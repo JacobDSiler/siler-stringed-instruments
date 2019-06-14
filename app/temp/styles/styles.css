@@ -439,12 +439,16 @@ img {
 
 a {
   color: black;
-  padding: 0px 6px;
+   padding: 0px 6px;
   text-decoration: none;
 }
 
 li ul{
   list-style: none;
+}
+
+.top-space {
+  padding: 10rem;
 }
 
 /* W3.CSS 4.12 November 2018 by Jan Egil and Borge Refsnes */
@@ -1129,30 +1133,7 @@ a{color:inherit}
   padding: 0;
   margin: 0;
   z-index: -10;
-  }
 
-.splashimage__slide {}
-
-.splashimage .animate-fading{
-  animation:fading 10s infinite;
-}
-
-.splashimage mySlides {
-  transition: all 30s ease-out;
-}
-
-.left_column {
-        float: left;
-        padding: 0 10rem;
-        margin-bottom: 3rem;
-        text-align: center;
-        border-radius: 1rem;
-  }
-
-.right_column {
-    float: left;
-            text-align: center;
-            border-radius: 1rem;
   }
 
 .bio__text {

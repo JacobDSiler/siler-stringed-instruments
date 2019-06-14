@@ -16,10 +16,14 @@ img {
 
 a {
   color: black;
-  padding: 0px 6px;
+   padding: 0px 6px;
   text-decoration: none;
 }
 
 li ul{
   list-style: none;
+}
+
+.top-space {
+  padding: 10rem;
 }
