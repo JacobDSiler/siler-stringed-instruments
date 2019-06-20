@@ -441,8 +441,8 @@ body {
 }
 
 img {
-  max-width: 100%;
-  height: auto;
+  /* max-width: 100%;
+  height: auto; */
 }
 
 * {
@@ -511,6 +511,49 @@ font-size: 1.1rem;
 vid-size {
   width:560;
   height:315;
+}
+
+/* Nav Brand Sizing */
+
+.nav-logo {
+  width: 100%;
+  height: auto;
+
+}
+
+@media (min-width: 530px) {
+
+  .nav-logo {
+    width: 205%;
+    height: auto;
+  }
+}
+
+@media (min-width: 530px) {
+
+  .nav-logo {
+    width: 150%;
+    height: auto;
+  }
+}
+
+@media (min-width: 1010px) {
+
+  .nav-logo {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.nav-brand-width {
+  width: 200%;
+}
+
+@media (min-width: 530px) {
+
+  .nav-brand-width {
+    width: 50%;
+  }
 }
 
 .bio__text {
