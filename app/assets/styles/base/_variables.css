@@ -1,3 +1,15 @@
 $mainBack: #00796B;
 $fontMain: #212121;
 $auxBack: #00BCD4;
+
+.mainBack {
+  background-color: $mainBack;
+}
+
+.fontMain {
+  font-color: $fontMain;
+}
+
+.auxBack {
+  background-color: $auxBack;
+}

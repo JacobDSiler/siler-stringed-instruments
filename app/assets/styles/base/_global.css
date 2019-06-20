@@ -24,6 +24,19 @@ li ul{
   list-style: none;
 }
 
+
+.title-text {
+font-size: 4rem;
+}
+
+.subtitle-text {
+font-size: 1.1rem;
+}
+
+.bold {
+  font-weight: bold;
+}
+
 .top-space {
   padding-top: 4rem;
 }
@@ -38,10 +51,25 @@ li ul{
   }
 }
 
+.bottom-space {
+      padding-top: 6rem;
+      margin-bottom: .5rem;
+  @mixin atMedium {
+    padding-top: 5rem;
+  }
+}
+
 .centered-text {
   text-align: center;
 }
 
 .centered-margin {
   margin:auto;
+}
+
+/* Video Sizing */
+
+vid-size {
+  width:560;
+  height:315;
 }
