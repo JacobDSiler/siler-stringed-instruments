@@ -441,6 +441,12 @@ body {
 }
 
 img {
+   max-width: 100%;
+   text-align: center;
+  /*height: auto; */
+}
+
+.imgsecond {
    max-width: 80%;
    text-align: center;
   /*height: auto; */
@@ -559,7 +565,7 @@ vid-size {
 
 .bio__text {
   font-family: "Arial", sans-serif;
-  font-size: 2rem;
+  font-size: 5vh;
   line-height: 1.6;
 }
 
