@@ -437,12 +437,13 @@ body {
   font-family: 'Cinzel', serif;
   color: #333;
   background-color: #00796B;
-  position: relative
+  position: relative;
 }
 
 img {
-  /* max-width: 100%;
-  height: auto; */
+   max-width: 80%;
+   text-align: center;
+  /*height: auto; */
 }
 
 * {
