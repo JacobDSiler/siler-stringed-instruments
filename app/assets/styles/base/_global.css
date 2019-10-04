@@ -33,11 +33,19 @@ li ul{
 
 
 .title-text {
-font-size: 4rem;
+font-size: 12vw;
+
+@mixin atMedium{
+  font-size: 8vw;
+}
+
+@mixin atLarge{
+  font-size: 4.5vw;
+}
 }
 
 .subtitle-text {
-font-size: 1.1rem;
+font-size: 2rem;
 }
 
 .bold {
@@ -93,7 +101,7 @@ vid-size {
 }
 
 @mixin atMedium {
-  width: 150%;
+  width: 200%;
   height: auto;
 }
 
