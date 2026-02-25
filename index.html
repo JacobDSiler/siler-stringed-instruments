@@ -6,6 +6,48 @@
 <title>Siler Stringed Instruments — Handcrafted Since Forever</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Josefin+Sans:wght@200;300;400&display=swap" rel="stylesheet">
+
+<!-- Firebase SDK v10 compat -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+<!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  FILL IN YOUR FIREBASE + EMAILJS CREDENTIALS BELOW          ║
+     ║  (given to you once you set up the projects)                 ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+<script>
+// ─── FIREBASE CONFIG ─────────────────────────────────────────────────────────
+// Paste your Firebase project config object here (from Firebase Console →
+// Project Settings → Your apps → SDK setup & config → "Config")
+const FIREBASE_CONFIG = {
+  apiKey:            "PASTE_YOUR_API_KEY_HERE",
+  authDomain:        "PASTE_YOUR_AUTH_DOMAIN_HERE",
+  projectId:         "PASTE_YOUR_PROJECT_ID_HERE",
+  storageBucket:     "PASTE_YOUR_STORAGE_BUCKET_HERE",
+  messagingSenderId: "PASTE_YOUR_MESSAGING_SENDER_ID_HERE",
+  appId:             "PASTE_YOUR_APP_ID_HERE"
+};
+
+// ─── EMAILJS CONFIG ───────────────────────────────────────────────────────────
+// From your EmailJS dashboard (emailjs.com → Account → API Keys)
+const EMAILJS_PUBLIC_KEY  = "PASTE_YOUR_EMAILJS_PUBLIC_KEY_HERE";
+const EMAILJS_SERVICE_ID  = "PASTE_YOUR_EMAILJS_SERVICE_ID_HERE";
+const EMAILJS_TEMPLATE_ID = "PASTE_YOUR_EMAILJS_TEMPLATE_ID_HERE"; // for the password recovery email
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+let db = null;
+try {
+  firebase.initializeApp(FIREBASE_CONFIG);
+  db = firebase.firestore();
+  emailjs.init(EMAILJS_PUBLIC_KEY);
+  console.log('Firebase + EmailJS ready');
+} catch(e) {
+  console.warn('Firebase/EmailJS init skipped (credentials not yet filled in):', e.message);
+}
+</script>
 <style>
   :root {
     --cream: #f5f0e8;
@@ -1101,6 +1143,159 @@
   }
   .fade-in.visible { opacity: 1; transform: translateY(0); }
 
+  /* ── LIVING TREASURE BADGE ── */
+  .living-treasure-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: rgba(200, 119, 42, 0.15);
+    border: 1px solid var(--amber);
+    color: var(--amber-light);
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .lt-star { color: var(--amber); font-size: 0.8rem; }
+
+  /* ── VIDEO EMBED ── */
+  .video-wrapper {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    border: 1px solid rgba(200,119,42,0.3);
+  }
+  .video-wrapper iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* ── ABOUT RIGHT COLUMN ── */
+  .about-right-col {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+  .about-portrait-wrap {
+    width: 100%;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    border: 1px solid rgba(200,119,42,0.25);
+  }
+  .about-portrait {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    filter: sepia(15%) contrast(1.05);
+    transition: transform 0.6s ease;
+  }
+  .about-portrait:hover { transform: scale(1.03); }
+
+  /* ── GALLERY SECTION ── */
+  #gallery { background: var(--dark); padding: 5rem; }
+  #gallery .section-eyebrow { color: var(--amber); }
+  #gallery .section-title { color: var(--cream); }
+  #gallery .section-line { background: rgba(200,119,42,0.3); }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 280px;
+    gap: 6px;
+    margin-top: 3rem;
+  }
+
+  .gallery-item {
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    background: #0d0905;
+  }
+  .gallery-item.wide { grid-column: span 2; }
+  .gallery-item.tall { grid-row: span 2; }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease, filter 0.4s ease;
+    filter: sepia(10%) brightness(0.9);
+  }
+  .gallery-item:hover img {
+    transform: scale(1.07);
+    filter: sepia(0%) brightness(1.05);
+  }
+
+  .gallery-item-caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(transparent, rgba(26,20,16,0.85));
+    padding: 2rem 1.2rem 1rem;
+    transform: translateY(100%);
+    transition: transform 0.35s ease;
+  }
+  .gallery-item:hover .gallery-item-caption { transform: translateY(0); }
+  .gallery-item-caption span {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--amber-light);
+  }
+
+  /* Lightbox */
+  .lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10,8,6,0.95);
+    z-index: 400;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+  .lightbox-overlay.open { opacity: 1; pointer-events: all; }
+  .lightbox-img {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    box-shadow: 0 40px 120px rgba(0,0,0,0.8);
+  }
+  .lightbox-close {
+    position: absolute;
+    top: 1.5rem; right: 1.5rem;
+    background: none;
+    border: 1px solid rgba(200,119,42,0.5);
+    color: var(--amber);
+    width: 40px; height: 40px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+  .lightbox-close:hover { background: var(--amber); color: var(--dark); }
+
+  @media (max-width: 900px) {
+    #gallery { padding: 3rem 1.5rem; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 200px; }
+    .gallery-item.wide { grid-column: span 1; }
+    .gallery-item.tall { grid-row: span 1; }
+    .about-right-col { margin-top: 2rem; }
+    .about-strip { grid-template-columns: 1fr; }
+  }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
     nav { padding: 1rem 1.5rem; }
@@ -1117,6 +1312,306 @@
     .cart-drawer { width: 100%; max-width: 420px; }
     .form-row { grid-template-columns: 1fr; }
   }
+
+  /* ── ADMIN PANEL ── */
+  /* No visible admin button — access via triple-click on footer name or Ctrl+Shift+A */
+
+  .admin-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10,8,6,0.75);
+    z-index: 850;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+  .admin-overlay.open { opacity: 1; pointer-events: all; }
+
+  .admin-panel {
+    background: var(--dark);
+    border: 1px solid rgba(200,119,42,0.3);
+    width: 100%;
+    max-width: 620px;
+    max-height: 88vh;
+    overflow-y: auto;
+    color: var(--cream);
+    transform: scale(0.96) translateY(12px);
+    transition: transform 0.3s;
+  }
+  .admin-overlay.open .admin-panel { transform: scale(1) translateY(0); }
+
+  .admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid rgba(200,119,42,0.2);
+  }
+  .admin-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--cream);
+  }
+  .admin-close {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 1.3rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0.2rem;
+    transition: color 0.2s;
+  }
+  .admin-close:hover { color: var(--amber); }
+
+  .admin-sub {
+    padding: 1.5rem 2rem 0;
+    font-size: 0.88rem;
+    color: rgba(245,240,232,0.6);
+    font-style: italic;
+  }
+
+  .admin-tabs {
+    display: flex;
+    border-bottom: 1px solid rgba(200,119,42,0.2);
+    padding: 0 1rem;
+    gap: 0;
+    overflow-x: auto;
+  }
+  .admin-tab {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: rgba(245,240,232,0.5);
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 0.9rem 1rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .admin-tab:hover { color: var(--amber-light); }
+  .admin-tab.active { color: var(--amber); border-bottom-color: var(--amber); }
+
+  .admin-tab-content { padding: 1.5rem 2rem 2rem; }
+  .admin-section-label {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 1.2rem;
+  }
+
+  /* override form styles for dark panel */
+  .admin-panel .form-group label { color: rgba(245,240,232,0.6); }
+  .admin-panel .form-group input,
+  .admin-panel .form-group select,
+  .admin-panel .form-group textarea {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(200,119,42,0.25);
+    color: var(--cream);
+  }
+  .admin-panel .form-group input::placeholder,
+  .admin-panel .form-group textarea::placeholder { color: rgba(245,240,232,0.3); }
+  .admin-panel .form-group input:focus,
+  .admin-panel .form-group select:focus,
+  .admin-panel .form-group textarea:focus { border-color: var(--amber); }
+  .admin-panel .form-group select option { background: #2a1810; color: var(--cream); }
+
+  /* image upload area */
+  .admin-img-upload-area {
+    width: 100%;
+    aspect-ratio: 16/7;
+    border: 2px dashed rgba(200,119,42,0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    position: relative;
+    background: rgba(255,255,255,0.04);
+    transition: border-color 0.2s;
+  }
+  .admin-img-upload-area:hover { border-color: var(--amber); }
+  .admin-img-upload-area.has-img { border-style: solid; }
+  .upload-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    text-align: center;
+    pointer-events: none;
+  }
+  .upload-icon { font-size: 2rem; }
+  .upload-preview p { font-size: 0.82rem; color: rgba(245,240,232,0.5); line-height: 1.5; }
+  .upload-hint { font-size: 0.75rem !important; color: rgba(245,240,232,0.35) !important; }
+  .upload-hint a { color: var(--amber) !important; }
+
+  .admin-paste-btn {
+    background: rgba(200,119,42,0.2);
+    border: 1px solid rgba(200,119,42,0.4);
+    color: var(--amber-light);
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.7rem 0.9rem;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .admin-paste-btn:hover { background: var(--amber); color: var(--dark); }
+
+  /* admin product list */
+  .admin-product-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid rgba(200,119,42,0.12);
+  }
+  .admin-product-thumb {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: #2a1810;
+  }
+  .admin-product-thumb-placeholder {
+    width: 50px;
+    height: 50px;
+    background: #2a1810;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--amber);
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  .admin-product-info { flex: 1; min-width: 0; }
+  .admin-product-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--cream);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .admin-product-meta {
+    font-size: 0.75rem;
+    color: rgba(245,240,232,0.45);
+    font-style: italic;
+  }
+  .admin-product-actions { display: flex; gap: 0.4rem; flex-shrink: 0; }
+  .admin-btn-toggle, .admin-btn-delete {
+    border: none;
+    padding: 0.35rem 0.7rem;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .admin-btn-toggle { background: rgba(200,119,42,0.2); color: var(--amber-light); }
+  .admin-btn-toggle:hover { background: var(--amber); color: var(--dark); }
+  .admin-btn-delete { background: rgba(180,60,60,0.2); color: #e88; }
+  .admin-btn-delete:hover { background: #c03030; color: #fff; }
+
+  /* admin pw hint */
+  .admin-pw-hint { margin-top: 0.6rem; font-size: 0.8rem; color: #e88; font-style: italic; height: 1.2rem; }
+
+  /* help steps */
+  .admin-help-steps { display: flex; flex-direction: column; gap: 1.2rem; }
+  .help-step {
+    display: flex;
+    gap: 1.2rem;
+    align-items: flex-start;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid rgba(200,119,42,0.12);
+  }
+  .help-step:last-child { border-bottom: none; }
+  .help-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    color: var(--amber);
+    line-height: 1;
+    min-width: 2.2rem;
+    text-align: center;
+  }
+  .help-step strong {
+    display: block;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--amber-light);
+    margin-bottom: 0.4rem;
+  }
+  .help-step p { font-size: 0.85rem; color: rgba(245,240,232,0.65); line-height: 1.7; }
+
+  /* gallery admin thumbs */
+  .gal-admin-thumb {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+  }
+  .gal-admin-thumb img { width:100%;height:100%;object-fit:cover; }
+  .gal-admin-thumb button {
+    position: absolute;
+    top: 4px; right: 4px;
+    background: rgba(180,60,60,0.85);
+    border: none;
+    color: #fff;
+    width: 22px; height: 22px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .admin-forgot-link {
+    background: none;
+    border: none;
+    color: rgba(200,119,42,0.65);
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 0.8rem 0 0;
+    display: block;
+    text-decoration: underline;
+    transition: color 0.2s;
+  }
+  .admin-forgot-link:hover { color: var(--amber); }
+
+  .admin-status-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #666;
+    display: inline-block;
+    margin-right: 0.4rem;
+    vertical-align: middle;
+  }
+  .admin-status-dot.connected { background: #4caf50; }
+  .admin-status-dot.error { background: #e55; }
+
+  @media (max-width: 600px) {
+    .admin-panel { max-width: 100%; max-height: 95vh; }
+  }
 </style>
 </head>
 <body>
@@ -1126,6 +1621,7 @@
   <a href="#" class="nav-logo">Siler <span>Stringed</span> Instruments</a>
   <ul class="nav-links">
     <li><a href="#shop">Shop</a></li>
+    <li><a href="#gallery">Gallery</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#commission">Commission</a></li>
     <li><a href="#commission" class="btn-primary" style="padding:0.4rem 1rem;">Inquire</a></li>
@@ -1139,7 +1635,7 @@
 <!-- HERO -->
 <section class="hero" id="home">
   <div class="hero-left">
-    <p class="hero-eyebrow">Handcrafted in the USA · Est. Dennis J. Siler</p>
+    <p class="hero-eyebrow">Arkansas Living Treasure · Handcrafted in the USA · Est. 1980</p>
     <h1 class="hero-title">Every note<br>begins with<br><em>the wood.</em></h1>
     <p class="hero-sub">Each instrument is built by hand — one at a time, with carefully selected tonewoods, time-proven joinery, and a luthier's patient eye for detail.</p>
     <div class="hero-actions">
@@ -1149,48 +1645,7 @@
   </div>
   <div class="hero-right">
     <div class="hero-img-container">
-      <svg class="guitar-hero-svg" viewBox="0 0 400 700" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- Body -->
-        <ellipse cx="200" cy="480" rx="130" ry="150" fill="#2a1810" opacity="0.9"/>
-        <ellipse cx="200" cy="380" rx="100" ry="110" fill="#2a1810" opacity="0.9"/>
-        <!-- Waist -->
-        <rect x="140" y="370" width="120" height="120" fill="#1a1008" opacity="0.9"/>
-        <!-- Sound hole -->
-        <circle cx="200" cy="400" r="42" fill="#0d0905"/>
-        <circle cx="200" cy="400" r="38" fill="none" stroke="#c8772a" stroke-width="2" opacity="0.7"/>
-        <!-- Strings -->
-        <line x1="175" y1="280" x2="180" y2="590" stroke="#b8963c" stroke-width="0.8" opacity="0.6"/>
-        <line x1="185" y1="280" x2="190" y2="590" stroke="#b8963c" stroke-width="0.8" opacity="0.6"/>
-        <line x1="195" y1="280" x2="200" y2="590" stroke="#b8963c" stroke-width="0.8" opacity="0.6"/>
-        <line x1="205" y1="280" x2="210" y2="590" stroke="#b8963c" stroke-width="0.8" opacity="0.6"/>
-        <line x1="215" y1="280" x2="220" y2="590" stroke="#b8963c" stroke-width="0.8" opacity="0.6"/>
-        <line x1="225" y1="280" x2="230" y2="590" stroke="#b8963c" stroke-width="0.8" opacity="0.6"/>
-        <!-- Neck -->
-        <rect x="183" y="100" width="34" height="200" fill="#1e1208" rx="4"/>
-        <!-- Frets -->
-        <line x1="183" y1="150" x2="217" y2="150" stroke="#c8772a" stroke-width="1.5" opacity="0.5"/>
-        <line x1="183" y1="170" x2="217" y2="170" stroke="#c8772a" stroke-width="1.5" opacity="0.5"/>
-        <line x1="183" y1="190" x2="217" y2="190" stroke="#c8772a" stroke-width="1.5" opacity="0.5"/>
-        <line x1="183" y1="210" x2="217" y2="210" stroke="#c8772a" stroke-width="1.5" opacity="0.5"/>
-        <line x1="183" y1="228" x2="217" y2="228" stroke="#c8772a" stroke-width="1.5" opacity="0.5"/>
-        <line x1="183" y1="244" x2="217" y2="244" stroke="#c8772a" stroke-width="1.5" opacity="0.5"/>
-        <line x1="183" y1="258" x2="217" y2="258" stroke="#c8772a" stroke-width="1.5" opacity="0.5"/>
-        <line x1="183" y1="270" x2="217" y2="270" stroke="#c8772a" stroke-width="1.5" opacity="0.5"/>
-        <!-- Headstock -->
-        <rect x="176" y="60" width="48" height="55" rx="6" fill="#1e1208"/>
-        <!-- Tuning pegs -->
-        <circle cx="183" cy="72" r="5" fill="#c8772a" opacity="0.8"/>
-        <circle cx="183" cy="90" r="5" fill="#c8772a" opacity="0.8"/>
-        <circle cx="183" cy="108" r="5" fill="#c8772a" opacity="0.8"/>
-        <circle cx="217" cy="72" r="5" fill="#c8772a" opacity="0.8"/>
-        <circle cx="217" cy="90" r="5" fill="#c8772a" opacity="0.8"/>
-        <circle cx="217" cy="108" r="5" fill="#c8772a" opacity="0.8"/>
-        <!-- Bridge -->
-        <rect x="178" y="570" width="44" height="14" rx="2" fill="#c8772a" opacity="0.8"/>
-        <!-- Body highlight/grain -->
-        <ellipse cx="200" cy="450" rx="90" ry="100" fill="none" stroke="#4a2e1a" stroke-width="1" opacity="0.4"/>
-        <ellipse cx="200" cy="450" rx="70" ry="80" fill="none" stroke="#4a2e1a" stroke-width="0.8" opacity="0.3"/>
-      </svg>
+      <img class="hero-guitar-graphic" referrerpolicy="no-referrer" crossorigin="anonymous" src="https://i.postimg.cc/vZTMJ4fW/1c7d037b-29b4-4a06-a763-99bc023d6a5d.jpg" alt="Siler handcrafted dreadnought guitar" style="object-position: center top;">
     </div>
     <div class="hero-overlay"></div>
     <div class="hero-right-text">
@@ -1219,13 +1674,109 @@
   </div>
 </section>
 
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-header fade-in">
+    <span class="section-eyebrow">The Craft</span>
+    <h2 class="section-title">From the Workshop</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="gallery-grid">
+    <!-- Row 1: wide feature + tall detail -->
+    <div class="gallery-item wide" onclick="openLightbox('https://i.postimg.cc/vZTMJ4fW/1c7d037b-29b4-4a06-a763-99bc023d6a5d.jpg')">
+      <img referrerpolicy="no-referrer" crossorigin="anonymous" src="https://i.postimg.cc/vZTMJ4fW/1c7d037b-29b4-4a06-a763-99bc023d6a5d.jpg" alt="Siler dreadnought acoustic guitar">
+      <div class="gallery-item-caption"><span>Dreadnought — Spruce & Rosewood</span></div>
+    </div>
+    <div class="gallery-item tall" onclick="openLightbox('https://i.postimg.cc/RZh9kWKY/04f7295c-b0ce-4d9d-af21-21108906b0b6.jpg')">
+      <img referrerpolicy="no-referrer" crossorigin="anonymous" src="https://i.postimg.cc/RZh9kWKY/04f7295c-b0ce-4d9d-af21-21108906b0b6.jpg" alt="Guitar headstock detail">
+      <div class="gallery-item-caption"><span>Headstock Detail — Walnut</span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox('https://i.postimg.cc/nhWZpn18/a37e3ad9-9cde-4693-866f-718340124dde.jpg')">
+      <img referrerpolicy="no-referrer" crossorigin="anonymous" src="https://i.postimg.cc/nhWZpn18/a37e3ad9-9cde-4693-866f-718340124dde.jpg" alt="Guitar back — exotic figured wood">
+      <div class="gallery-item-caption"><span>Back — Figured Exotic Wood</span></div>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="gallery-item" onclick="openLightbox('https://i.postimg.cc/NjFY3Km3/6cf208a8-d30d-4e95-9f1b-87e04f6c49b4.jpg')">
+      <img referrerpolicy="no-referrer" crossorigin="anonymous" src="https://i.postimg.cc/NjFY3Km3/6cf208a8-d30d-4e95-9f1b-87e04f6c49b4.jpg" alt="Guitar back — Osage Orange">
+      <div class="gallery-item-caption"><span>Back — Osage Orange</span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox('https://i.postimg.cc/9QkVCcYg/27dab5c9-86b3-4364-9fa0-80342a9eb47f.jpg')">
+      <img referrerpolicy="no-referrer" crossorigin="anonymous" src="https://i.postimg.cc/9QkVCcYg/27dab5c9-86b3-4364-9fa0-80342a9eb47f.jpg" alt="Abalone fretboard inlay">
+      <div class="gallery-item-caption"><span>Vine Inlay — Abalone</span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox('https://i.postimg.cc/Cx2YSwsQ/7d809df8-9f93-4fe3-a280-84f201a2f739.jpg')">
+      <img referrerpolicy="no-referrer" crossorigin="anonymous" src="https://i.postimg.cc/Cx2YSwsQ/7d809df8-9f93-4fe3-a280-84f201a2f739.jpg" alt="Siler Stringed Instruments label">
+      <div class="gallery-item-caption"><span>Sound Hole Label — Est. 1980</span></div>
+    </div>
+
+    <!-- Row 3: feature + details -->
+    <div class="gallery-item wide" onclick="openLightbox('https://i.postimg.cc/qvF04pGR/e4209d31-205f-42cd-8258-e5a10cab3572.jpg')">
+      <img referrerpolicy="no-referrer" crossorigin="anonymous" src="https://i.postimg.cc/qvF04pGR/e4209d31-205f-42cd-8258-e5a10cab3572.jpg" alt="Siler OM guitar in case">
+      <div class="gallery-item-caption"><span>OM Guitar — Cedar Top</span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox('https://i.postimg.cc/jS1KtR4p/961e6be5-2607-4460-add8-cdbc6b092fc2.jpg')">
+      <img referrerpolicy="no-referrer" crossorigin="anonymous" src="https://i.postimg.cc/jS1KtR4p/961e6be5-2607-4460-add8-cdbc6b092fc2.jpg" alt="Rosette and soundhole detail">
+      <div class="gallery-item-caption"><span>Rosette — August 2018</span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox('https://i.postimg.cc/jS1KtRhS/bc3825ae-9d44-42c2-a195-fe4185a46431.jpg')">
+      <img referrerpolicy="no-referrer" crossorigin="anonymous" src="https://i.postimg.cc/jS1KtRhS/bc3825ae-9d44-42c2-a195-fe4185a46431.jpg" alt="Guitar back — rosewood and neck">
+      <div class="gallery-item-caption"><span>Back & Neck — Rosewood</span></div>
+    </div>
+
+    <!-- Row 4: harp, banjos, dulcimer -->
+    <div class="gallery-item" onclick="openLightbox('https://i.postimg.cc/RZY94vLY/353acdf0-f47b-4f9c-abf1-c6c6e930395b.jpg')">
+      <img referrerpolicy="no-referrer" crossorigin="anonymous" src="https://i.postimg.cc/RZY94vLY/353acdf0-f47b-4f9c-abf1-c6c6e930395b.jpg" alt="Handbuilt Celtic harp">
+      <div class="gallery-item-caption"><span>Celtic Harp — Walnut & Maple</span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox('https://i.postimg.cc/3xq7Y3ZH/b2ce22ca-6c83-486d-9a17-6103cf7d6567.jpg')">
+      <img referrerpolicy="no-referrer" crossorigin="anonymous" src="https://i.postimg.cc/3xq7Y3ZH/b2ce22ca-6c83-486d-9a17-6103cf7d6567.jpg" alt="Minstrel / fretless banjo">
+      <div class="gallery-item-caption"><span>Minstrel Banjo — Fretless</span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox('https://i.postimg.cc/K8WFxm5c/ba140368-34b3-4114-acf7-acf9be012655.jpg')">
+      <img referrerpolicy="no-referrer" crossorigin="anonymous" src="https://i.postimg.cc/K8WFxm5c/ba140368-34b3-4114-acf7-acf9be012655.jpg" alt="Mountain dulcimer">
+      <div class="gallery-item-caption"><span>Mountain Dulcimer</span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox('https://i.postimg.cc/Vkh1mzFv/d4c5c5d3-4de7-476c-88dd-bff5f4d25237.jpg')">
+      <img referrerpolicy="no-referrer" crossorigin="anonymous" src="https://i.postimg.cc/Vkh1mzFv/d4c5c5d3-4de7-476c-88dd-bff5f4d25237.jpg" alt="Abalone binding detail">
+      <div class="gallery-item-caption"><span>Abalone Binding Detail</span></div>
+    </div>
+
+    <!-- Row 5: sunburst + 12-string -->
+    <div class="gallery-item" onclick="openLightbox('https://i.postimg.cc/nhWZpn18/a37e3ad9-9cde-4693-866f-718340124dde.jpg')">
+      <img referrerpolicy="no-referrer" crossorigin="anonymous" src="https://i.postimg.cc/nhWZpn18/a37e3ad9-9cde-4693-866f-718340124dde.jpg" alt="Sunburst OM guitar in case">
+      <div class="gallery-item-caption"><span>Sunburst OM Guitar</span></div>
+    </div>
+    <div class="gallery-item wide" onclick="openLightbox('https://i.postimg.cc/qvF04pGR/e4209d31-205f-42cd-8258-e5a10cab3572.jpg')">
+      <img referrerpolicy="no-referrer" crossorigin="anonymous" src="https://i.postimg.cc/qvF04pGR/e4209d31-205f-42cd-8258-e5a10cab3572.jpg" alt="12-string Siler guitar" style="object-position: top;">
+      <div class="gallery-item-caption"><span>12-String Guitar — Spruce Top</span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox('https://i.postimg.cc/9Q0V6DZs/5df96386-a597-47c6-8c2f-2b8d78f9544c.jpg')">
+      <img referrerpolicy="no-referrer" crossorigin="anonymous" src="https://i.postimg.cc/9Q0V6DZs/5df96386-a597-47c6-8c2f-2b8d78f9544c.jpg" alt="Binding and purfling detail">
+      <div class="gallery-item-caption"><span>Binding & Purfling Detail</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox-overlay" id="lightboxOverlay" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img class="lightbox-img" id="lightboxImg" src="" alt="">
+</div>
+
 <!-- ABOUT -->
 <div class="about-strip fade-in" id="about">
   <div class="about-left">
     <span class="section-eyebrow">The Luthier</span>
     <h2 class="section-title">Dennis J. Siler</h2>
+    <div class="living-treasure-badge">
+      <span class="lt-star">★</span>
+      Arkansas Living Treasure
+      <span class="lt-star">★</span>
+    </div>
     <p class="about-text">
-      Dennis has spent decades learning the art of stringed instrument construction — a craft where millimetres matter and patience is the most important tool in the shop. From selecting raw tonewoods to final setup and playability, every instrument is built with the care of someone who plays as well as builds.
+      Dennis has spent over 40 years learning the art of stringed instrument construction — a craft where millimetres matter and patience is the most important tool in the shop. From selecting raw tonewoods to final setup and playability, every instrument is built with the care of someone who plays as well as builds.
     </p>
     <p class="about-text" style="margin-top:1rem;">
       He also offers repairs, restorations, and teaching — because a great instrument is only half of the story.
@@ -1233,23 +1784,43 @@
     <div style="margin-top:2rem;">
       <a href="#commission" class="btn-primary">Get in Touch</a>
     </div>
+
+    <!-- YouTube Video -->
+    <div class="about-video" style="margin-top:2.5rem;">
+      <p style="font-family:'Josefin Sans',sans-serif;font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--amber-light);margin-bottom:0.8rem;">Watch — Meet the Luthier</p>
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/k6pyjJ_F3W4"
+          title="Dennis J. Siler — Arkansas Living Treasure Luthier"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
   </div>
-  <div class="about-stats">
-    <div class="stat-item">
-      <div class="stat-number">40+</div>
-      <div class="stat-label">Years Building</div>
+
+  <div class="about-right-col">
+    <div class="about-portrait-wrap">
+      <img referrerpolicy="no-referrer" crossorigin="anonymous" src="https://i.postimg.cc/7ZRDwqNk/abc8270f-55ac-45cd-a8e9-e945d886dbfb.jpg" alt="Dennis J. Siler with one of his handcrafted banjos" class="about-portrait">
     </div>
-    <div class="stat-item">
-      <div class="stat-number">100%</div>
-      <div class="stat-label">Handcrafted</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number">All</div>
-      <div class="stat-label">Stringed Types</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number">USA</div>
-      <div class="stat-label">Built Locally</div>
+    <div class="about-stats">
+      <div class="stat-item">
+        <div class="stat-number">40+</div>
+        <div class="stat-label">Years Building</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">Handcrafted</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">All</div>
+        <div class="stat-label">Stringed Types</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">Est.<br><span style="font-size:1.6rem">1980</span></div>
+        <div class="stat-label">Est. in Arkansas</div>
+      </div>
     </div>
   </div>
 </div>
@@ -1365,6 +1936,7 @@
       <h4>Navigate</h4>
       <ul>
         <li><a onclick="scrollTo('shop')">Shop</a></li>
+        <li><a onclick="scrollTo('gallery')">Gallery</a></li>
         <li><a onclick="scrollTo('about')">About Dennis</a></li>
         <li><a onclick="scrollTo('commission')">Commission</a></li>
         <li><a onclick="scrollTo('commission')">Repairs & Restoration</a></li>
@@ -1374,14 +1946,14 @@
     <div class="footer-col">
       <h4>Get in Touch</h4>
       <ul>
-        <li><a href="mailto:info@silerguitars.com">info@silerguitars.com</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#751c1b131a35061c19100712001c011407065b161a18"><span class="__cf_email__" data-cfemail="6b02050d042b1802070e190c1e021f0a191845080406">[email&#160;protected]</span></a></li>
         <li><a href="https://silerguitars.com" target="_blank">silerguitars.com</a></li>
         <li><a onclick="scrollTo('commission')">Send an Enquiry</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© Dennis J. Siler — All instruments handbuilt in the USA</span>
+    <span>© <span id="adminTrigger" title="">Dennis J. Siler</span> — All instruments handbuilt in the USA</span>
     <span>Site by Siler Family</span>
   </div>
 </footer>
@@ -1460,7 +2032,7 @@
     <div class="checkout-success" id="checkoutSuccess">
       <h2>You're All Set</h2>
       <p>Dennis has received your enquiry and will be in touch within 48 hours to confirm availability and arrange payment and delivery.</p>
-      <p style="margin-top:1rem;">In the meantime, feel free to <a href="mailto:info@silerguitars.com" style="color:var(--amber)">email directly</a> with any questions.</p>
+      <p style="margin-top:1rem;">In the meantime, feel free to <a href="/cdn-cgi/l/email-protection#d6bfb8b0b996a5bfbab3a4b1a3bfa2b7a4a5f8b5b9bb" style="color:var(--amber)">email directly</a> with any questions.</p>
       <button class="btn-outline" style="margin-top:2rem" onclick="closeCheckoutModal()">Back to Shop</button>
     </div>
   </div>
@@ -1469,21 +2041,281 @@
 <!-- TOAST -->
 <div class="toast" id="toast">Added to cart</div>
 
-<script>
+<!-- ═══════════════════════════════════════════════════════
+     ADMIN PANEL — Product Manager
+     Click the gold "Admin" button (bottom-right) to open.
+     Password: siler1980
+═══════════════════════════════════════════════════════ -->
+<!-- Admin access: triple-click "Dennis J. Siler" in the footer, or press Ctrl+Shift+A -->
+
+<div class="admin-overlay" id="adminOverlay" onclick="closeAdminCheck(event)">
+  <div class="admin-panel" id="adminPanel">
+
+    <!-- LOGIN SCREEN -->
+    <div id="adminLogin">
+      <div class="admin-header">
+        <h2 class="admin-title">Siler Instruments — Admin</h2>
+        <button class="admin-close" onclick="closeAdmin()">✕</button>
+      </div>
+
+      <!-- Login form -->
+      <div id="adminLoginForm" style="padding:1.5rem 2rem 2rem">
+        <p class="admin-sub" style="padding:0 0 1.5rem">Enter the admin password to manage listings.</p>
+        <div class="form-group">
+          <label>Password</label>
+          <div style="display:flex;gap:0.5rem;align-items:center">
+            <input type="password" id="adminPw" placeholder="••••••••"
+              onkeydown="if(event.key==='Enter')checkAdminPw()"
+              style="flex:1">
+            <button class="admin-paste-btn" onclick="togglePwVisibility()" id="pwToggleBtn"
+              style="padding:0.7rem 0.8rem;font-size:0.9rem">👁</button>
+          </div>
+        </div>
+        <button class="form-submit" id="loginBtn" onclick="checkAdminPw()">Unlock →</button>
+        <p class="admin-pw-hint" id="adminPwHint"></p>
+        <button class="admin-forgot-link" onclick="showRecovery()">Forgot password?</button>
+      </div>
+
+      <!-- Change password form (shown after first login or via settings) -->
+      <div id="adminChangePwForm" style="display:none;padding:0 2rem 2rem">
+        <div class="admin-section-label" style="margin-bottom:1rem">Change Admin Password</div>
+        <div class="form-group">
+          <label>Current Password</label>
+          <input type="password" id="cp_current" placeholder="Current password">
+        </div>
+        <div class="form-group">
+          <label>New Password</label>
+          <input type="password" id="cp_new" placeholder="New password (min 6 chars)">
+        </div>
+        <div class="form-group">
+          <label>Confirm New Password</label>
+          <input type="password" id="cp_confirm" placeholder="Repeat new password">
+        </div>
+        <div style="display:flex;gap:0.8rem">
+          <button class="form-submit" style="flex:1" onclick="changePassword()">Save New Password →</button>
+          <button class="admin-paste-btn" onclick="document.getElementById('adminChangePwForm').style.display='none';document.getElementById('adminLoginForm').style.display='block'">Cancel</button>
+        </div>
+        <p class="admin-pw-hint" id="changePwHint"></p>
+      </div>
+
+      <!-- Recovery form -->
+      <div id="adminRecoveryForm" style="display:none;padding:0 2rem 2rem">
+        <div class="admin-section-label" style="margin-bottom:0.4rem">Password Recovery</div>
+        <p style="font-size:0.84rem;color:rgba(245,240,232,0.55);line-height:1.6;margin-bottom:1.2rem;font-style:italic">
+          Your recovery email address is stored securely in Firebase. Enter it below — if it matches, we'll send you the current password.
+        </p>
+        <div class="form-group">
+          <label>Your Recovery Email</label>
+          <input type="email" id="recoveryEmail" placeholder="your@email.com"
+            onkeydown="if(event.key==='Enter')sendRecovery()">
+        </div>
+        <button class="form-submit" id="recoveryBtn" onclick="sendRecovery()">Send Recovery Email →</button>
+        <p class="admin-pw-hint" id="recoveryHint" style="color:var(--amber-light)"></p>
+        <button class="admin-forgot-link" onclick="showLogin()">← Back to login</button>
+      </div>
+    </div>
+
+    <!-- MAIN ADMIN (hidden until login) -->
+    <div id="adminMain" style="display:none">
+      <div class="admin-header">
+        <div>
+          <h2 class="admin-title">Product Manager</h2>
+          <p style="font-size:0.72rem;color:rgba(245,240,232,0.4);margin-top:0.2rem;font-family:'Josefin Sans',sans-serif;letter-spacing:0.1em">
+            <span class="admin-status-dot" id="firebaseStatusDot"></span>
+            <span id="firebaseStatusTxt">Checking…</span>
+            &nbsp;·&nbsp;
+            <button onclick="showChangePwFromMain()" style="background:none;border:none;color:rgba(200,119,42,0.6);font-family:'Josefin Sans',sans-serif;font-size:0.65rem;letter-spacing:0.1em;cursor:pointer;text-decoration:underline;padding:0" title="Change password">Change password</button>
+          </p>
+        </div>
+        <button class="admin-close" onclick="closeAdmin()">✕</button>
+      </div>
+
+      <!-- TABS -->
+      <div class="admin-tabs">
+        <button class="admin-tab active" onclick="switchAdminTab('add',this)">＋ Add Listing</button>
+        <button class="admin-tab" onclick="switchAdminTab('manage',this)">✎ Manage Listings</button>
+        <button class="admin-tab" onclick="switchAdminTab('gallery',this)">⬛ Gallery Images</button>
+        <button class="admin-tab" onclick="switchAdminTab('help',this)">? How To</button>
+      </div>
+
+      <!-- TAB: ADD -->
+      <div class="admin-tab-content" id="tab-add">
+        <div class="admin-section-label">Add a New Instrument for Sale</div>
+        
+        <!-- Image uploader -->
+        <div class="admin-img-upload-area" id="imgUploadArea">
+          <div class="upload-preview" id="uploadPreview">
+            <span class="upload-icon">📷</span>
+            <p>Paste a PostImg URL below, or drag & drop a photo here</p>
+            <p class="upload-hint">Free upload: <a href="https://postimages.org" target="_blank" style="color:var(--amber)">postimages.org</a> → get Direct link</p>
+          </div>
+          <img id="uploadPreviewImg" src="" alt="" style="display:none;width:100%;height:100%;object-fit:cover;">
+        </div>
+
+        <div class="form-group">
+          <label>Photo URL (PostImg or any direct image URL)</label>
+          <div style="display:flex;gap:0.5rem">
+            <input type="url" id="add_photo" placeholder="https://i.postimg.cc/..." oninput="previewPhoto(this.value)">
+            <button class="admin-paste-btn" onclick="pasteFromClipboard('add_photo')">Paste</button>
+          </div>
+          <p class="upload-hint" style="margin-top:0.4rem">Tip: Upload to <a href="https://postimages.org" target="_blank" style="color:var(--amber)">postimages.org</a>, choose "Direct link" and paste here.</p>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Instrument Name</label>
+            <input type="text" id="add_name" placeholder="e.g. Dreadnought No. 14">
+          </div>
+          <div class="form-group">
+            <label>Price ($)</label>
+            <input type="number" id="add_price" placeholder="2800">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Type</label>
+            <select id="add_type">
+              <option value="guitar">Guitar</option>
+              <option value="other">Other Instrument</option>
+              <option value="repair">Repaired / Restored</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Label (shown on card)</label>
+            <input type="text" id="add_label" placeholder="Guitar / Banjo / Harp…">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Materials (shown under name)</label>
+          <input type="text" id="add_materials" placeholder="Sitka Spruce top · Rosewood back & sides">
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea id="add_desc" placeholder="A detailed description of this instrument…" style="min-height:80px"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Badge (optional)</label>
+            <input type="text" id="add_badge" placeholder="New / Featured / Rare">
+          </div>
+          <div class="form-group" style="display:flex;align-items:center;gap:0.8rem;padding-top:1.6rem">
+            <input type="checkbox" id="add_available" checked style="width:18px;height:18px;cursor:pointer">
+            <label style="font-family:'Josefin Sans',sans-serif;font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;margin:0;cursor:pointer" for="add_available">Available for Sale</label>
+          </div>
+        </div>
+        <button class="form-submit" onclick="addProduct()">Add to Shop →</button>
+        <div id="addSuccess" style="display:none;margin-top:1rem;padding:0.8rem;background:rgba(200,119,42,0.15);border-left:3px solid var(--amber);color:var(--amber-light);font-family:'Josefin Sans',sans-serif;font-size:0.75rem;letter-spacing:0.1em">
+          ✓ Listing added successfully!
+        </div>
+      </div>
+
+      <!-- TAB: MANAGE -->
+      <div class="admin-tab-content" id="tab-manage" style="display:none">
+        <div class="admin-section-label">Current Listings</div>
+        <div id="adminProductList"></div>
+      </div>
+
+      <!-- TAB: GALLERY -->
+      <div class="admin-tab-content" id="tab-gallery" style="display:none">
+        <div class="admin-section-label">Add an Image to the Gallery</div>
+        <div class="form-group">
+          <label>Image URL (PostImg direct link)</label>
+          <div style="display:flex;gap:0.5rem">
+            <input type="url" id="gal_url" placeholder="https://i.postimg.cc/...">
+            <button class="admin-paste-btn" onclick="pasteFromClipboard('gal_url')">Paste</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Caption</label>
+          <input type="text" id="gal_caption" placeholder="e.g. Rosette detail — 2024">
+        </div>
+        <button class="form-submit" onclick="addGalleryImage()">Add to Gallery →</button>
+        <div id="galSuccess" style="display:none;margin-top:1rem;padding:0.8rem;background:rgba(200,119,42,0.15);border-left:3px solid var(--amber);color:var(--amber-light);font-family:'Josefin Sans',sans-serif;font-size:0.75rem;letter-spacing:0.1em">
+          ✓ Image added to gallery!
+        </div>
+        <div class="admin-section-label" style="margin-top:2rem">Current Gallery Images</div>
+        <div id="adminGalleryList" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:1rem"></div>
+      </div>
+
+      <!-- TAB: HELP -->
+      <div class="admin-tab-content" id="tab-help" style="display:none">
+        <div class="admin-section-label">How to Add Photos with PostImages</div>
+        <div class="admin-help-steps">
+          <div class="help-step">
+            <div class="help-num">1</div>
+            <div>
+              <strong>Go to postimages.org</strong>
+              <p>Visit <a href="https://postimages.org" target="_blank" style="color:var(--amber)">postimages.org</a> in your browser. No account needed — it's completely free.</p>
+            </div>
+          </div>
+          <div class="help-step">
+            <div class="help-num">2</div>
+            <div>
+              <strong>Upload your photo</strong>
+              <p>Click "Choose images" and select a photo from your phone or computer. Click the green upload button.</p>
+            </div>
+          </div>
+          <div class="help-step">
+            <div class="help-num">3</div>
+            <div>
+              <strong>Copy the "Direct link"</strong>
+              <p>After uploading, you'll see several link options. Copy the one labelled <em>Direct link</em> — it should end in .jpg or .png and start with https://i.postimg.cc/…</p>
+            </div>
+          </div>
+          <div class="help-step">
+            <div class="help-num">4</div>
+            <div>
+              <strong>Paste into the Admin Panel</strong>
+              <p>Come back here, open "Add Listing" or "Gallery Images", paste the URL into the Photo URL field, fill in the details, and click Add.</p>
+            </div>
+          </div>
+          <div class="help-step">
+            <div class="help-num">5</div>
+            <div>
+              <strong>That's it!</strong>
+              <p>Your listing or gallery photo appears on the site instantly. To save changes permanently, use the export button below.</p>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:2rem;padding:1rem;background:rgba(200,119,42,0.1);border:1px solid rgba(200,119,42,0.3)">
+          <p style="font-family:'Josefin Sans',sans-serif;font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--amber-light);margin-bottom:0.5rem">⚠ Note on Saving</p>
+          <p style="font-size:0.85rem;color:rgba(245,240,232,0.7);line-height:1.7">Changes made through this panel are <em>live on the page right now</em> but won't survive a page refresh unless you download the updated file. Ask your site helper to export &amp; re-upload after making changes, or use a host that supports server-side storage.</p>
+        </div>
+      </div>
+
+    </div><!-- /adminMain -->
+  </div><!-- /adminPanel -->
+</div><!-- /adminOverlay -->
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ─── DATA ───────────────────────────────────────────────────────────────────
+// ┌─────────────────────────────────────────────────────────────────────────────┐
+// │  HOW TO ADD A NEW INSTRUMENT FOR SALE (easy way):                           │
+// │  Click the gold "Admin" button in the bottom-right corner of the page.      │
+// │  Fill in the form, paste a PostImg (or any image) URL for the photo,        │
+// │  and click Add. The listing appears instantly!                               │
+// │                                                                              │
+// │  HOW TO ADD VIA CODE:                                                        │
+// │  1. Upload your photo to https://postimages.org (free, no account needed)   │
+// │  2. Copy the "Direct link" URL (ends in .jpg)                               │
+// │  3. Add a new object to the PRODUCTS array below                            │
+// │  4. Set photo: "https://i.postimg.cc/XXXX/your-image.jpg"                   │
+// │  5. Save — done!                                                             │
+// └─────────────────────────────────────────────────────────────────────────────┘
 const PRODUCTS = [
   {
     id: 1,
-    name: "OM-28 Style Acoustic",
+    name: "Dreadnought No. 11",
     type: "guitar",
     label: "Guitar",
     available: true,
     badge: "Available",
     price: 2800,
+    photo: "https://i.postimg.cc/vZTMJ4fW/1c7d037b-29b4-4a06-a763-99bc023d6a5d.jpg",
     materials: "Sitka Spruce top · Rosewood back & sides · Mahogany neck",
-    desc: "A beautifully balanced orchestra model with a Sitka spruce top for crisp highs and a warm mid-range. The Indian rosewood back and sides add depth and complexity. Hand-fitted bone nut and saddle, Gotoh tuners.",
+    desc: "A beautifully balanced dreadnought with a Sitka spruce top for crisp highs and a warm mid-range. The Indian rosewood back and sides add depth and complexity. Hand-fitted bone nut and saddle, gold hardware.",
     specs: [
-      ["Body Style", "Orchestra Model (OM)"],
+      ["Body Style", "Dreadnought"],
       ["Top", "Sitka Spruce, book-matched"],
       ["Back & Sides", "Indian Rosewood"],
       ["Neck", "Mahogany, hand-shaped"],
@@ -1491,123 +2323,176 @@ const PRODUCTS = [
       ["Scale Length", '25.4"'],
       ["Nut Width", '1 3/4"'],
       ["Finish", "Nitrocellulose lacquer"],
-      ["Tuners", "Gotoh 510 Gold"],
+      ["Tuners", "Gotoh Gold"],
     ],
     color: "#2a1810"
   },
   {
     id: 2,
-    name: "Parlour Guitar No. 7",
+    name: "OM Guitar — Abalone Vine",
     type: "guitar",
     label: "Guitar",
     available: true,
-    badge: "New",
-    price: 2200,
-    materials: "Cedar top · Maple back & sides · Walnut fingerboard",
-    desc: "A compact, player-friendly parlour guitar with a warm cedar top and bright maple back and sides. Ideal for fingerstyle playing, recording, and travel. Light, responsive, and beautifully voiced.",
+    badge: "Featured",
+    price: 3400,
+    photo: "https://i.postimg.cc/9QkVCcYg/27dab5c9-86b3-4364-9fa0-80342a9eb47f.jpg",
+    materials: "Spruce top · Rosewood back & sides · Abalone fretboard vine inlay",
+    desc: "A stunning orchestra model featuring a full abalone vine inlay running the length of the fretboard — one of the most elaborate inlay jobs Dennis has completed. Exceptional tone and a showpiece of the luthier's art.",
     specs: [
-      ["Body Style", "Parlour"],
-      ["Top", "Western Red Cedar"],
-      ["Back & Sides", "Hard Maple"],
-      ["Neck", "Walnut"],
-      ["Fingerboard", "Walnut, 12-fret"],
-      ["Scale Length", '24.9"'],
-      ["Nut Width", '1 7/8"'],
-      ["Finish", "Hand-rubbed oil & wax"],
-      ["Tuners", "Waverly Nickel"],
+      ["Body Style", "Orchestra Model (OM)"],
+      ["Top", "Sitka Spruce"],
+      ["Back & Sides", "Indian Rosewood"],
+      ["Inlay", "Full-board abalone vine"],
+      ["Fingerboard", "Ebony, 14-fret"],
+      ["Scale Length", '25.4"'],
+      ["Nut Width", '1 3/4"'],
+      ["Finish", "Nitrocellulose lacquer"],
     ],
-    color: "#3a2218"
+    color: "#2a1810"
   },
   {
     id: 3,
-    name: "Classical No. 4",
+    name: "Celtic Harp",
+    type: "other",
+    label: "Harp",
+    available: true,
+    badge: "Rare",
+    price: 2200,
+    photo: "https://i.postimg.cc/RZY94vLY/353acdf0-f47b-4f9c-abf1-c6c6e930395b.jpg",
+    materials: "Walnut soundboard · Figured maple pillar · 26 strings",
+    desc: "A hand-built Celtic harp in walnut and curly maple. 26 strings spanning over three octaves — perfect for folk, Celtic, and classical repertoire. Beautiful figured maple column with walnut soundboard.",
+    specs: [
+      ["Style", "Celtic / Folk Harp"],
+      ["Strings", "26"],
+      ["Soundboard", "Walnut"],
+      ["Pillar", "Figured Maple"],
+      ["Levers", "Silver blade levers"],
+      ["Finish", "Hand-rubbed oil"],
+    ],
+    color: "#3a2510"
+  },
+  {
+    id: 4,
+    name: "OM Guitar — August 2018",
     type: "guitar",
-    label: "Classical Guitar",
+    label: "Guitar",
     available: true,
     badge: null,
-    price: 1900,
-    materials: "Cedar top · Walnut back & sides · Ebony fingerboard",
-    desc: "A traditional Spanish-style classical guitar built with a fan-braced cedar top. Comfortable neck profile for both beginners and advanced players. Warm, balanced tone with excellent projection.",
+    price: 3200,
+    photo: "https://i.postimg.cc/Cx2YSwsQ/7d809df8-9f93-4fe3-a280-84f201a2f739.jpg",
+    materials: "Spruce top · Abalone rosette · Tortoise-shell pickguard",
+    desc: "A finely crafted orchestra model from August 2018 with an abalone rosette and beautiful tortoise-shell pickguard. The spruce top projects with clarity and warmth. A balanced instrument equally suited to fingerpicking and flatpicking.",
     specs: [
-      ["Body Style", "Classical Full"],
-      ["Top", "Western Red Cedar, fan-braced"],
-      ["Back & Sides", "Claro Walnut"],
-      ["Neck", "Spanish Cedar"],
-      ["Fingerboard", "Ebony, 12-fret"],
-      ["Scale Length", '650mm (25.6")'],
-      ["Nut Width", "52mm"],
-      ["Finish", "French Polish"],
-      ["Tuners", "Hauser-style Gold"],
+      ["Body Style", "Orchestra Model"],
+      ["Top", "Sitka Spruce"],
+      ["Rosette", "Multi-ring abalone"],
+      ["Pickguard", "Tortoiseshell-style"],
+      ["Fingerboard", "Ebony"],
+      ["Year Built", "August 2018"],
+      ["Finish", "Nitrocellulose"],
     ],
     color: "#1e1208"
   },
   {
-    id: 4,
-    name: "Handmade Mandolin",
-    type: "other",
-    label: "Mandolin",
+    id: 5,
+    name: "Sunburst OM Guitar",
+    type: "guitar",
+    label: "Guitar",
     available: true,
-    badge: "Rare",
-    price: 1400,
-    materials: "Spruce top · Maple back & sides · Ebony fingerboard",
-    desc: "An F-style mandolin built to handle everything from bluegrass to Celtic. Tight, punchy tone with excellent sustain. The book-matched spruce top gives a clear, focused voice.",
+    badge: "Available",
+    price: 2600,
+    photo: "https://i.postimg.cc/nhWZpn18/a37e3ad9-9cde-4693-866f-718340124dde.jpg",
+    materials: "Spruce top · Sunburst finish · Rosewood fingerboard",
+    desc: "A rich sunburst OM-style guitar with a dramatic amber-to-dark burst finish. Excellent projection and a warm, rounded tone ideal for blues, folk, and country styles.",
     specs: [
-      ["Style", "F-Style Archtop"],
-      ["Top", "Engelmann Spruce"],
-      ["Back & Sides", "Figured Maple"],
-      ["Neck", "Maple"],
-      ["Fingerboard", "Ebony"],
-      ["Scale Length", "13.875\""],
-      ["Tuners", "Schaller M6 Gold"],
-      ["Finish", "Nitrocellulose"],
+      ["Body Style", "Orchestra Model"],
+      ["Top", "Spruce"],
+      ["Finish", "Sunburst nitrocellulose"],
+      ["Fingerboard", "Rosewood"],
+      ["Tuners", "Gotoh Gold"],
+      ["Nut", "Bone"],
+    ],
+    color: "#1a0e06"
+  },
+  {
+    id: 6,
+    name: "Minstrel / Open-Back Banjo",
+    type: "other",
+    label: "Banjo",
+    available: true,
+    badge: null,
+    price: 1100,
+    photo: "https://i.postimg.cc/3xq7Y3ZH/b2ce22ca-6c83-486d-9a17-6103cf7d6567.jpg",
+    materials: "Walnut neck · Fretless · Natural head · Period hardware",
+    desc: "A historically-styled minstrel banjo with a fretless neck and open-back pot. Built in the tradition of 19th-century American banjos — authentic tone and feel for old-time and minstrel repertoire.",
+    specs: [
+      ["Style", "Minstrel / Open-Back"],
+      ["Neck", "Walnut, fretless"],
+      ["Head", "Natural skin-style"],
+      ["Pot", "Open back, walnut"],
+      ["Strings", "5-string"],
+      ["Scale Length", '26.25"'],
     ],
     color: "#2e1a10"
   },
   {
-    id: 5,
-    name: "Restored 1960s Harmony",
-    type: "repair",
-    label: "Restored",
+    id: 7,
+    name: "Mountain Dulcimer",
+    type: "other",
+    label: "Dulcimer",
     available: true,
-    badge: "Restored",
-    price: 650,
-    materials: "Original spruce top · Repaired bracing · New nut & saddle · Full setup",
-    desc: "A vintage 1960s Harmony archtop brought back to full playing condition. New nut and saddle, refretted, neck reset, and a light cleaning of the original finish. Plays beautifully and has the charm of its era.",
+    badge: null,
+    price: 550,
+    photo: "https://i.postimg.cc/K8WFxm5c/ba140368-34b3-4114-acf7-acf9be012655.jpg",
+    materials: "Spruce top · Walnut back & sides · Heart soundholes",
+    desc: "A traditional Appalachian mountain dulcimer with decorative heart and scroll soundholes. Three strings, easy to learn, and a gentle, singing tone. Perfect for beginners or folk enthusiasts.",
     specs: [
-      ["Original Year", "c. 1963"],
-      ["Make", "Harmony USA"],
-      ["Work Done", "Neck reset, refret, nut & saddle"],
-      ["Finish", "Original, lightly cleaned"],
-      ["Condition", "Good — playwear present"],
-      ["Setup", "Full professional setup"],
-      ["Action", "Low — player ready"],
+      ["Style", "Appalachian Mountain"],
+      ["Top", "Spruce"],
+      ["Back & Sides", "Walnut"],
+      ["Soundholes", "Heart & scroll cutouts"],
+      ["Strings", "3 (melody, middle, bass)"],
+      ["Tuners", "Geared"],
     ],
-    color: "#1a1008"
+    color: "#6b3d1a"
   },
   {
-    id: 6,
-    name: "Dreadnought No. 12",
+    id: 8,
+    name: "OM Guitar — Cedar Top",
     type: "guitar",
     label: "Guitar",
-    available: false,
-    badge: "Sold",
-    price: 3200,
-    materials: "Adirondack Spruce top · Mahogany back & sides",
-    desc: "A powerful dreadnought with a bold, full-bodied sound. Adirondack spruce top with scalloped X-bracing delivers strong bass and crystalline highs. This instrument has been sold but similar builds are available on commission.",
+    available: true,
+    badge: "Available",
+    price: 2900,
+    photo: "https://i.postimg.cc/qvF04pGR/e4209d31-205f-42cd-8258-e5a10cab3572.jpg",
+    materials: "Cedar top · Abalone rosette · Ebony fingerboard",
+    desc: "A warm-voiced orchestra model with a western red cedar top. Cedar tops are prized for their quick response and rich warmth even at low volumes — ideal for fingerstyle players. Beautiful abalone rosette.",
     specs: [
-      ["Body Style", "Dreadnought"],
-      ["Top", "Adirondack Spruce"],
-      ["Back & Sides", "Honduran Mahogany"],
-      ["Neck", "Mahogany"],
+      ["Body Style", "Orchestra Model"],
+      ["Top", "Western Red Cedar"],
+      ["Rosette", "Abalone"],
       ["Fingerboard", "Ebony"],
-      ["Finish", "Nitrocellulose, Vintage Amber"],
+      ["Scale Length", '25.4"'],
+      ["Nut Width", '1 3/4"'],
+      ["Finish", "Nitrocellulose"],
     ],
-    color: "#261510"
-  }
+    color: "#3a2015"
+  },
 ];
 
 let cart = [];
 let currentFilter = 'all';
+
+// ─── LIGHTBOX ────────────────────────────────────────────────────────────────
+function openLightbox(src) {
+  document.getElementById('lightboxImg').src = src;
+  document.getElementById('lightboxOverlay').classList.add('open');
+}
+function closeLightbox(e) {
+  if (!e || e.target === document.getElementById('lightboxOverlay') || e.target.classList.contains('lightbox-close')) {
+    document.getElementById('lightboxOverlay').classList.remove('open');
+  }
+}
 
 // ─── GUITAR SVG FOR CARDS ────────────────────────────────────────────────────
 function guitarSVG(color = '#2a1810') {
@@ -1671,7 +2556,10 @@ function renderProducts() {
   grid.innerHTML = filtered.map(p => `
     <div class="product-card fade-in" onclick="openProductModal(${p.id})">
       <div class="product-img" style="background:${p.color}">
-        ${p.type === 'other' ? mandolinSVG() : guitarSVG(p.color)}
+        ${p.photo
+          ? `<img src="${p.photo}" alt="${p.name}" referrerpolicy="no-referrer" crossorigin="anonymous" style="width:100%;height:100%;object-fit:cover;object-position:center;transition:transform 0.5s ease;">`
+          : (p.type === 'other' ? mandolinSVG() : guitarSVG(p.color))
+        }
         ${p.badge ? `<div class="product-badge">${p.badge}</div>` : ''}
       </div>
       <div class="product-info">
@@ -1764,36 +2652,25 @@ function openProductModal(id) {
   if (!p) return;
   
   document.getElementById('modalImg').innerHTML = `
-    <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:${p.color};min-height:400px">
-      ${p.type === 'other' ? `<svg viewBox="0 0 140 260" width="140" height="260" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:${p.color};min-height:400px;overflow:hidden;">
+      ${p.photo
+        ? `<img src="${p.photo}" alt="${p.name}" referrerpolicy="no-referrer" crossorigin="anonymous" style="width:100%;height:100%;object-fit:cover;object-position:center;">`
+        : (p.type === 'other' ? `<svg viewBox="0 0 140 260" width="140" height="260" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M70 220 C30 220 20 180 20 155 C20 130 35 115 70 115 C105 115 120 130 120 155 C120 180 110 220 70 220Z" fill="#4a2e1a" opacity="0.9"/>
         <circle cx="70" cy="160" r="22" fill="#0d0905"/>
         <circle cx="70" cy="160" r="18" fill="none" stroke="#c8772a" stroke-width="1.5" opacity="0.7"/>
         <rect x="63" y="38" width="14" height="80" fill="#2e1a10" rx="3"/>
         <rect x="59" y="16" width="22" height="28" rx="4" fill="#2e1a10"/>
-        <line x1="65" y1="116" x2="69" y2="205" stroke="#b8963c" stroke-width="0.8" opacity="0.6"/>
-        <line x1="69" y1="116" x2="73" y2="205" stroke="#b8963c" stroke-width="0.8" opacity="0.6"/>
-        <line x1="73" y1="116" x2="77" y2="205" stroke="#b8963c" stroke-width="0.8" opacity="0.6"/>
-      </svg>` : `<svg viewBox="0 0 200 350" width="170" height="297" fill="none" xmlns="http://www.w3.org/2000/svg">
+        </svg>` : `<svg viewBox="0 0 200 350" width="170" height="297" fill="none" xmlns="http://www.w3.org/2000/svg">
         <ellipse cx="100" cy="240" rx="65" ry="75" fill="#4a2e1a" opacity="0.9"/>
         <ellipse cx="100" cy="190" rx="50" ry="55" fill="#4a2e1a" opacity="0.9"/>
         <rect x="70" y="182" width="60" height="63" fill="#3a2218" opacity="0.95"/>
         <circle cx="100" cy="200" r="21" fill="#0d0905"/>
         <circle cx="100" cy="200" r="18" fill="none" stroke="#c8772a" stroke-width="1.5" opacity="0.7"/>
-        <line x1="87" y1="138" x2="90" y2="298" stroke="#b8963c" stroke-width="0.8" opacity="0.6"/>
-        <line x1="93" y1="138" x2="96" y2="298" stroke="#b8963c" stroke-width="0.8" opacity="0.6"/>
-        <line x1="99" y1="138" x2="102" y2="298" stroke="#b8963c" stroke-width="0.8" opacity="0.6"/>
-        <line x1="105" y1="138" x2="108" y2="298" stroke="#b8963c" stroke-width="0.8" opacity="0.6"/>
-        <line x1="111" y1="138" x2="114" y2="298" stroke="#b8963c" stroke-width="0.8" opacity="0.6"/>
-        <line x1="117" y1="138" x2="120" y2="298" stroke="#b8963c" stroke-width="0.8" opacity="0.6"/>
         <rect x="91" y="50" width="18" height="95" fill="#2a1810" rx="3"/>
         <rect x="86" y="28" width="28" height="30" rx="4" fill="#2a1810"/>
-        <circle cx="90" cy="36" r="3.5" fill="#c8772a" opacity="0.85"/>
-        <circle cx="90" cy="48" r="3.5" fill="#c8772a" opacity="0.85"/>
-        <circle cx="110" cy="36" r="3.5" fill="#c8772a" opacity="0.85"/>
-        <circle cx="110" cy="48" r="3.5" fill="#c8772a" opacity="0.85"/>
-        <rect x="88" y="285" width="24" height="9" rx="2" fill="#c8772a" opacity="0.8"/>
-      </svg>`}
+        </svg>`)
+      }
     </div>
   `;
   
@@ -1916,8 +2793,471 @@ function scrollTo(id) {
 }
 
 // ─── INIT ────────────────────────────────────────────────────────────────────
-renderProducts();
-initFadeIn();
+document.addEventListener('DOMContentLoaded', () => {
+  renderProducts();
+  initFadeIn();
+
+  // Re-run fade-in on scroll
+  window.addEventListener('scroll', () => {
+    initFadeIn();
+    // Shrink nav on scroll
+    const nav = document.getElementById('navbar');
+    if (window.scrollY > 60) {
+      nav.style.padding = '0.8rem 3rem';
+    } else {
+      nav.style.padding = '1.2rem 3rem';
+    }
+  }, { passive: true });
+});
+
+// ─── DISCRETE ADMIN TRIGGERS ─────────────────────────────────────────────────
+// Two ways to open admin — both invisible to casual visitors:
+//   1. Triple-click "Dennis J. Siler" in the footer
+//   2. Keyboard shortcut: Ctrl + Shift + A
+
+(function setupAdminTriggers() {
+  // Triple-click on footer name
+  let clickCount = 0;
+  let clickTimer = null;
+  document.addEventListener('DOMContentLoaded', () => {
+    const trigger = document.getElementById('adminTrigger');
+    if (!trigger) return;
+    trigger.style.cursor = 'default'; // no pointer — looks normal
+    trigger.addEventListener('click', () => {
+      clickCount++;
+      clearTimeout(clickTimer);
+      if (clickCount >= 3) {
+        clickCount = 0;
+        openAdmin();
+      } else {
+        clickTimer = setTimeout(() => { clickCount = 0; }, 600);
+      }
+    });
+  });
+
+  // Keyboard shortcut: Ctrl + Shift + A
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.shiftKey && e.key === 'A') {
+      e.preventDefault();
+      openAdmin();
+    }
+  });
+})();
+
+
+// Password lives in Firestore: collection "admin", document "config",
+// fields: { password: "...", recoveryEmail: "..." }
+// You never hardcode the password in this file.
+
+let adminUnlocked = false;
+let GALLERY_EXTRA = [];
+let firestoreAdminDoc = null; // cached after first fetch
+
+// ── Firebase helpers ──────────────────────────────────────────────────────────
+async function getAdminDoc() {
+  if (!db) return null;
+  try {
+    const snap = await db.collection('admin').doc('config').get();
+    return snap.exists ? snap.data() : null;
+  } catch(e) {
+    console.warn('Firestore read error:', e);
+    return null;
+  }
+}
+
+async function setAdminDoc(data) {
+  if (!db) return false;
+  try {
+    await db.collection('admin').doc('config').set(data, { merge: true });
+    return true;
+  } catch(e) {
+    console.warn('Firestore write error:', e);
+    return false;
+  }
+}
+
+// ── Open / close ──────────────────────────────────────────────────────────────
+function openAdmin() {
+  document.getElementById('adminOverlay').classList.add('open');
+  if (adminUnlocked) {
+    showAdminMain();
+  } else {
+    showLogin();
+    setTimeout(() => document.getElementById('adminPw').focus(), 200);
+  }
+}
+
+function closeAdmin() {
+  document.getElementById('adminOverlay').classList.remove('open');
+}
+
+function closeAdminCheck(e) {
+  if (e.target === document.getElementById('adminOverlay')) closeAdmin();
+}
+
+// ── Login screen helpers ──────────────────────────────────────────────────────
+function showLogin() {
+  document.getElementById('adminLoginForm').style.display = 'block';
+  document.getElementById('adminChangePwForm').style.display = 'none';
+  document.getElementById('adminRecoveryForm').style.display = 'none';
+}
+
+function showRecovery() {
+  document.getElementById('adminLoginForm').style.display = 'none';
+  document.getElementById('adminChangePwForm').style.display = 'none';
+  document.getElementById('adminRecoveryForm').style.display = 'block';
+  document.getElementById('recoveryEmail').value = '';
+  document.getElementById('recoveryHint').textContent = '';
+}
+
+function showChangePw() {
+  document.getElementById('adminLoginForm').style.display = 'none';
+  document.getElementById('adminChangePwForm').style.display = 'block';
+  document.getElementById('adminRecoveryForm').style.display = 'none';
+  document.getElementById('cp_current').value = '';
+  document.getElementById('cp_new').value = '';
+  document.getElementById('cp_confirm').value = '';
+  document.getElementById('changePwHint').textContent = '';
+}
+
+function togglePwVisibility() {
+  const f = document.getElementById('adminPw');
+  const b = document.getElementById('pwToggleBtn');
+  if (f.type === 'password') { f.type = 'text'; b.textContent = '🙈'; }
+  else { f.type = 'password'; b.textContent = '👁'; }
+}
+
+// ── Check password against Firestore ─────────────────────────────────────────
+async function checkAdminPw() {
+  const btn = document.getElementById('loginBtn');
+  const hint = document.getElementById('adminPwHint');
+  const pw = document.getElementById('adminPw').value.trim();
+
+  if (!pw) { hint.textContent = 'Please enter a password.'; hint.style.color='#e88'; return; }
+
+  btn.textContent = 'Checking…';
+  btn.disabled = true;
+  hint.textContent = '';
+
+  // If Firebase isn't configured yet, fall back gracefully
+  if (!db) {
+    hint.textContent = 'Firebase not connected — fill in credentials at top of file.';
+    hint.style.color = '#e88';
+    btn.textContent = 'Unlock →';
+    btn.disabled = false;
+    return;
+  }
+
+  const data = await getAdminDoc();
+
+  if (!data) {
+    // No doc exists yet — first-time setup: accept any password and save it
+    const saved = await setAdminDoc({ password: pw, recoveryEmail: '' });
+    if (saved) {
+      adminUnlocked = true;
+      firestoreAdminDoc = { password: pw, recoveryEmail: '' };
+      showAdminMain();
+    } else {
+      hint.textContent = 'Could not connect to Firebase. Check credentials.';
+      hint.style.color = '#e88';
+    }
+  } else if (pw === data.password) {
+    adminUnlocked = true;
+    firestoreAdminDoc = data;
+    showAdminMain();
+  } else {
+    hint.textContent = 'Incorrect password. Try again.';
+    hint.style.color = '#e88';
+    document.getElementById('adminPw').value = '';
+    document.getElementById('adminPw').focus();
+  }
+
+  btn.textContent = 'Unlock →';
+  btn.disabled = false;
+}
+
+// ── Change password ───────────────────────────────────────────────────────────
+async function changePassword() {
+  const current = document.getElementById('cp_current').value.trim();
+  const newPw   = document.getElementById('cp_new').value.trim();
+  const confirm = document.getElementById('cp_confirm').value.trim();
+  const hint    = document.getElementById('changePwHint');
+
+  if (!current || !newPw || !confirm) { hint.textContent='Fill in all fields.'; hint.style.color='#e88'; return; }
+  if (newPw !== confirm)              { hint.textContent='New passwords do not match.'; hint.style.color='#e88'; return; }
+  if (newPw.length < 6)               { hint.textContent='Password must be at least 6 characters.'; hint.style.color='#e88'; return; }
+
+  if (!db) { hint.textContent='Firebase not connected.'; hint.style.color='#e88'; return; }
+
+  const data = await getAdminDoc();
+  if (!data || current !== data.password) {
+    hint.textContent = 'Current password is wrong.';
+    hint.style.color = '#e88';
+    return;
+  }
+
+  const ok = await setAdminDoc({ password: newPw });
+  if (ok) {
+    firestoreAdminDoc = { ...firestoreAdminDoc, password: newPw };
+    hint.textContent = '✓ Password updated!';
+    hint.style.color = 'var(--amber-light)';
+    setTimeout(() => {
+      document.getElementById('adminChangePwForm').style.display = 'none';
+      document.getElementById('adminLoginForm').style.display = 'block';
+    }, 1800);
+  } else {
+    hint.textContent = 'Save failed — check Firebase permissions.';
+    hint.style.color = '#e88';
+  }
+}
+
+// ── Password recovery via EmailJS ─────────────────────────────────────────────
+async function sendRecovery() {
+  const enteredEmail = document.getElementById('recoveryEmail').value.trim().toLowerCase();
+  const hint = document.getElementById('recoveryHint');
+  const btn  = document.getElementById('recoveryBtn');
+
+  if (!enteredEmail) { hint.textContent='Please enter your email address.'; hint.style.color='#e88'; return; }
+
+  if (!db) {
+    hint.textContent = 'Firebase not connected.';
+    hint.style.color = '#e88';
+    return;
+  }
+
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+  hint.textContent = '';
+
+  const data = await getAdminDoc();
+
+  if (!data || !data.recoveryEmail) {
+    hint.textContent = 'No recovery email is set in Firebase yet. Ask your site helper.';
+    hint.style.color = '#e88';
+    btn.textContent = 'Send Recovery Email →';
+    btn.disabled = false;
+    return;
+  }
+
+  if (enteredEmail !== data.recoveryEmail.toLowerCase()) {
+    // IMPORTANT: we give the same message either way — never confirm/deny which emails exist
+    hint.textContent = 'If that email matches our records, a recovery message has been sent.';
+    hint.style.color = 'var(--amber-light)';
+    btn.textContent = 'Send Recovery Email →';
+    btn.disabled = false;
+    return;
+  }
+
+  // Email matches — send via EmailJS
+  // Template variables sent: {{to_email}}, {{password}}, {{site_name}}
+  try {
+    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      to_email:  data.recoveryEmail,
+      password:  data.password,
+      site_name: 'Siler Stringed Instruments'
+    });
+    hint.textContent = '✓ Recovery email sent! Check your inbox.';
+    hint.style.color = 'var(--amber-light)';
+  } catch(e) {
+    console.error('EmailJS error:', e);
+    hint.textContent = 'Email send failed. Check your EmailJS configuration.';
+    hint.style.color = '#e88';
+  }
+
+  btn.textContent = 'Send Recovery Email →';
+  btn.disabled = false;
+}
+
+// ── Show main admin after login ───────────────────────────────────────────────
+function showAdminMain() {
+  document.getElementById('adminLogin').style.display = 'none';
+  document.getElementById('adminMain').style.display = 'block';
+  switchAdminTab('add', document.querySelector('.admin-tab'));
+  // Show Firebase connection status
+  updateFirebaseStatus();
+}
+
+function updateFirebaseStatus() {
+  const dot = document.getElementById('firebaseStatusDot');
+  const txt = document.getElementById('firebaseStatusTxt');
+  if (!dot || !txt) return;
+  if (db) {
+    dot.className = 'admin-status-dot connected';
+    txt.textContent = 'Firebase connected';
+  } else {
+    dot.className = 'admin-status-dot error';
+    txt.textContent = 'Firebase not configured';
+  }
+}
+
+function showChangePwFromMain() {
+  document.getElementById('adminMain').style.display = 'none';
+  document.getElementById('adminLogin').style.display = 'block';
+  showChangePw();
+}
+
+
+  document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.admin-tab-content').forEach(c => c.style.display = 'none');
+  btn.classList.add('active');
+  document.getElementById('tab-' + tab).style.display = 'block';
+  if (tab === 'manage') renderAdminProductList();
+  if (tab === 'gallery') renderAdminGalleryList();
+}
+
+function previewPhoto(url) {
+  const area = document.getElementById('imgUploadArea');
+  const preview = document.getElementById('uploadPreview');
+  const img = document.getElementById('uploadPreviewImg');
+  if (url && url.startsWith('http')) {
+    img.src = url;
+    img.style.display = 'block';
+    preview.style.display = 'none';
+    area.classList.add('has-img');
+  } else {
+    img.style.display = 'none';
+    preview.style.display = 'flex';
+    area.classList.remove('has-img');
+  }
+}
+
+async function pasteFromClipboard(inputId) {
+  try {
+    const text = await navigator.clipboard.readText();
+    document.getElementById(inputId).value = text;
+    if (inputId === 'add_photo') previewPhoto(text);
+  } catch(e) {
+    showToast('Paste shortcut: use Ctrl+V / Cmd+V in the field');
+  }
+}
+
+function addProduct() {
+  const photo = document.getElementById('add_photo').value.trim();
+  const name = document.getElementById('add_name').value.trim();
+  const price = parseInt(document.getElementById('add_price').value) || 0;
+  const type = document.getElementById('add_type').value;
+  const label = document.getElementById('add_label').value.trim() || type.charAt(0).toUpperCase() + type.slice(1);
+  const materials = document.getElementById('add_materials').value.trim();
+  const desc = document.getElementById('add_desc').value.trim();
+  const badge = document.getElementById('add_badge').value.trim() || null;
+  const available = document.getElementById('add_available').checked;
+
+  if (!name) { showToast('Please enter an instrument name'); return; }
+  if (!price) { showToast('Please enter a price'); return; }
+
+  const newId = Math.max(...PRODUCTS.map(p => p.id), 0) + 1;
+  PRODUCTS.push({
+    id: newId, name, type, label, available, badge, price,
+    photo: photo || null, materials, desc, specs: [], color: '#2a1810'
+  });
+
+  renderProducts();
+
+  // Reset form
+  ['add_photo','add_name','add_price','add_label','add_materials','add_desc','add_badge'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('add_available').checked = true;
+  previewPhoto('');
+
+  document.getElementById('addSuccess').style.display = 'block';
+  setTimeout(() => document.getElementById('addSuccess').style.display = 'none', 3500);
+  showToast('Listing added!');
+}
+
+function renderAdminProductList() {
+  const list = document.getElementById('adminProductList');
+  if (!PRODUCTS.length) {
+    list.innerHTML = '<p style="color:rgba(245,240,232,0.4);font-style:italic;font-size:0.85rem">No listings yet.</p>';
+    return;
+  }
+  list.innerHTML = PRODUCTS.map(p => `
+    <div class="admin-product-row">
+      ${p.photo
+        ? `<img class="admin-product-thumb" src="${p.photo}" alt="${p.name}">`
+        : `<div class="admin-product-thumb-placeholder">♪</div>`}
+      <div class="admin-product-info">
+        <div class="admin-product-name">${p.name}</div>
+        <div class="admin-product-meta">$${p.price.toLocaleString()} · ${p.available ? '✓ Available' : '✗ Sold'}</div>
+      </div>
+      <div class="admin-product-actions">
+        <button class="admin-btn-toggle" onclick="toggleAvailable(${p.id})">${p.available ? 'Mark Sold' : 'Mark Avail.'}</button>
+        <button class="admin-btn-delete" onclick="deleteProduct(${p.id})">Delete</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleAvailable(id) {
+  const p = PRODUCTS.find(x => x.id === id);
+  if (p) { p.available = !p.available; renderProducts(); renderAdminProductList(); }
+}
+
+function deleteProduct(id) {
+  if (!confirm('Remove this listing from the shop?')) return;
+  const idx = PRODUCTS.findIndex(x => x.id === id);
+  if (idx !== -1) { PRODUCTS.splice(idx, 1); renderProducts(); renderAdminProductList(); }
+}
+
+function addGalleryImage() {
+  const url = document.getElementById('gal_url').value.trim();
+  const caption = document.getElementById('gal_caption').value.trim() || 'New Image';
+  if (!url) { showToast('Please enter an image URL'); return; }
+
+  // Add a new gallery item to the DOM dynamically
+  const grid = document.querySelector('.gallery-grid');
+  if (!grid) return;
+
+  const div = document.createElement('div');
+  div.className = 'gallery-item fade-in';
+  div.setAttribute('onclick', `openLightbox('${url}')`);
+  div.innerHTML = `
+    <img src="${url}" alt="${caption}">
+    <div class="gallery-item-caption"><span>${caption}</span></div>
+  `;
+  grid.appendChild(div);
+  initFadeIn();
+
+  GALLERY_EXTRA.push({ url, caption });
+
+  document.getElementById('gal_url').value = '';
+  document.getElementById('gal_caption').value = '';
+  document.getElementById('galSuccess').style.display = 'block';
+  setTimeout(() => document.getElementById('galSuccess').style.display = 'none', 3500);
+  renderAdminGalleryList();
+}
+
+function renderAdminGalleryList() {
+  const list = document.getElementById('adminGalleryList');
+  const allGalleryImgs = [
+    { url: 'https://i.postimg.cc/RZh9kWKY/04f7295c-b0ce-4d9d-af21-21108906b0b6.jpg', caption: 'Headstock Detail' },
+    { url: 'https://i.postimg.cc/vZTMJ4fW/1c7d037b-29b4-4a06-a763-99bc023d6a5d.jpg', caption: 'Dreadnought Guitar' },
+    { url: 'https://i.postimg.cc/9QkVCcYg/27dab5c9-86b3-4364-9fa0-80342a9eb47f.jpg', caption: 'Abalone Vine Inlay' },
+    { url: 'https://i.postimg.cc/RZY94vLY/353acdf0-f47b-4f9c-abf1-c6c6e930395b.jpg', caption: 'Celtic Harp' },
+    { url: 'https://i.postimg.cc/rwscBDxZ/3e53de8b-c1ba-4a2f-9b54-69ed59a40be8.jpg', caption: 'Label — Est. 1980' },
+    { url: 'https://i.postimg.cc/9Q0V6DZs/5df96386-a597-47c6-8c2f-2b8d78f9544c.jpg', caption: 'Binding Detail' },
+    { url: 'https://i.postimg.cc/rwHcMqNY/67cbc9fa-2dde-4733-bcd5-19080bf1520b.jpg', caption: 'Purfling Detail' },
+    { url: 'https://i.postimg.cc/NjFY3Km3/6cf208a8-d30d-4e95-9f1b-87e04f6c49b4.jpg', caption: 'Osage Orange Back' },
+    { url: 'https://i.postimg.cc/Cx2YSwsQ/7d809df8-9f93-4fe3-a280-84f201a2f739.jpg', caption: 'OM Rosette 2018' },
+    { url: 'https://i.postimg.cc/jS1KtR4p/961e6be5-2607-4460-add8-cdbc6b092fc2.jpg', caption: 'Sunburst OM' },
+    { url: 'https://i.postimg.cc/nhWZpn18/a37e3ad9-9cde-4693-866f-718340124dde.jpg', caption: 'Figured Back' },
+    { url: 'https://i.postimg.cc/7ZRDwqNk/abc8270f-55ac-45cd-a8e9-e945d886dbfb.jpg', caption: 'Dennis Siler' },
+    { url: 'https://i.postimg.cc/3xq7Y3ZH/b2ce22ca-6c83-486d-9a17-6103cf7d6567.jpg', caption: 'Minstrel Banjo' },
+    { url: 'https://i.postimg.cc/K8WFxm5c/ba140368-34b3-4114-acf7-acf9be012655.jpg', caption: 'Mountain Dulcimer' },
+    { url: 'https://i.postimg.cc/jS1KtRhS/bc3825ae-9d44-42c2-a195-fe4185a46431.jpg', caption: 'Rosewood Back & Neck' },
+    { url: 'https://i.postimg.cc/Vkh1mzFv/d4c5c5d3-4de7-476c-88dd-bff5f4d25237.jpg', caption: 'Abalone Edge Binding' },
+    { url: 'https://i.postimg.cc/qvF04pGR/e4209d31-205f-42cd-8258-e5a10cab3572.jpg', caption: '12-String Guitar' },
+    { url: 'https://i.postimg.cc/Pq8Hq06d/eccd866f-04ee-4f7b-85ed-d2dcd0e58f52.jpg', caption: 'OM Guitar in Case' },
+    ...GALLERY_EXTRA
+  ];
+
+  list.innerHTML = allGalleryImgs.map((img, i) => `
+    <div class="gal-admin-thumb" title="${img.caption}">
+      <img src="${img.url}" alt="${img.caption}">
+    </div>
+  `).join('');
+}
+
 </script>
 </body>
 </html>
