@@ -145,6 +145,19 @@ try {
   }
   .nav-admin-link:hover { color: var(--amber) !important; }
 
+  /* Footer admin link — same ghost treatment */
+  .footer-admin-link {
+    color: rgba(245,240,232,0.1);
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  .footer-admin-link:hover { color: rgba(200,119,42,0.7); }
+
   .cart-count {
     position: absolute;
     top: -6px; right: -6px;
@@ -251,12 +264,14 @@ try {
     position: relative;
     background: var(--dark);
     overflow: hidden;
+    min-height: 100vh;
   }
 
   .hero-img-container {
     position: absolute;
-    inset: 0;
-    /* flex removed — slides use position:absolute stacking */
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100%;
+    height: 100%;
   }
 
   .hero-guitar-graphic {
@@ -296,7 +311,9 @@ try {
   /* ── HERO SLIDESHOW ── */
   .hero-slide {
     position: absolute;
-    inset: 0;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100%;
+    height: 100%;
     opacity: 0;
     transition: opacity 1.2s ease;
     z-index: 1;
@@ -2379,8 +2396,11 @@ try {
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© <span id="adminTrigger" title="">Dennis J. Siler</span> — All instruments handbuilt in the USA</span>
-    <span>Site by Siler Family</span>
+    <span>© Dennis J. Siler — All instruments handbuilt in the USA</span>
+    <span style="display:flex;align-items:center;gap:1.5rem">
+      Site by Siler Family
+      <a onclick="openAdmin()" href="javascript:void(0)" class="footer-admin-link">Admin</a>
+    </span>
   </div>
 </footer>
 
@@ -3400,49 +3420,75 @@ function togglePwVisibility() {
   else { f.type = 'password'; b.textContent = '👁'; }
 }
 
-// ── Check password against Firestore ─────────────────────────────────────────
-async function checkAdminPw() {
-  const btn = document.getElementById('loginBtn');
-  const hint = document.getElementById('adminPwHint');
-  const pw = document.getElementById('adminPw').value.trim();
+// ── Check password against Firestore (with local fallback) ───────────────────
+// SETUP: Go to Firebase Console → Firestore → Create collection "admin" →
+//        Document ID "config" → add fields:
+//          password  (string)  = your chosen password
+//          recoveryEmail (string) = dad's email address
+//
+// Until that document exists, the fallback password below is used.
+const FALLBACK_PASSWORD = 'siler1980'; // change this once Firestore is set up
 
-  if (!pw) { hint.textContent = 'Please enter a password.'; hint.style.color='#e88'; return; }
+async function checkAdminPw() {
+  const btn  = document.getElementById('loginBtn');
+  const hint = document.getElementById('adminPwHint');
+  const pw   = document.getElementById('adminPw').value.trim();
+
+  if (!pw) { hint.textContent = 'Please enter a password.'; hint.style.color = '#e88'; return; }
 
   btn.textContent = 'Checking…';
   btn.disabled = true;
   hint.textContent = '';
 
-  // If Firebase isn't configured yet, fall back gracefully
-  if (!db) {
-    hint.textContent = 'Firebase not connected — fill in credentials at top of file.';
-    hint.style.color = '#e88';
-    btn.textContent = 'Unlock →';
-    btn.disabled = false;
-    return;
-  }
+  let authenticated = false;
 
-  const data = await getAdminDoc();
+  // Try Firestore first
+  if (db) {
+    try {
+      const data = await getAdminDoc();
 
-  if (!data) {
-    // No doc exists yet — first-time setup: accept any password and save it
-    const saved = await setAdminDoc({ password: pw, recoveryEmail: '' });
-    if (saved) {
-      adminUnlocked = true;
-      firestoreAdminDoc = { password: pw, recoveryEmail: '' };
-      showAdminMain();
+      if (!data) {
+        // No config doc yet — try to create it with this password, then let them in
+        const saved = await setAdminDoc({ password: pw, recoveryEmail: '' });
+        if (saved) {
+          firestoreAdminDoc = { password: pw, recoveryEmail: '' };
+          authenticated = true;
+        } else {
+          // Firestore write blocked — fall back to local password
+          if (pw === FALLBACK_PASSWORD) authenticated = true;
+          else hint.textContent = 'Firestore not configured yet — use fallback password: siler1980';
+        }
+      } else if (pw === data.password) {
+        firestoreAdminDoc = data;
+        authenticated = true;
+      } else {
+        hint.textContent = 'Incorrect password. Try again.';
+        hint.style.color = '#e88';
+      }
+    } catch (e) {
+      console.warn('Firestore error:', e);
+      // Network/rules error — fall back to local password
+      if (pw === FALLBACK_PASSWORD) {
+        authenticated = true;
+        hint.textContent = ''; // clear any error
+      } else {
+        hint.textContent = 'Firebase error — try the fallback password (siler1980) or check console.';
+        hint.style.color = '#e88';
+      }
+    }
+  } else {
+    // Firebase not initialized — use local fallback
+    if (pw === FALLBACK_PASSWORD) {
+      authenticated = true;
     } else {
-      hint.textContent = 'Could not connect to Firebase. Check credentials.';
+      hint.textContent = 'Firebase not connected. Use fallback password: siler1980';
       hint.style.color = '#e88';
     }
-  } else if (pw === data.password) {
+  }
+
+  if (authenticated) {
     adminUnlocked = true;
-    firestoreAdminDoc = data;
     showAdminMain();
-  } else {
-    hint.textContent = 'Incorrect password. Try again.';
-    hint.style.color = '#e88';
-    document.getElementById('adminPw').value = '';
-    document.getElementById('adminPw').focus();
   }
 
   btn.textContent = 'Unlock →';
