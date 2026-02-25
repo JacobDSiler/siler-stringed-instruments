@@ -7,45 +7,43 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Josefin+Sans:wght@200;300;400&display=swap" rel="stylesheet">
 
-<!-- Firebase SDK v10 compat -->
+<!-- Firebase SDK v10 compat (must match project version) -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
 <!-- EmailJS SDK -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
-<!-- ╔══════════════════════════════════════════════════════════════╗
-     ║  FILL IN YOUR FIREBASE + EMAILJS CREDENTIALS BELOW          ║
-     ║  (given to you once you set up the projects)                 ║
-     ╚══════════════════════════════════════════════════════════════╝ -->
 <script>
-// ─── FIREBASE CONFIG ─────────────────────────────────────────────────────────
-// Paste your Firebase project config object here (from Firebase Console →
-// Project Settings → Your apps → SDK setup & config → "Config")
+// ─── FIREBASE CONFIG (Siler Stringed Instruments) ────────────────────────────
 const FIREBASE_CONFIG = {
-  apiKey:            "PASTE_YOUR_API_KEY_HERE",
-  authDomain:        "PASTE_YOUR_AUTH_DOMAIN_HERE",
-  projectId:         "PASTE_YOUR_PROJECT_ID_HERE",
-  storageBucket:     "PASTE_YOUR_STORAGE_BUCKET_HERE",
-  messagingSenderId: "PASTE_YOUR_MESSAGING_SENDER_ID_HERE",
-  appId:             "PASTE_YOUR_APP_ID_HERE"
+  apiKey:            "AIzaSyDCuZP3OwNztxYWcPrzuxQbQEKHgEyeuvA",
+  authDomain:        "siler-stringed-instruments.firebaseapp.com",
+  projectId:         "siler-stringed-instruments",
+  storageBucket:     "siler-stringed-instruments.firebasestorage.app",
+  messagingSenderId: "807238649986",
+  appId:             "1:807238649986:web:a3f048fb8ab4d97053cc9b"
 };
 
 // ─── EMAILJS CONFIG ───────────────────────────────────────────────────────────
-// From your EmailJS dashboard (emailjs.com → Account → API Keys)
+// Paste your EmailJS credentials here (emailjs.com → Account → API Keys)
 const EMAILJS_PUBLIC_KEY  = "PASTE_YOUR_EMAILJS_PUBLIC_KEY_HERE";
 const EMAILJS_SERVICE_ID  = "PASTE_YOUR_EMAILJS_SERVICE_ID_HERE";
-const EMAILJS_TEMPLATE_ID = "PASTE_YOUR_EMAILJS_TEMPLATE_ID_HERE"; // for the password recovery email
+const EMAILJS_TEMPLATE_ID = "PASTE_YOUR_EMAILJS_TEMPLATE_ID_HERE";
 
 // ─── INIT ─────────────────────────────────────────────────────────────────────
 let db = null;
 try {
   firebase.initializeApp(FIREBASE_CONFIG);
   db = firebase.firestore();
-  emailjs.init(EMAILJS_PUBLIC_KEY);
-  console.log('Firebase + EmailJS ready');
+  console.log('✓ Firebase connected — project:', FIREBASE_CONFIG.projectId);
 } catch(e) {
-  console.warn('Firebase/EmailJS init skipped (credentials not yet filled in):', e.message);
+  console.warn('Firebase init failed:', e.message);
+}
+try {
+  emailjs.init(EMAILJS_PUBLIC_KEY);
+} catch(e) {
+  console.warn('EmailJS init skipped (fill in key):', e.message);
 }
 </script>
 <style>
@@ -136,6 +134,16 @@ try {
     position: relative;
   }
   .cart-btn:hover { background: var(--amber) !important; color: var(--dark) !important; }
+
+  /* Hidden admin link — invisible until hovered */
+  .nav-admin-item { opacity: 0; transition: opacity 0.3s; }
+  .nav-admin-item:hover { opacity: 1; }
+  .nav-admin-link {
+    color: rgba(138,122,106,0.5) !important;
+    font-size: 0.62rem !important;
+    letter-spacing: 0.15em !important;
+  }
+  .nav-admin-link:hover { color: var(--amber) !important; }
 
   .cart-count {
     position: absolute;
@@ -248,9 +256,7 @@ try {
   .hero-img-container {
     position: absolute;
     inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    /* flex removed — slides use position:absolute stacking */
   }
 
   .hero-guitar-graphic {
@@ -264,6 +270,8 @@ try {
     position: absolute;
     inset: 0;
     background: linear-gradient(135deg, rgba(26,20,16,0.3) 0%, rgba(200,119,42,0.1) 100%);
+    z-index: 2;
+    pointer-events: none;
   }
 
   .hero-right-text {
@@ -271,6 +279,7 @@ try {
     bottom: 3rem;
     right: 3rem;
     text-align: right;
+    z-index: 3;
   }
 
   .hero-right-text p {
@@ -282,18 +291,15 @@ try {
   }
 
   /* Guitar SVG placeholder */
-  .guitar-hero-svg {
-    width: 100%;
-    height: 100%;
-  }
+  .guitar-hero-svg { width: 100%; height: 100%; }
 
   /* ── HERO SLIDESHOW ── */
-  .hero-img-container { position: absolute; inset: 0; }
   .hero-slide {
     position: absolute;
     inset: 0;
     opacity: 0;
-    transition: opacity 1s ease;
+    transition: opacity 1.2s ease;
+    z-index: 1;
   }
   .hero-slide.active { opacity: 1; }
   .hero-slide img {
@@ -301,6 +307,7 @@ try {
     height: 100%;
     object-fit: cover;
     object-position: center;
+    display: block;
   }
   .hero-slide-nav {
     position: absolute;
@@ -315,7 +322,7 @@ try {
   .hero-slide-prev, .hero-slide-next {
     background: rgba(245,240,232,0.15);
     border: 1px solid rgba(245,240,232,0.3);
-    color: rgba(245,240,232,0.8);
+    color: rgba(245,240,232,0.85);
     width: 32px; height: 32px;
     cursor: pointer;
     font-size: 0.9rem;
@@ -326,8 +333,9 @@ try {
     backdrop-filter: blur(4px);
   }
   .hero-slide-prev:hover, .hero-slide-next:hover {
-    background: rgba(200,119,42,0.5);
+    background: rgba(200,119,42,0.6);
     color: white;
+    border-color: var(--amber);
   }
   .hero-slide-dots { display: flex; gap: 0.4rem; }
   .hero-dot {
@@ -339,7 +347,7 @@ try {
     border: none;
     padding: 0;
   }
-  .hero-dot.active { background: var(--amber); transform: scale(1.3); }
+  .hero-dot.active { background: var(--amber); transform: scale(1.4); }
 
   /* ── SECTION STYLES ── */
   section { padding: 6rem 5rem; }
@@ -1699,7 +1707,7 @@ try {
   }
 
   /* ── ADMIN PANEL ── */
-  /* No visible admin button — access via triple-press 'A' key, or triple-click footer name */
+  /* Admin accessed via hidden nav link (visible on hover only) */
 
   .admin-overlay {
     position: fixed;
@@ -2011,6 +2019,9 @@ try {
     <li><a href="#about">About</a></li>
     <li><a href="#commission">Commission</a></li>
     <li><a href="#commission" class="btn-primary" style="padding:0.4rem 1rem;">Inquire</a></li>
+    <li class="nav-admin-item">
+      <a class="nav-admin-link" onclick="openAdmin()" href="javascript:void(0)">Admin</a>
+    </li>
     <li><a class="cart-btn" onclick="openCart()">
       Cart
       <span class="cart-count" id="cartCount">0</span>
@@ -2361,7 +2372,7 @@ try {
     <div class="footer-col">
       <h4>Get in Touch</h4>
       <ul>
-        <! --<li><a href="/cdn-cgi/l/email-protection#751c1b131a35061c19100712001c011407065b161a18"><span class="__cf_email__" data-cfemail="6b02050d042b1802070e190c1e021f0a191845080406">[email&#160;protected]</span></a></li>-->
+        <li><a href="/cdn-cgi/l/email-protection#751c1b131a35061c19100712001c011407065b161a18"><span class="__cf_email__" data-cfemail="6b02050d042b1802070e190c1e021f0a191845080406">[email&#160;protected]</span></a></li>
         <li><a href="https://silerguitars.com" target="_blank">silerguitars.com</a></li>
         <li><a onclick="scrollTo('commission')">Send an Enquiry</a></li>
       </ul>
@@ -2461,7 +2472,7 @@ try {
      Click the gold "Admin" button (bottom-right) to open.
      Password: siler1980
 ═══════════════════════════════════════════════════════ -->
-<!-- Admin access: triple-press 'A' key, or triple-click "Dennis J. Siler" in the footer -->
+<!-- Admin access: hover over the end of the nav bar to reveal the hidden "Admin" link -->
 
 <div class="admin-overlay" id="adminOverlay" onclick="closeAdminCheck(event)">
   <div class="admin-panel" id="adminPanel">
@@ -3302,67 +3313,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { passive: true });
 });
 
-// ─── DISCRETE ADMIN TRIGGERS ─────────────────────────────────────────────────
-// Two ways to open admin — both invisible to casual visitors:
-//   1. Triple-click "Dennis J. Siler" in the footer
-//   2. Keyboard shortcut: Ctrl + Shift + A
-
-(function setupAdminTriggers() {
-
-  // ── Trigger 1: Triple-press the 'a' key (no modifiers needed) ────────────
-  // Press 'a' three times within 1.2 seconds, while NOT in a text input
-  let keySeq = 0;
-  let keyTimer = null;
-  document.addEventListener('keydown', (e) => {
-    // Ignore if user is typing in any input / textarea / select
-    const tag = document.activeElement && document.activeElement.tagName;
-    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
-
-    if (e.key === 'a' || e.key === 'A') {
-      keySeq++;
-      clearTimeout(keyTimer);
-      if (keySeq >= 3) {
-        keySeq = 0;
-        openAdmin();
-      } else {
-        keyTimer = setTimeout(() => { keySeq = 0; }, 1200);
-      }
-    } else {
-      // Any other key resets the sequence
-      keySeq = 0;
-      clearTimeout(keyTimer);
-    }
-  });
-
-  // ── Trigger 2: Triple-click "Dennis J. Siler" in the footer ──────────────
-  // Attaches after DOM is ready; uses mousedown to avoid selection interfering
-  function attachFooterTrigger() {
-    const trigger = document.getElementById('adminTrigger');
-    if (!trigger) return;
-    trigger.style.cursor = 'default';
-    trigger.style.userSelect = 'none';
-    let clicks = 0;
-    let timer = null;
-    trigger.addEventListener('mousedown', (e) => {
-      e.preventDefault(); // prevents text selection on rapid clicks
-      clicks++;
-      clearTimeout(timer);
-      if (clicks >= 3) {
-        clicks = 0;
-        openAdmin();
-      } else {
-        timer = setTimeout(() => { clicks = 0; }, 700);
-      }
-    });
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', attachFooterTrigger);
-  } else {
-    attachFooterTrigger();
-  }
-
-})();
+// ─── ADMIN ACCESS ─────────────────────────────────────────────────────────────
+// Admin is accessed via the hidden "Admin" link at the end of the nav bar.
+// It's invisible until hovered — the password requirement keeps it secure.
 
 
 // Password lives in Firestore: collection "admin", document "config",
