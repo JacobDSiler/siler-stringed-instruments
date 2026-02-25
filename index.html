@@ -287,6 +287,60 @@ try {
     height: 100%;
   }
 
+  /* ── HERO SLIDESHOW ── */
+  .hero-img-container { position: absolute; inset: 0; }
+  .hero-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1s ease;
+  }
+  .hero-slide.active { opacity: 1; }
+  .hero-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  .hero-slide-nav {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    z-index: 10;
+  }
+  .hero-slide-prev, .hero-slide-next {
+    background: rgba(245,240,232,0.15);
+    border: 1px solid rgba(245,240,232,0.3);
+    color: rgba(245,240,232,0.8);
+    width: 32px; height: 32px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    backdrop-filter: blur(4px);
+  }
+  .hero-slide-prev:hover, .hero-slide-next:hover {
+    background: rgba(200,119,42,0.5);
+    color: white;
+  }
+  .hero-slide-dots { display: flex; gap: 0.4rem; }
+  .hero-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: rgba(245,240,232,0.35);
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+    padding: 0;
+  }
+  .hero-dot.active { background: var(--amber); transform: scale(1.3); }
+
   /* ── SECTION STYLES ── */
   section { padding: 6rem 5rem; }
 
@@ -1296,7 +1350,338 @@ try {
     .about-strip { grid-template-columns: 1fr; }
   }
 
-  /* ── RESPONSIVE ── */
+  /* ── JOURNAL / ARTICLES ── */
+  #journal { background: var(--cream); padding: 6rem 5rem; }
+
+  .journal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2.5rem;
+    margin-top: 3rem;
+  }
+
+  .journal-card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    overflow: hidden;
+  }
+  .journal-card:hover { transform: translateY(-3px); box-shadow: 0 16px 48px rgba(26,20,16,0.1); }
+
+  .journal-card-img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    background: var(--dark);
+  }
+  .journal-card-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+    referrerpolicy: no-referrer;
+  }
+  .journal-card:hover .journal-card-img img { transform: scale(1.04); }
+  .journal-card-img-placeholder {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: linear-gradient(135deg, #2a1810, #4a2e1a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    opacity: 0.5;
+  }
+
+  .journal-card-body { padding: 1.5rem; }
+  .journal-card-cat {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 0.5rem;
+  }
+  .journal-card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.45rem;
+    font-weight: 400;
+    color: var(--dark);
+    line-height: 1.2;
+    margin-bottom: 0.6rem;
+  }
+  .journal-card-excerpt {
+    font-size: 0.84rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .journal-card-meta {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    opacity: 0.7;
+  }
+
+  .journal-empty {
+    grid-column: 1/-1;
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+  .journal-empty p { font-size: 0.95rem; line-height: 1.7; margin-top: 0.5rem; }
+
+  /* Article reader overlay */
+  .article-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(26,20,16,0.85);
+    z-index: 450;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 2rem;
+    overflow-y: auto;
+  }
+  .article-overlay.open { opacity: 1; pointer-events: all; }
+
+  .article-reader {
+    background: var(--warm-white);
+    max-width: 760px;
+    width: 100%;
+    position: relative;
+    transform: translateY(20px);
+    transition: transform 0.3s;
+    margin: auto;
+  }
+  .article-overlay.open .article-reader { transform: translateY(0); }
+
+  .article-hero-img {
+    width: 100%;
+    aspect-ratio: 16/7;
+    object-fit: cover;
+    display: block;
+  }
+  .article-hero-placeholder {
+    width: 100%;
+    aspect-ratio: 16/7;
+    background: linear-gradient(135deg, #2a1810 0%, #4a2e1a 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 5rem; opacity: 0.4;
+  }
+
+  .article-header {
+    padding: 2.5rem 3rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .article-cat {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 0.8rem;
+  }
+  .article-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--dark);
+    margin-bottom: 1rem;
+  }
+  .article-byline {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .article-body {
+    padding: 2rem 3rem 3rem;
+    font-size: 1rem;
+    line-height: 1.95;
+    color: var(--dark);
+  }
+  .article-body h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    margin: 2rem 0 0.8rem;
+    color: var(--dark);
+  }
+  .article-body h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    margin: 1.5rem 0 0.5rem;
+    color: var(--brown);
+  }
+  .article-body p { margin-bottom: 1.2rem; }
+  .article-body img {
+    width: 100%;
+    margin: 1.5rem 0;
+    display: block;
+  }
+  .article-body img.img-left {
+    float: left;
+    width: 45%;
+    margin: 0.5rem 1.5rem 1rem 0;
+  }
+  .article-body img.img-right {
+    float: right;
+    width: 45%;
+    margin: 0.5rem 0 1rem 1.5rem;
+  }
+  .article-body blockquote {
+    border-left: 3px solid var(--amber);
+    margin: 1.5rem 0;
+    padding: 0.8rem 1.5rem;
+    background: rgba(200,119,42,0.05);
+    font-style: italic;
+    color: var(--brown);
+  }
+
+  .article-footer {
+    padding: 1.5rem 3rem 2rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .article-share-btn {
+    background: var(--amber);
+    color: var(--dark);
+    border: none;
+    padding: 0.7rem 1.5rem;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .article-share-btn:hover { background: var(--dark); color: var(--cream); }
+
+  .article-close-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 0.7rem 1.5rem;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .article-close-btn:hover { border-color: var(--dark); color: var(--dark); }
+
+  .article-overlay-close {
+    position: fixed;
+    top: 1rem; right: 1rem;
+    background: var(--dark);
+    color: var(--cream);
+    border: none;
+    width: 36px; height: 36px;
+    font-size: 1rem;
+    cursor: pointer;
+    z-index: 460;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .article-overlay-close:hover { background: var(--amber); color: var(--dark); }
+
+  /* Share toast */
+  .share-copied {
+    position: fixed;
+    bottom: 2rem; left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--amber);
+    color: var(--dark);
+    padding: 0.7rem 1.5rem;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    z-index: 900;
+    transition: transform 0.3s;
+  }
+  .share-copied.show { transform: translateX(-50%) translateY(0); }
+
+  /* Admin article tab styles */
+  .rich-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    padding: 6px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(200,119,42,0.2);
+    border-bottom: none;
+  }
+  .rich-btn {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(200,119,42,0.2);
+    color: rgba(245,240,232,0.75);
+    padding: 3px 8px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: sans-serif;
+    line-height: 1.4;
+  }
+  .rich-btn:hover { background: var(--amber); color: var(--dark); border-color: var(--amber); }
+  .rich-editor {
+    width: 100%;
+    min-height: 220px;
+    padding: 0.9rem 1rem;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(200,119,42,0.25);
+    color: var(--cream);
+    font-family: 'Libre Baskerville', serif;
+    font-size: 0.88rem;
+    line-height: 1.8;
+    outline: none;
+  }
+  .rich-editor:focus { border-color: var(--amber); }
+  .rich-editor [contenteditable] { outline: none; }
+
+  .journal-article-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid rgba(200,119,42,0.12);
+  }
+  .journal-article-thumb {
+    width: 60px; height: 40px;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: #2a1810;
+  }
+  .journal-article-info { flex: 1; min-width: 0; }
+  .journal-article-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--cream);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .journal-article-meta { font-size: 0.72rem; color: rgba(245,240,232,0.4); font-style: italic; }
   @media (max-width: 900px) {
     nav { padding: 1rem 1.5rem; }
     .nav-links { gap: 1.2rem; }
@@ -1314,7 +1699,7 @@ try {
   }
 
   /* ── ADMIN PANEL ── */
-  /* No visible admin button — access via triple-click on footer name or Ctrl+Shift+A */
+  /* No visible admin button — access via triple-press 'A' key, or triple-click footer name */
 
   .admin-overlay {
     position: fixed;
@@ -1622,6 +2007,7 @@ try {
   <ul class="nav-links">
     <li><a href="#shop">Shop</a></li>
     <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#journal">Journal</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#commission">Commission</a></li>
     <li><a href="#commission" class="btn-primary" style="padding:0.4rem 1rem;">Inquire</a></li>
@@ -1644,8 +2030,13 @@ try {
     </div>
   </div>
   <div class="hero-right">
-    <div class="hero-img-container">
-      <img class="hero-guitar-graphic" referrerpolicy="no-referrer" crossorigin="anonymous" src="https://i.postimg.cc/vZTMJ4fW/1c7d037b-29b4-4a06-a763-99bc023d6a5d.jpg" alt="Siler handcrafted dreadnought guitar" style="object-position: center top;">
+    <div class="hero-img-container" id="heroSlideshow">
+      <!-- Slides injected by JS -->
+    </div>
+    <div class="hero-slide-nav">
+      <button class="hero-slide-prev" onclick="heroSlide(-1)" aria-label="Previous">&#8592;</button>
+      <div class="hero-slide-dots" id="heroSlideDots"></div>
+      <button class="hero-slide-next" onclick="heroSlide(1)" aria-label="Next">&#8594;</button>
     </div>
     <div class="hero-overlay"></div>
     <div class="hero-right-text">
@@ -1765,8 +2156,31 @@ try {
   <img class="lightbox-img" id="lightboxImg" src="" alt="">
 </div>
 
+<!-- JOURNAL -->
+<section id="journal">
+  <div class="section-header fade-in">
+    <span class="section-eyebrow">From the Workshop</span>
+    <h2 class="section-title">Dennis's Journal</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="journal-grid" id="journalGrid">
+    <!-- Rendered by JS -->
+  </div>
+</section>
+
+<!-- ARTICLE READER OVERLAY -->
+<div class="article-overlay" id="articleOverlay" onclick="closeArticleCheck(event)">
+  <button class="article-overlay-close" onclick="closeArticle()">✕</button>
+  <div class="article-reader" id="articleReader">
+    <!-- Injected by JS -->
+  </div>
+</div>
+
+<!-- SHARE TOAST -->
+<div class="share-copied" id="shareCopied">Link copied to clipboard!</div>
+
 <!-- ABOUT -->
-<div class="about-strip fade-in" id="about">
+<div class="about-strip" id="about">
   <div class="about-left">
     <span class="section-eyebrow">The Luthier</span>
     <h2 class="section-title">Dennis J. Siler</h2>
@@ -1865,7 +2279,7 @@ try {
       </div>
     </div>
 
-    <div class="commission-form fade-in">
+    <div class="commission-form">
       <div id="commissionFormWrap">
         <h3 class="form-title">Start a Conversation</h3>
         <p class="form-subtitle">No commitment — just a chat about what you're dreaming of.</p>
@@ -1937,6 +2351,7 @@ try {
       <ul>
         <li><a onclick="scrollTo('shop')">Shop</a></li>
         <li><a onclick="scrollTo('gallery')">Gallery</a></li>
+        <li><a onclick="scrollTo('journal')">Journal</a></li>
         <li><a onclick="scrollTo('about')">About Dennis</a></li>
         <li><a onclick="scrollTo('commission')">Commission</a></li>
         <li><a onclick="scrollTo('commission')">Repairs & Restoration</a></li>
@@ -2046,7 +2461,7 @@ try {
      Click the gold "Admin" button (bottom-right) to open.
      Password: siler1980
 ═══════════════════════════════════════════════════════ -->
-<!-- Admin access: triple-click "Dennis J. Siler" in the footer, or press Ctrl+Shift+A -->
+<!-- Admin access: triple-press 'A' key, or triple-click "Dennis J. Siler" in the footer -->
 
 <div class="admin-overlay" id="adminOverlay" onclick="closeAdminCheck(event)">
   <div class="admin-panel" id="adminPanel">
@@ -2134,7 +2549,8 @@ try {
       <div class="admin-tabs">
         <button class="admin-tab active" onclick="switchAdminTab('add',this)">＋ Add Listing</button>
         <button class="admin-tab" onclick="switchAdminTab('manage',this)">✎ Manage Listings</button>
-        <button class="admin-tab" onclick="switchAdminTab('gallery',this)">⬛ Gallery Images</button>
+        <button class="admin-tab" onclick="switchAdminTab('journal',this)">✍ Journal</button>
+        <button class="admin-tab" onclick="switchAdminTab('gallery',this)">⬛ Gallery</button>
         <button class="admin-tab" onclick="switchAdminTab('help',this)">? How To</button>
       </div>
 
@@ -2213,6 +2629,78 @@ try {
       <div class="admin-tab-content" id="tab-manage" style="display:none">
         <div class="admin-section-label">Current Listings</div>
         <div id="adminProductList"></div>
+      </div>
+
+      <!-- TAB: JOURNAL -->
+      <div class="admin-tab-content" id="tab-journal" style="display:none">
+
+        <!-- Write new article -->
+        <div id="journalWritePanel">
+          <div class="admin-section-label">Write a New Article</div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Title</label>
+              <input type="text" id="art_title" placeholder="e.g. How I Build a Spruce Top">
+            </div>
+            <div class="form-group">
+              <label>Category</label>
+              <select id="art_cat">
+                <option>Build Process</option>
+                <option>Wood & Materials</option>
+                <option>Instruments</option>
+                <option>Workshop Life</option>
+                <option>Stories</option>
+                <option>Tips & Advice</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Cover Image URL (optional — PostImg direct link)</label>
+            <div style="display:flex;gap:0.5rem">
+              <input type="url" id="art_cover" placeholder="https://i.postimg.cc/..." oninput="previewArticleCover(this.value)">
+              <button class="admin-paste-btn" onclick="pasteFromClipboard('art_cover')">Paste</button>
+            </div>
+            <img id="art_cover_preview" src="" alt="" style="display:none;width:100%;margin-top:0.5rem;max-height:140px;object-fit:cover;">
+          </div>
+
+          <div class="form-group" style="margin-bottom:0">
+            <label>Article Body</label>
+          </div>
+          <!-- Rich text toolbar -->
+          <div class="rich-toolbar">
+            <button class="rich-btn" onclick="artFmt('bold')" title="Bold"><b>B</b></button>
+            <button class="rich-btn" onclick="artFmt('italic')" title="Italic"><i>I</i></button>
+            <button class="rich-btn" onclick="artFmt('underline')" title="Underline"><u>U</u></button>
+            <button class="rich-btn" onclick="artFmtBlock('h2')" title="Heading">H2</button>
+            <button class="rich-btn" onclick="artFmtBlock('h3')" title="Sub-heading">H3</button>
+            <button class="rich-btn" onclick="artFmtBlock('blockquote')" title="Quote">❝</button>
+            <button class="rich-btn" onclick="artFmt('insertUnorderedList')" title="Bullet list">• List</button>
+            <button class="rich-btn" onclick="artFmt('insertOrderedList')" title="Numbered list">1. List</button>
+            <button class="rich-btn" onclick="artInsertImg('full')" title="Insert image full width">⬛ Img</button>
+            <button class="rich-btn" onclick="artInsertImg('left')" title="Insert image float left">◧ Img Left</button>
+            <button class="rich-btn" onclick="artInsertImg('right')" title="Insert image float right">◨ Img Right</button>
+            <button class="rich-btn" onclick="artFmt('removeFormat')" title="Clear formatting">✕ Fmt</button>
+          </div>
+          <div class="rich-editor" id="artEditor" contenteditable="true"
+            placeholder="Start writing here… use the toolbar above to format and add images."></div>
+
+          <div style="display:flex;gap:0.8rem;margin-top:1rem">
+            <button class="form-submit" style="flex:1" onclick="publishArticle()">Publish Article →</button>
+          </div>
+          <div id="artSuccess" style="display:none;margin-top:1rem;padding:0.8rem;background:rgba(200,119,42,0.15);border-left:3px solid var(--amber);color:var(--amber-light);font-family:'Josefin Sans',sans-serif;font-size:0.75rem;letter-spacing:0.1em">
+            ✓ Article published!
+          </div>
+        </div>
+
+        <!-- Manage existing articles -->
+        <div style="margin-top:2.5rem">
+          <div class="admin-section-label">Published Articles</div>
+          <div id="adminArticleList">
+            <p style="color:rgba(245,240,232,0.35);font-style:italic;font-size:0.85rem">No articles yet. Write your first one above!</p>
+          </div>
+        </div>
       </div>
 
       <!-- TAB: GALLERY -->
@@ -2783,7 +3271,7 @@ function initFadeIn() {
         obs.unobserve(e.target);
       }
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
   els.forEach(el => obs.observe(el));
 }
 
@@ -2796,6 +3284,10 @@ function scrollTo(id) {
 document.addEventListener('DOMContentLoaded', () => {
   renderProducts();
   initFadeIn();
+  initHeroSlideshow();
+  renderJournal();
+  loadArticlesFromFirestore();
+  checkArticleDeepLink();
 
   // Re-run fade-in on scroll
   window.addEventListener('scroll', () => {
@@ -2816,32 +3308,60 @@ document.addEventListener('DOMContentLoaded', () => {
 //   2. Keyboard shortcut: Ctrl + Shift + A
 
 (function setupAdminTriggers() {
-  // Triple-click on footer name
-  let clickCount = 0;
-  let clickTimer = null;
-  document.addEventListener('DOMContentLoaded', () => {
-    const trigger = document.getElementById('adminTrigger');
-    if (!trigger) return;
-    trigger.style.cursor = 'default'; // no pointer — looks normal
-    trigger.addEventListener('click', () => {
-      clickCount++;
-      clearTimeout(clickTimer);
-      if (clickCount >= 3) {
-        clickCount = 0;
+
+  // ── Trigger 1: Triple-press the 'a' key (no modifiers needed) ────────────
+  // Press 'a' three times within 1.2 seconds, while NOT in a text input
+  let keySeq = 0;
+  let keyTimer = null;
+  document.addEventListener('keydown', (e) => {
+    // Ignore if user is typing in any input / textarea / select
+    const tag = document.activeElement && document.activeElement.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+
+    if (e.key === 'a' || e.key === 'A') {
+      keySeq++;
+      clearTimeout(keyTimer);
+      if (keySeq >= 3) {
+        keySeq = 0;
         openAdmin();
       } else {
-        clickTimer = setTimeout(() => { clickCount = 0; }, 600);
+        keyTimer = setTimeout(() => { keySeq = 0; }, 1200);
       }
-    });
-  });
-
-  // Keyboard shortcut: Ctrl + Shift + A
-  document.addEventListener('keydown', (e) => {
-    if (e.ctrlKey && e.shiftKey && e.key === 'A') {
-      e.preventDefault();
-      openAdmin();
+    } else {
+      // Any other key resets the sequence
+      keySeq = 0;
+      clearTimeout(keyTimer);
     }
   });
+
+  // ── Trigger 2: Triple-click "Dennis J. Siler" in the footer ──────────────
+  // Attaches after DOM is ready; uses mousedown to avoid selection interfering
+  function attachFooterTrigger() {
+    const trigger = document.getElementById('adminTrigger');
+    if (!trigger) return;
+    trigger.style.cursor = 'default';
+    trigger.style.userSelect = 'none';
+    let clicks = 0;
+    let timer = null;
+    trigger.addEventListener('mousedown', (e) => {
+      e.preventDefault(); // prevents text selection on rapid clicks
+      clicks++;
+      clearTimeout(timer);
+      if (clicks >= 3) {
+        clicks = 0;
+        openAdmin();
+      } else {
+        timer = setTimeout(() => { clicks = 0; }, 700);
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', attachFooterTrigger);
+  } else {
+    attachFooterTrigger();
+  }
+
 })();
 
 
@@ -3256,6 +3776,315 @@ function renderAdminGalleryList() {
       <img src="${img.url}" alt="${img.caption}">
     </div>
   `).join('');
+
+}
+
+// ─── HERO SLIDESHOW ───────────────────────────────────────────────────────────
+const HERO_IMAGES = [
+  { url: 'https://i.postimg.cc/vZTMJ4fW/1c7d037b-29b4-4a06-a763-99bc023d6a5d.jpg', alt: 'Siler dreadnought guitar' },
+  { url: 'https://i.postimg.cc/9QkVCcYg/27dab5c9-86b3-4364-9fa0-80342a9eb47f.jpg', alt: 'Abalone vine fretboard inlay' },
+  { url: 'https://i.postimg.cc/RZY94vLY/353acdf0-f47b-4f9c-abf1-c6c6e930395b.jpg', alt: 'Celtic harp in workshop' },
+  { url: 'https://i.postimg.cc/NjFY3Km3/6cf208a8-d30d-4e95-9f1b-87e04f6c49b4.jpg', alt: 'Osage orange guitar back' },
+  { url: 'https://i.postimg.cc/Cx2YSwsQ/7d809df8-9f93-4fe3-a280-84f201a2f739.jpg', alt: 'OM guitar abalone rosette' },
+  { url: 'https://i.postimg.cc/nhWZpn18/a37e3ad9-9cde-4693-866f-718340124dde.jpg', alt: 'Figured maple guitar back' },
+  { url: 'https://i.postimg.cc/3xq7Y3ZH/b2ce22ca-6c83-486d-9a17-6103cf7d6567.jpg', alt: 'Minstrel banjo' },
+  { url: 'https://i.postimg.cc/qvF04pGR/e4209d31-205f-42cd-8258-e5a10cab3572.jpg', alt: '12-string guitar' },
+  { url: 'https://i.postimg.cc/Pq8Hq06d/eccd866f-04ee-4f7b-85ed-d2dcd0e58f52.jpg', alt: 'OM guitar in case' },
+];
+
+let heroCurrentSlide = 0;
+let heroTimer = null;
+
+function initHeroSlideshow() {
+  const container = document.getElementById('heroSlideshow');
+  const dotsEl    = document.getElementById('heroSlideDots');
+  if (!container || !dotsEl) return;
+
+  // Build slides
+  container.innerHTML = HERO_IMAGES.map((img, i) => `
+    <div class="hero-slide${i === 0 ? ' active' : ''}">
+      <img src="${img.url}" alt="${img.alt}" referrerpolicy="no-referrer" loading="${i === 0 ? 'eager' : 'lazy'}">
+    </div>
+  `).join('');
+
+  // Build dots
+  dotsEl.innerHTML = HERO_IMAGES.map((_, i) => `
+    <button class="hero-dot${i === 0 ? ' active' : ''}" onclick="heroGoTo(${i})" aria-label="Slide ${i+1}"></button>
+  `).join('');
+
+  startHeroTimer();
+}
+
+function heroGoTo(idx) {
+  const slides = document.querySelectorAll('.hero-slide');
+  const dots   = document.querySelectorAll('.hero-dot');
+  slides[heroCurrentSlide]?.classList.remove('active');
+  dots[heroCurrentSlide]?.classList.remove('active');
+  heroCurrentSlide = (idx + HERO_IMAGES.length) % HERO_IMAGES.length;
+  slides[heroCurrentSlide]?.classList.add('active');
+  dots[heroCurrentSlide]?.classList.add('active');
+}
+
+function heroSlide(dir) {
+  clearTimeout(heroTimer);
+  heroGoTo(heroCurrentSlide + dir);
+  startHeroTimer();
+}
+
+function startHeroTimer() {
+  clearTimeout(heroTimer);
+  heroTimer = setTimeout(() => {
+    heroGoTo(heroCurrentSlide + 1);
+    startHeroTimer();
+  }, 4500);
+}
+
+// ─── JOURNAL / ARTICLES ───────────────────────────────────────────────────────
+// Articles stored in memory (and optionally Firestore)
+let ARTICLES = [];
+
+function renderJournal() {
+  const grid = document.getElementById('journalGrid');
+  if (!grid) return;
+
+  if (ARTICLES.length === 0) {
+    grid.innerHTML = `
+      <div class="journal-empty">
+        <p style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;color:var(--muted)">Coming soon…</p>
+        <p>Dennis will be sharing stories from the workshop — build processes, wood selection, and the stories behind his instruments.</p>
+      </div>`;
+    return;
+  }
+
+  grid.innerHTML = ARTICLES.slice().reverse().map(a => `
+    <div class="journal-card fade-in" onclick="openArticle('${a.id}')">
+      ${a.cover
+        ? `<div class="journal-card-img"><img src="${a.cover}" alt="${a.title}" referrerpolicy="no-referrer" loading="lazy"></div>`
+        : `<div class="journal-card-img-placeholder">♪</div>`}
+      <div class="journal-card-body">
+        <div class="journal-card-cat">${a.category}</div>
+        <div class="journal-card-title">${a.title}</div>
+        <div class="journal-card-excerpt">${a.excerpt}</div>
+        <div class="journal-card-meta">${a.date}</div>
+      </div>
+    </div>
+  `).join('');
+
+  setTimeout(initFadeIn, 50);
+}
+
+function openArticle(id) {
+  const a = ARTICLES.find(x => x.id === id);
+  if (!a) return;
+
+  const reader = document.getElementById('articleReader');
+  reader.innerHTML = `
+    ${a.cover
+      ? `<img class="article-hero-img" src="${a.cover}" alt="${a.title}" referrerpolicy="no-referrer">`
+      : `<div class="article-hero-placeholder">♪</div>`}
+    <div class="article-header">
+      <div class="article-cat">${a.category}</div>
+      <h1 class="article-title">${a.title}</h1>
+      <div class="article-byline">By Dennis J. Siler &nbsp;·&nbsp; ${a.date}</div>
+    </div>
+    <div class="article-body">${a.body}</div>
+    <div class="article-footer">
+      <button class="article-share-btn" onclick="shareArticle('${a.id}')">
+        ↗ Share this Article
+      </button>
+      <button class="article-close-btn" onclick="closeArticle()">← Back to Journal</button>
+    </div>
+  `;
+
+  // Store current article ID for sharing
+  reader.dataset.articleId = id;
+  document.getElementById('articleOverlay').classList.add('open');
+  document.getElementById('articleOverlay').scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+}
+
+function closeArticle() {
+  document.getElementById('articleOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeArticleCheck(e) {
+  if (e.target === document.getElementById('articleOverlay')) closeArticle();
+}
+
+function shareArticle(id) {
+  const a = ARTICLES.find(x => x.id === id);
+  if (!a) return;
+
+  // Build a shareable message
+  const url  = window.location.href.split('?')[0] + '?article=' + id;
+  const text = `"${a.title}" — from Dennis Siler's Workshop Journal\n${url}`;
+
+  if (navigator.share) {
+    navigator.share({ title: a.title, text: `Read "${a.title}" on the Siler Instruments journal`, url })
+      .catch(() => copyToClipboard(url));
+  } else {
+    copyToClipboard(url);
+  }
+}
+
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    const el = document.getElementById('shareCopied');
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 2800);
+  }).catch(() => {
+    // Fallback
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    const el = document.getElementById('shareCopied');
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 2800);
+  });
+}
+
+// Check URL for article deep-link on load
+function checkArticleDeepLink() {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('article');
+  if (id && ARTICLES.find(x => x.id === id)) {
+    openArticle(id);
+  }
+}
+
+// ─── ADMIN: JOURNAL / ARTICLE EDITOR ─────────────────────────────────────────
+
+function artFmt(cmd) {
+  document.getElementById('artEditor').focus();
+  document.execCommand(cmd, false, null);
+}
+
+function artFmtBlock(tag) {
+  document.getElementById('artEditor').focus();
+  document.execCommand('formatBlock', false, tag);
+}
+
+function artInsertImg(position) {
+  const url = prompt('Paste the image URL (PostImg direct link):');
+  if (!url || !url.startsWith('http')) return;
+  const cls = position === 'full' ? '' : position === 'left' ? ' class="img-left"' : ' class="img-right"';
+  const html = `<img src="${url}" referrerpolicy="no-referrer"${cls} alt=""><p></p>`;
+  document.getElementById('artEditor').focus();
+  document.execCommand('insertHTML', false, html);
+}
+
+function previewArticleCover(url) {
+  const img = document.getElementById('art_cover_preview');
+  if (url && url.startsWith('http')) {
+    img.src = url;
+    img.style.display = 'block';
+  } else {
+    img.style.display = 'none';
+  }
+}
+
+async function publishArticle() {
+  const title  = document.getElementById('art_title').value.trim();
+  const cat    = document.getElementById('art_cat').value;
+  const cover  = document.getElementById('art_cover').value.trim();
+  const body   = document.getElementById('artEditor').innerHTML.trim();
+
+  if (!title) { showToast('Please enter a title'); return; }
+  if (!body || body === '<br>') { showToast('Please write something in the article body'); return; }
+
+  // Extract excerpt from body (strip HTML)
+  const tmp = document.createElement('div');
+  tmp.innerHTML = body;
+  const plainText = tmp.textContent || tmp.innerText || '';
+  const excerpt = plainText.substring(0, 200).trim() + (plainText.length > 200 ? '…' : '');
+
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  const id = 'art_' + Date.now();
+
+  const article = { id, title, category: cat, cover: cover || null, body, excerpt, date: dateStr };
+  ARTICLES.push(article);
+
+  // Save to Firestore if available
+  if (db) {
+    try {
+      await db.collection('articles').doc(id).set(article);
+    } catch(e) {
+      console.warn('Firestore article save failed:', e);
+    }
+  }
+
+  renderJournal();
+  renderAdminArticleList();
+
+  // Reset form
+  document.getElementById('art_title').value = '';
+  document.getElementById('art_cover').value = '';
+  document.getElementById('art_cover_preview').style.display = 'none';
+  document.getElementById('artEditor').innerHTML = '';
+
+  document.getElementById('artSuccess').style.display = 'block';
+  setTimeout(() => document.getElementById('artSuccess').style.display = 'none', 3500);
+  showToast('Article published!');
+}
+
+function renderAdminArticleList() {
+  const list = document.getElementById('adminArticleList');
+  if (!list) return;
+  if (ARTICLES.length === 0) {
+    list.innerHTML = '<p style="color:rgba(245,240,232,0.35);font-style:italic;font-size:0.85rem">No articles yet. Write your first one above!</p>';
+    return;
+  }
+  list.innerHTML = ARTICLES.slice().reverse().map(a => `
+    <div class="journal-article-row">
+      ${a.cover
+        ? `<img class="journal-article-thumb" src="${a.cover}" alt="${a.title}" referrerpolicy="no-referrer">`
+        : `<div class="journal-article-thumb" style="display:flex;align-items:center;justify-content:center;color:var(--amber);font-size:1.2rem">♪</div>`}
+      <div class="journal-article-info">
+        <div class="journal-article-title">${a.title}</div>
+        <div class="journal-article-meta">${a.category} · ${a.date}</div>
+      </div>
+      <div class="admin-product-actions">
+        <button class="admin-btn-delete" onclick="deleteArticle('${a.id}')">Delete</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function deleteArticle(id) {
+  if (!confirm('Delete this article? This cannot be undone.')) return;
+  const idx = ARTICLES.findIndex(x => x.id === id);
+  if (idx !== -1) ARTICLES.splice(idx, 1);
+  if (db) {
+    try { await db.collection('articles').doc(id).delete(); } catch(e) {}
+  }
+  renderJournal();
+  renderAdminArticleList();
+}
+
+// Load articles from Firestore on page load
+async function loadArticlesFromFirestore() {
+  if (!db) return;
+  try {
+    const snap = await db.collection('articles').orderBy('date').get();
+    ARTICLES = snap.docs.map(d => d.data());
+    renderJournal();
+    checkArticleDeepLink();
+  } catch(e) {
+    console.warn('Could not load articles:', e);
+    renderJournal();
+  }
+}
+
+// Override switchAdminTab to handle journal tab
+const _origSwitchTab = switchAdminTab;
+function switchAdminTab(tab, btn) {
+  _origSwitchTab(tab, btn);
+  if (tab === 'journal') renderAdminArticleList();
 }
 
 </script>
