@@ -135,17 +135,7 @@ try {
   }
   .cart-btn:hover { background: var(--amber) !important; color: var(--dark) !important; }
 
-  /* Hidden admin link — invisible until hovered */
-  .nav-admin-item { opacity: 0; transition: opacity 0.3s; }
-  .nav-admin-item:hover { opacity: 1; }
-  .nav-admin-link {
-    color: rgba(138,122,106,0.5) !important;
-    font-size: 0.62rem !important;
-    letter-spacing: 0.15em !important;
-  }
-  .nav-admin-link:hover { color: var(--amber) !important; }
-
-  /* Footer admin link — same ghost treatment */
+  /* Footer admin link — ghost treatment, nearly invisible until hovered */
   .footer-admin-link {
     color: rgba(245,240,232,0.1);
     font-family: 'Josefin Sans', sans-serif;
@@ -2036,9 +2026,6 @@ try {
     <li><a href="#about">About</a></li>
     <li><a href="#commission">Commission</a></li>
     <li><a href="#commission" class="btn-primary" style="padding:0.4rem 1rem;">Inquire</a></li>
-    <li class="nav-admin-item">
-      <a class="nav-admin-link" onclick="openAdmin()" href="javascript:void(0)">Admin</a>
-    </li>
     <li><a class="cart-btn" onclick="openCart()">
       Cart
       <span class="cart-count" id="cartCount">0</span>
@@ -2399,7 +2386,7 @@ try {
     <span>© Dennis J. Siler — All instruments handbuilt in the USA</span>
     <span style="display:flex;align-items:center;gap:1.5rem">
       Site by Siler Family
-      <a onclick="openAdmin()" href="javascript:void(0)" class="footer-admin-link">Admin</a>
+      <a onclick="(() => openAdmin())()" href="javascript:void(0)" class="footer-admin-link">Admin</a>
     </span>
   </div>
 </footer>
@@ -3615,13 +3602,14 @@ function showChangePwFromMain() {
   showChangePw();
 }
 
-
+function switchAdminTab(tab, btn) {
   document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.admin-tab-content').forEach(c => c.style.display = 'none');
   btn.classList.add('active');
   document.getElementById('tab-' + tab).style.display = 'block';
   if (tab === 'manage') renderAdminProductList();
   if (tab === 'gallery') renderAdminGalleryList();
+  if (tab === 'journal') renderAdminArticleList();
 }
 
 function previewPhoto(url) {
@@ -4079,12 +4067,6 @@ async function loadArticlesFromFirestore() {
   }
 }
 
-// Override switchAdminTab to handle journal tab
-const _origSwitchTab = switchAdminTab;
-function switchAdminTab(tab, btn) {
-  _origSwitchTab(tab, btn);
-  if (tab === 'journal') renderAdminArticleList();
-}
 
 </script>
 </body>
