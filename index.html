@@ -2042,6 +2042,8 @@ try {
     transition: all 0.2s;
     text-align: left;
   }
+  .cg-btn-save   { background: #2a5a2a; color: #9de89d; border: 1px solid #3a7a3a; }
+  .cg-btn-save:hover { background: #3a7a3a; color: #c8f5c8; }
   .cg-btn-keep   { background: var(--amber); color: var(--dark); }
   .cg-btn-keep:hover { background: var(--amber-light); }
   .cg-btn-discard { background: rgba(180,60,60,0.18); color: #e99; border: 1px solid rgba(180,60,60,0.3); }
@@ -2597,24 +2599,36 @@ try {
 <!-- CLOSE GUARD OVERLAY -->
 <div class="close-guard-overlay" id="closeGuardOverlay">
   <div class="close-guard-box">
-    <div class="close-guard-title">Leave the admin panel?</div>
-    <p class="close-guard-sub">You may have unsaved changes. What would you like to do?</p>
-    <div class="close-guard-btns">
-      <button class="cg-btn cg-btn-keep" onclick="closeGuardKeepOpen()">
-        ← Keep working — don't close
-      </button>
-      <button class="cg-btn" onclick="closeGuardDiscard()"
-        style="background:rgba(180,60,60,0.18);color:#e99;border:1px solid rgba(180,60,60,0.3)">
-        Discard changes &amp; close
-      </button>
-    </div>
-    <div class="discard-confirm" id="discardConfirm">
-      <p>⚠ Are you sure? Any unsaved work — new listings, article drafts, gallery images — will be permanently lost. This cannot be undone.</p>
-      <div class="discard-confirm-btns">
-        <button class="dc-no" onclick="closeGuardCancelDiscard()">No — go back</button>
-        <button class="dc-yes" onclick="closeGuardConfirmDiscard()">Yes, discard &amp; close</button>
+
+    <!-- Step 1: the three choices -->
+    <div id="closeGuardStep1">
+      <div class="close-guard-title">Leave the admin panel?</div>
+      <p class="close-guard-sub">You may have unsaved changes. What would you like to do?</p>
+      <div class="close-guard-btns">
+        <button class="cg-btn cg-btn-save" onclick="closeGuardSaveAndClose()">
+          ✓ &nbsp;Save all changes &amp; close
+        </button>
+        <button class="cg-btn cg-btn-keep" onclick="closeGuardKeepOpen()">
+          ← &nbsp;Keep working — don't close yet
+        </button>
+        <button class="cg-btn cg-btn-discard" onclick="closeGuardDiscard()">
+          ✕ &nbsp;Discard changes &amp; close
+        </button>
       </div>
     </div>
+
+    <!-- Step 2: discard confirmation — only shown after choosing Discard -->
+    <div id="closeGuardStep2" style="display:none">
+      <div class="close-guard-title" style="color:#e99">Are you sure?</div>
+      <div class="discard-confirm show" style="margin-top:0.8rem">
+        <p>⚠ Any unsaved work — new listings, edits, article drafts — will be permanently lost and cannot be recovered.</p>
+        <div class="discard-confirm-btns">
+          <button class="dc-no" onclick="closeGuardCancelDiscard()">← Keep working</button>
+          <button class="dc-yes" onclick="closeGuardConfirmDiscard()">Discard &amp; close</button>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 <footer>
@@ -3637,29 +3651,45 @@ function closeAdmin() {
 
 // ── Close guard ───────────────────────────────────────────────────────────────
 function closeAdminCheck(e) {
-  // Only trigger if clicking the bare overlay backdrop (not the panel itself)
   if (e.target !== document.getElementById('adminOverlay')) return;
-  // If not yet logged in, close freely — no work to lose
   if (!adminUnlocked) { closeAdmin(); return; }
   openCloseGuard();
 }
 
 function openCloseGuard() {
-  document.getElementById('discardConfirm').classList.remove('show');
+  // Always reset to step 1 when opening
+  document.getElementById('closeGuardStep1').style.display = 'block';
+  document.getElementById('closeGuardStep2').style.display = 'none';
   document.getElementById('closeGuardOverlay').classList.add('open');
 }
 
 function closeGuardKeepOpen() {
+  // Just dismiss the guard — stay in admin
   document.getElementById('closeGuardOverlay').classList.remove('open');
 }
 
+async function closeGuardSaveAndClose() {
+  // Save every product currently in memory to Firestore, then close
+  document.getElementById('closeGuardOverlay').classList.remove('open');
+  if (db) {
+    for (const p of PRODUCTS) {
+      await saveProductToFirestore(p);
+    }
+    showToast('All changes saved!');
+  }
+  closeAdmin();
+}
+
 function closeGuardDiscard() {
-  // Show the scary confirmation step
-  document.getElementById('discardConfirm').classList.add('show');
+  // Advance to the "are you sure?" step
+  document.getElementById('closeGuardStep1').style.display = 'none';
+  document.getElementById('closeGuardStep2').style.display = 'block';
 }
 
 function closeGuardCancelDiscard() {
-  document.getElementById('discardConfirm').classList.remove('show');
+  // Go back to step 1
+  document.getElementById('closeGuardStep1').style.display = 'block';
+  document.getElementById('closeGuardStep2').style.display = 'none';
 }
 
 function closeGuardConfirmDiscard() {
@@ -3667,7 +3697,7 @@ function closeGuardConfirmDiscard() {
   closeAdmin();
 }
 
-// Also intercept the ✕ close button when logged in
+// Intercept the ✕ close button when logged in
 function closeAdminSafe() {
   if (!adminUnlocked) { closeAdmin(); return; }
   openCloseGuard();
@@ -3677,43 +3707,64 @@ function closeAdminSafe() {
 async function saveProductToFirestore(product) {
   if (!db) return;
   try {
-    await db.collection('products').doc(String(product.id)).set(product);
-  } catch(e) { console.warn('Firestore product save failed:', e); }
+    const doc = { ...product, id: Number(product.id) };
+    await db.collection('products').doc(String(product.id)).set(doc);
+    console.log('✓ Saved to Firestore:', product.name);
+  } catch(e) {
+    console.error('saveProductToFirestore failed:', e.code, e.message);
+  }
 }
 
 async function updateProductInFirestore(product) {
   if (!db) return;
   try {
-    await db.collection('products').doc(String(product.id)).set(product);
-  } catch(e) { console.warn('Firestore product update failed:', e); }
+    const doc = { ...product, id: Number(product.id) };
+    await db.collection('products').doc(String(product.id)).set(doc);
+    console.log('✓ Updated in Firestore:', product.name);
+  } catch(e) {
+    console.error('updateProductInFirestore failed:', e.code, e.message);
+  }
 }
 
 async function deleteProductFromFirestore(id) {
   if (!db) return;
   try {
     await db.collection('products').doc(String(id)).delete();
-  } catch(e) { console.warn('Firestore product delete failed:', e); }
+    console.log('✓ Deleted from Firestore id:', id);
+  } catch(e) {
+    console.error('deleteProductFromFirestore failed:', e.code, e.message);
+  }
 }
 
 async function loadProductsFromFirestore() {
-  if (!db) return;
+  if (!db) {
+    console.warn('Firestore not connected — showing hardcoded products');
+    return;
+  }
   try {
-    const snap = await db.collection('products').orderBy('id').get();
+    // NO orderBy — that requires a Firestore index and will throw without one.
+    // We sort by id in JS instead.
+    const snap = await db.collection('products').get();
     if (!snap.empty) {
-      // Replace the default PRODUCTS array with Firestore data
       PRODUCTS.length = 0;
-      snap.docs.forEach(d => PRODUCTS.push(d.data()));
+      snap.docs.forEach(d => {
+        const p = d.data();
+        p.id = Number(p.id); // ensure numeric
+        PRODUCTS.push(p);
+      });
+      PRODUCTS.sort((a, b) => a.id - b.id);
       renderProducts();
       console.log(`✓ Loaded ${PRODUCTS.length} products from Firestore`);
     } else {
-      // First run — push default products up to Firestore
-      console.log('No Firestore products yet — uploading defaults…');
+      // First ever run — seed the defaults into Firestore
+      console.log('Firestore products collection empty — seeding defaults…');
       for (const p of PRODUCTS) {
         await saveProductToFirestore(p);
       }
+      console.log('✓ Default products seeded');
     }
   } catch(e) {
-    console.warn('Could not load products from Firestore:', e);
+    console.error('loadProductsFromFirestore failed:', e.code, e.message);
   }
 }
 
