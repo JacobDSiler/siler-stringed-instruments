@@ -3059,9 +3059,23 @@ try {
             </div>
           </div>
         </div>
-        <div style="margin-top:2rem;padding:1rem;background:rgba(200,119,42,0.1);border:1px solid rgba(200,119,42,0.3)">
-          <p style="font-family:'Josefin Sans',sans-serif;font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--amber-light);margin-bottom:0.5rem">⚠ Note on Saving</p>
-          <p style="font-size:0.85rem;color:rgba(245,240,232,0.7);line-height:1.7">Changes made through this panel are <em>live on the page right now</em> but won't survive a page refresh unless you download the updated file. Ask your site helper to export &amp; re-upload after making changes, or use a host that supports server-side storage.</p>
+        <div style="margin-top:2rem;padding:1.2rem;background:rgba(200,119,42,0.1);border:1px solid rgba(200,119,42,0.3)">
+          <p style="font-family:'Josefin Sans',sans-serif;font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--amber-light);margin-bottom:0.8rem">⚠ One-Time Firebase Setup — Required for Saving to Work</p>
+          <p style="font-size:0.84rem;color:rgba(245,240,232,0.75);line-height:1.8;margin-bottom:0.8rem">If edits or new listings reset when the page refreshes, it means Firestore's security rules are blocking writes. Fix it once and it works forever:</p>
+          <ol style="font-size:0.83rem;color:rgba(245,240,232,0.65);line-height:2;padding-left:1.2rem">
+            <li>Go to <strong style="color:var(--amber-light)">console.firebase.google.com</strong></li>
+            <li>Open your project → <strong style="color:var(--amber-light)">Firestore Database</strong> → <strong style="color:var(--amber-light)">Rules</strong> tab</li>
+            <li>Replace everything in the editor with the rules below, then click <strong style="color:var(--amber-light)">Publish</strong></li>
+          </ol>
+          <pre style="margin-top:0.8rem;padding:0.8rem;background:rgba(0,0,0,0.4);font-size:0.72rem;color:#9de89d;line-height:1.8;overflow-x:auto">rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /products/{id} { allow read, write: if true; }
+    match /articles/{id} { allow read, write: if true; }
+    match /admin/{id}    { allow read, write: if true; }
+  }
+}</pre>
+          <p style="font-size:0.78rem;color:rgba(245,240,232,0.4);margin-top:0.6rem;font-style:italic">After publishing, reload the site and all saves will persist permanently across every device and browser visit.</p>
         </div>
       </div>
 
@@ -3704,67 +3718,87 @@ function closeAdminSafe() {
 }
 
 // ── Firestore: products ───────────────────────────────────────────────────────
+// !! If saves silently fail, the cause is almost certainly Firestore security rules.
+// Go to: Firebase Console → Firestore Database → Rules → paste this → Publish:
+//
+//   rules_version = '2';
+//   service cloud.firestore {
+//     match /databases/{database}/documents {
+//       match /products/{id}  { allow read, write: if true; }
+//       match /articles/{id}  { allow read, write: if true; }
+//       match /admin/{id}     { allow read, write: if true; }
+//     }
+//   }
+
 async function saveProductToFirestore(product) {
-  if (!db) return;
+  if (!db) { showToast('⚠ Firestore not connected'); return false; }
   try {
     const doc = { ...product, id: Number(product.id) };
     await db.collection('products').doc(String(product.id)).set(doc);
-    console.log('✓ Saved to Firestore:', product.name);
+    console.log('✓ Firestore saved:', product.name);
+    return true;
   } catch(e) {
-    console.error('saveProductToFirestore failed:', e.code, e.message);
+    showToast('⚠ Save failed: ' + (e.code || e.message) + ' — check Firestore Rules');
+    console.error('saveProductToFirestore:', e);
+    return false;
   }
 }
 
 async function updateProductInFirestore(product) {
-  if (!db) return;
+  if (!db) { showToast('⚠ Firestore not connected'); return false; }
   try {
     const doc = { ...product, id: Number(product.id) };
     await db.collection('products').doc(String(product.id)).set(doc);
-    console.log('✓ Updated in Firestore:', product.name);
+    console.log('✓ Firestore updated:', product.name);
+    return true;
   } catch(e) {
-    console.error('updateProductInFirestore failed:', e.code, e.message);
+    showToast('⚠ Update failed: ' + (e.code || e.message) + ' — check Firestore Rules');
+    console.error('updateProductInFirestore:', e);
+    return false;
   }
 }
 
 async function deleteProductFromFirestore(id) {
-  if (!db) return;
+  if (!db) { showToast('⚠ Firestore not connected'); return false; }
   try {
     await db.collection('products').doc(String(id)).delete();
-    console.log('✓ Deleted from Firestore id:', id);
+    console.log('✓ Firestore deleted id:', id);
+    return true;
   } catch(e) {
-    console.error('deleteProductFromFirestore failed:', e.code, e.message);
+    showToast('⚠ Delete failed: ' + (e.code || e.message) + ' — check Firestore Rules');
+    console.error('deleteProductFromFirestore:', e);
+    return false;
   }
 }
 
 async function loadProductsFromFirestore() {
   if (!db) {
-    console.warn('Firestore not connected — showing hardcoded products');
+    console.warn('Firestore not connected — using hardcoded defaults');
     return;
   }
   try {
-    // NO orderBy — that requires a Firestore index and will throw without one.
-    // We sort by id in JS instead.
     const snap = await db.collection('products').get();
     if (!snap.empty) {
       PRODUCTS.length = 0;
       snap.docs.forEach(d => {
         const p = d.data();
-        p.id = Number(p.id); // ensure numeric
+        p.id = Number(p.id);
         PRODUCTS.push(p);
       });
       PRODUCTS.sort((a, b) => a.id - b.id);
       renderProducts();
       console.log(`✓ Loaded ${PRODUCTS.length} products from Firestore`);
     } else {
-      // First ever run — seed the defaults into Firestore
-      console.log('Firestore products collection empty — seeding defaults…');
+      // First ever run — seed the hardcoded defaults up to Firestore
+      console.log('No Firestore products — seeding defaults…');
       for (const p of PRODUCTS) {
         await saveProductToFirestore(p);
       }
-      console.log('✓ Default products seeded');
+      console.log('✓ Defaults seeded to Firestore');
     }
   } catch(e) {
-    console.error('loadProductsFromFirestore failed:', e.code, e.message);
+    showToast('⚠ Load failed: ' + (e.code || e.message) + ' — check Firestore Rules');
+    console.error('loadProductsFromFirestore:', e);
   }
 }
 
@@ -4145,10 +4179,19 @@ async function saveEditProduct(id) {
   p.badge     = document.getElementById(`ep_badge_${id}`).value.trim() || null;
   p.available = document.getElementById(`ep_avail_${id}`).checked;
 
-  await updateProductInFirestore(p);
-  renderProducts();
-  renderAdminProductList();
-  showToast(`${p.name} updated & saved!`);
+  const btn = document.querySelector(`#edit-panel-${id} .edit-save-btn`);
+  if (btn) { btn.textContent = 'Saving…'; btn.disabled = true; }
+
+  const ok = await updateProductInFirestore(p);
+
+  if (btn) { btn.textContent = 'Save Changes →'; btn.disabled = false; }
+
+  if (ok) {
+    showToast(`✓ ${p.name} saved!`);
+    renderProducts();
+    renderAdminProductList();
+  }
+  // If not ok, the toast from updateProductInFirestore already told the user what went wrong
 }
 
 async function toggleAvailable(id) {
